@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Registration Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="portal-container">
+        <header class="portal-header">
+            <h1><i class="fas fa-user-astronaut"></i> Quantum Registration</h1>
+            <p>Join our digital universe - Become part of the future</p>
+        </header>
+
+        <form class="portal-form" method="post" action='https://register-demo.freecodecamp.org'>
+            <fieldset class="form-section half-width">
+                <legend><i class="fas fa-id-card"></i> Personal Info</legend>
+
+                <div class="input-group">
+                    <input id="first-name" name="first-name" type="text" required placeholder=" " aria-label="First Name" />
+                    <label for="first-name">First Name</label>
+                    <i class="fas fa-user"></i>
+                </div>
+
+                <div class="input-group">
+                    <input id="last-name" name="last-name" type="text" required placeholder=" " aria-label="Last Name" />
+                    <label for="last-name">Last Name</label>
+                    <i class="fas fa-user-tag"></i>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section half-width">
+                <legend><i class="fas fa-lock"></i> Security</legend>
+
+                <div class="input-group">
+                    <input id="email" name="email" type="email" required placeholder=" " aria-label="Quantum Mail" />
+                    <label for="email">Quantum Mail</label>
+                    <i class="fas fa-at"></i>
+                </div>
+
+                <div class="input-group">
+                    <input id="new-password" name="new-password" type="password" pattern="[a-z0-5]{8,}" required placeholder=" " aria-label="Encryption Key" />
+                    <label for="new-password">Encryption Key</label>
+                    <i class="fas fa-key"></i>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend><i class="fas fa-user-shield"></i> Account Protocol</legend>
+                
+                <div class="radio-group">
+                    <input id="personal-account" type="radio" name="account-type" value="stealth" checked class="a11y-hidden" />
+                    <label for="personal-account" class="custom-radio-label"><i class="fas fa-user-ninja"></i> Stealth Mode</label>
+                    
+                    <input id="business-account" type="radio" name="account-type" value="corporate" class="a11y-hidden" />
+                    <label for="business-account" class="custom-radio-label"><i class="fas fa-robot"></i> Corporate AI</label>
+
+                    <input id="premium-account" type="radio" name="account-type" value="elite" class="a11y-hidden" />
+                    <label for="premium-account" class="custom-radio-label"><i class="fas fa-crown"></i> Quantum Elite</label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section half-width">
+                <legend><i class="fas fa-id-badge"></i> Profile Matrix</legend>
+
+                <div class="input-group">
+                    <input id="age" type="number" name="age" min="13" max="120" placeholder=" " aria-label="Temporal Cycles" />
+                    <label for="age">Temporal Cycles</label>
+                    <i class="fas fa-hourglass-half"></i>
+                </div>
+
+                <div class="file-upload">
+                    <label for="profile-picture" class="file-upload-label">
+                        <i class="fas fa-cloud-upload-alt"></i> Upload Neural Imprint
+                    </label>
+                    <input id="profile-picture" type="file" name="file" accept="image/*" aria-describedby="file-instructions" />
+                    <span id="file-instructions" class="sr-only">Accepted file formats are images.</span>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section half-width">
+                <legend><i class="fas fa-satellite-dish"></i> Connection</legend>
+                <div class="input-group">
+                    <select id="referrer" name="referrer" aria-label="Discovery Vector" required>
+                        <option value="">(select transmission source)</option>
+                        <option value="1">Quantum Network Broadcast</option>
+                        <option value="2">Neural Link Recommendation</option>
+                        <option value="3">Temporal Anomaly Detection</option>
+                        <option value="4">Other Dimension</option>
+                    </select>
+                    <label for="referrer">Discovery Vector</label>
+                    <i class="fas fa-wifi"></i>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend><i class="fas fa-brain"></i> Neural Pattern</legend>
+                <div class="input-group">
+                    <textarea id="bio" name="bio" rows="4" placeholder=" " aria-label="Consciousness Signature"></textarea>
+                    <label for="bio">Consciousness Signature</label>
+                </div>
+            </fieldset>
+
+            <div class="terms form-section">
+                <input class="a11y-hidden" id="terms-and-conditions" type="checkbox" required name="terms-and-conditions" />
+                <label for="terms-and-conditions" class="custom-checkbox-label">
+                    I accept the
+                    <a href="https://www.freecodecamp.org/news/terms-of-service/" target="_blank" rel="noopener noreferrer">quantum entanglement terms</a>
+                </label>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-paper-plane"></i> INITIATE QUANTUM ENROLLMENT
+            </button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

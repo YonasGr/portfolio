@@ -1,0 +1,343 @@
+:root {
+    --neon-blue: #0ff0fc;
+    --neon-pink: #ff2ced;
+    --neon-purple: #9d00ff;
+    --neon-green: #00ff9d;
+    --dark-bg: #0a0a15;
+    --darker-bg: #050510;
+    --card-bg: rgba(15, 15, 30, 0.9); /* Slightly more opaque */
+    --text-primary: #e0e0ff;
+    --text-secondary: #a0a0c0;
+    --transition: all 0.3s ease; /* Faster, lighter transition */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* Simplified, static background, removing heavy JavaScript particles and complex gradients */
+    background: var(--dark-bg);
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem; /* Added padding for small screens */
+    overflow-x: hidden;
+}
+
+/* Accessibility: Hide element visually but keep it available for screen readers */
+.sr-only, .a11y-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Main container - No mousemove 3D transform */
+.portal-container {
+    width: 100%;
+    max-width: 850px;
+    background: var(--card-bg);
+    backdrop-filter: blur(8px);
+    border-radius: 15px;
+    border: 1px solid rgba(0, 255, 157, 0.2);
+    box-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
+    overflow: hidden;
+    z-index: 10;
+}
+
+/* Header section - Removed complex shine animation */
+.portal-header {
+    background: linear-gradient(to right, rgba(0, 255, 157, 0.1), rgba(157, 0, 255, 0.1));
+    padding: 2rem 1.5rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 255, 157, 0.3);
+}
+
+.portal-header h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.8rem, 5vw, 2.5rem); /* Responsive font size */
+    background: linear-gradient(to right, var(--neon-blue), var(--neon-pink));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 8px rgba(0, 255, 157, 0.5);
+    margin-bottom: 1rem;
+}
+
+/* Form styling using modern CSS Grid */
+.portal-form {
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Auto-responsive grid */
+    gap: 1.5rem;
+}
+
+.form-section {
+    background: rgba(10, 10, 20, 0.6);
+    border-radius: 10px;
+    padding: 1.5rem;
+    border: 1px solid rgba(0, 255, 157, 0.1);
+    transition: var(--transition);
+}
+
+.form-section:hover {
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 15px rgba(0, 255, 157, 0.2);
+}
+
+legend {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--neon-blue);
+    padding: 0 0.5rem;
+    font-size: 1rem;
+    text-shadow: 0 0 5px var(--neon-blue);
+    margin-bottom: 1rem;
+}
+
+/* Input fields */
+.input-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    color: var(--text-secondary);
+    pointer-events: none;
+    transition: var(--transition);
+    font-size: 1rem;
+    padding: 0 5px;
+    z-index: 2;
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+    width: 100%;
+    padding: 15px;
+    background: rgba(20, 20, 40, 0.8);
+    border: 1px solid rgba(0, 255, 157, 0.2);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: var(--transition);
+    font-family: 'Rajdhani', sans-serif;
+}
+/* Important: Add 'empty' option to SELECT to make the label effect work */
+.input-group select:required:invalid {
+    color: var(--text-secondary);
+}
+
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+    outline: none;
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+}
+
+/* Floating label logic (improved for :placeholder-shown and :focus) */
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label,
+.input-group select:valid + label, /* Use :valid for select */
+.input-group textarea:focus + label,
+.input-group textarea:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 10px;
+    font-size: 0.8rem;
+    color: var(--neon-blue);
+    text-shadow: 0 0 5px var(--neon-blue);
+    background: var(--darker-bg);
+    padding: 0 8px;
+}
+
+.input-group i {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    color: var(--text-secondary);
+    transition: var(--transition);
+}
+
+.input-group input:focus ~ i,
+.input-group select:focus ~ i,
+.input-group textarea:focus ~ i {
+    color: var(--neon-blue);
+    text-shadow: 0 0 5px var(--neon-blue);
+}
+
+/* Custom Radio/Checkbox (A11Y improved: visually hide input and style the label) */
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.custom-radio-label, .custom-checkbox-label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: var(--transition);
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.custom-radio-label::before, .custom-checkbox-label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--text-secondary);
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.custom-checkbox-label::before {
+    border-radius: 4px;
+}
+
+/* Checked state */
+.a11y-hidden:checked + .custom-radio-label::before,
+.a11y-hidden:checked + .custom-checkbox-label::before {
+    border-color: var(--neon-blue);
+    background: var(--neon-blue);
+    box-shadow: 0 0 8px var(--neon-blue);
+}
+
+.a11y-hidden:checked + .custom-radio-label,
+.a11y-hidden:checked + .custom-checkbox-label {
+    color: var(--neon-blue);
+    text-shadow: 0 0 5px var(--neon-blue);
+}
+
+.a11y-hidden:checked + .custom-radio-label::after {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--darker-bg);
+}
+
+.a11y-hidden:checked + .custom-checkbox-label::after {
+    content: '\f00c'; /* Font Awesome checkmark icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    left: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+    color: var(--darker-bg);
+}
+
+
+/* File upload */
+.file-upload-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background: rgba(20, 20, 40, 0.8);
+    border: 2px dashed rgba(0, 255, 157, 0.3);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--text-secondary);
+}
+
+.file-upload-label:hover {
+    border-color: var(--neon-blue);
+    color: var(--neon-blue);
+    box-shadow: 0 0 10px rgba(0, 255, 157, 0.2);
+}
+
+.file-upload-label i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+/* Submit button */
+.submit-btn {
+    grid-column: 1 / -1; /* Make button span all columns */
+    background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+    color: var(--darker-bg);
+    border: none;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: var(--transition);
+    text-transform: uppercase;
+    box-shadow: 0 5px 15px rgba(0, 255, 157, 0.3);
+    margin-top: 1rem;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 255, 157, 0.4);
+    letter-spacing: 1.5px;
+}
+
+.submit-btn i {
+    margin-right: 8px;
+}
+
+/* Terms and conditions */
+.terms {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+    background: transparent; /* Don't style terms like a section */
+    border: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+.terms a {
+    color: var(--neon-blue);
+    text-decoration: none;
+    transition: var(--transition);
+    margin-left: 5px;
+    text-shadow: 0 0 3px rgba(0, 255, 252, 0.5);
+}
+
+.terms a:hover {
+    color: var(--neon-pink);
+    text-shadow: 0 0 5px var(--neon-pink);
+}
+
+/* Focus state for keyboard navigation */
+.a11y-hidden:focus + .custom-radio-label,
+.a11y-hidden:focus + .custom-checkbox-label,
+.file-upload-label:focus,
+.submit-btn:focus,
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+    outline: 3px solid var(--neon-pink);
+    outline-offset: 2px;
+}
