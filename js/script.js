@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fileName: document.getElementById('fileName')
     };
 
-    const BACKEND_URL = '/send-file';
+    const BACKEND_URL = 'https://yonasgirma-backend-service.onrender.com';
 
     // Handle file input display
     if (DOMElements.fileInput) {
