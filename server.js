@@ -117,7 +117,13 @@ async function sendTelegramFile(chatId, file, caption, isImage) {
     const resolvedPath = path.resolve(file.path);
     const resolvedUploadsPath = path.resolve(uploadsDir);
     
-    if (!resolvedPath.startsWith(resolvedUploadsPath + path.sep)) {
+    // Ensure consistent path separator handling across platforms
+    const normalizedResolvedPath = resolvedPath + path.sep;
+    const normalizedUploadsPath = resolvedUploadsPath.endsWith(path.sep) 
+        ? resolvedUploadsPath 
+        : resolvedUploadsPath + path.sep;
+    
+    if (!normalizedResolvedPath.startsWith(normalizedUploadsPath)) {
         throw new Error('Invalid file path');
     }
     
@@ -148,7 +154,13 @@ function removeFile(filePath) {
     const resolvedPath = path.resolve(filePath);
     const resolvedUploadsPath = path.resolve(uploadsDir);
     
-    if (!resolvedPath.startsWith(resolvedUploadsPath + path.sep)) {
+    // Ensure consistent path separator handling across platforms
+    const normalizedResolvedPath = resolvedPath + path.sep;
+    const normalizedUploadsPath = resolvedUploadsPath.endsWith(path.sep) 
+        ? resolvedUploadsPath 
+        : resolvedUploadsPath + path.sep;
+    
+    if (!normalizedResolvedPath.startsWith(normalizedUploadsPath)) {
         console.error('Attempted to remove file outside uploads directory:', filePath);
         return;
     }
