@@ -113,11 +113,11 @@ async function sendTelegramFile(chatId, file, caption, isImage) {
     const endpoint = isImage ? 'sendPhoto' : 'sendDocument';
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/${endpoint}`;
     
-    // Validate file path is within uploads directory
-    const normalizedPath = path.normalize(file.path);
-    const uploadsPath = path.normalize(uploadsDir);
+    // Validate file path is within uploads directory (prevent directory traversal)
+    const resolvedPath = path.resolve(file.path);
+    const resolvedUploadsPath = path.resolve(uploadsDir);
     
-    if (!normalizedPath.startsWith(uploadsPath)) {
+    if (!resolvedPath.startsWith(resolvedUploadsPath + path.sep)) {
         throw new Error('Invalid file path');
     }
     
@@ -144,11 +144,11 @@ async function sendTelegramFile(chatId, file, caption, isImage) {
 
 // Remove temporary file with path validation
 function removeFile(filePath) {
-    // Ensure file is within uploads directory for security
-    const normalizedPath = path.normalize(filePath);
-    const uploadsPath = path.normalize(uploadsDir);
+    // Ensure file is within uploads directory for security (prevent directory traversal)
+    const resolvedPath = path.resolve(filePath);
+    const resolvedUploadsPath = path.resolve(uploadsDir);
     
-    if (!normalizedPath.startsWith(uploadsPath)) {
+    if (!resolvedPath.startsWith(resolvedUploadsPath + path.sep)) {
         console.error('Attempted to remove file outside uploads directory:', filePath);
         return;
     }
