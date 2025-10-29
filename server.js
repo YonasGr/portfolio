@@ -295,6 +295,36 @@ app.post('/send-file', upload.single('file'), async (req, res) => {
     }
 });
 
+// Global error handler for multer and other errors
+app.use((err, req, res, next) => {
+    console.error('Global error handler:', err);
+    
+    if (err instanceof multer.MulterError) {
+        if (err.code === 'LIMIT_FILE_SIZE') {
+            return res.status(400).json({
+                success: false,
+                message: 'File size exceeds 20 MB limit.'
+            });
+        }
+        return res.status(400).json({
+            success: false,
+            message: `File upload error: ${err.message}`
+        });
+    }
+    
+    if (err.message && err.message.includes('File type not supported')) {
+        return res.status(400).json({
+            success: false,
+            message: err.message
+        });
+    }
+    
+    res.status(500).json({
+        success: false,
+        message: 'An unexpected error occurred.'
+    });
+});
+
 // Start server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
