@@ -13,8 +13,27 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from the current directory
-app.use(express.static(__dirname));
+// Block access to sensitive files
+app.use((req, res, next) => {
+    const blockedFiles = [
+        '/server.js', '/package.json', '/package-lock.json', 
+        '/.env', '/.env.example', '/.gitignore'
+    ];
+    
+    if (blockedFiles.includes(req.path)) {
+        return res.status(403).send('Access denied');
+    }
+    next();
+});
+
+// Serve static files from the current directory, with security considerations
+// Note: This serves the root directory since the site structure has files at root.
+// The .gitignore ensures node_modules, .env, and uploads are not exposed.
+// For production, consider reorganizing files into a 'public' directory.
+app.use(express.static(__dirname, {
+    dotfiles: 'deny', // Deny access to dotfiles like .env
+    index: 'index.html'
+}));
 
 // Create uploads directory if it doesn't exist
 const uploadsDir = path.join(__dirname, 'uploads');
@@ -94,6 +113,14 @@ async function sendTelegramFile(chatId, file, caption, isImage) {
     const endpoint = isImage ? 'sendPhoto' : 'sendDocument';
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/${endpoint}`;
     
+    // Validate file path is within uploads directory
+    const normalizedPath = path.normalize(file.path);
+    const uploadsPath = path.normalize(uploadsDir);
+    
+    if (!normalizedPath.startsWith(uploadsPath)) {
+        throw new Error('Invalid file path');
+    }
+    
     const form = new FormData();
     form.append('chat_id', chatId);
     
@@ -115,8 +142,17 @@ async function sendTelegramFile(chatId, file, caption, isImage) {
     return response.json();
 }
 
-// Remove temporary file
+// Remove temporary file with path validation
 function removeFile(filePath) {
+    // Ensure file is within uploads directory for security
+    const normalizedPath = path.normalize(filePath);
+    const uploadsPath = path.normalize(uploadsDir);
+    
+    if (!normalizedPath.startsWith(uploadsPath)) {
+        console.error('Attempted to remove file outside uploads directory:', filePath);
+        return;
+    }
+    
     if (fs.existsSync(filePath)) {
         fs.unlink(filePath, (err) => {
             if (err) console.error('Error removing file:', err);
