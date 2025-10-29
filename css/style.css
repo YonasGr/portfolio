@@ -474,6 +474,94 @@ a {
     background-color: var(--accent-light-green);
 }
 
+.submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* File Upload Styling */
+.file-upload-group {
+    margin-top: 1rem;
+}
+
+.file-upload-group input[type="file"] {
+    display: none;
+}
+
+.file-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: rgba(0, 217, 145, 0.05);
+    border: 2px dashed #555;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.file-label:hover {
+    border-color: var(--accent-green);
+    background-color: rgba(0, 217, 145, 0.1);
+}
+
+.file-label i {
+    font-size: 2.5rem;
+    color: var(--accent-green);
+    margin-bottom: 0.5rem;
+}
+
+.file-label-text {
+    color: var(--dark-text);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.file-info {
+    color: var(--gray-text);
+    font-size: 0.85rem;
+}
+
+.file-name {
+    margin-top: 0.75rem;
+    padding: 0.5rem;
+    color: var(--accent-green);
+    font-size: 0.9rem;
+    text-align: center;
+    word-break: break-all;
+}
+
+/* Form Message Styling */
+.form-message {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 0.95rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.form-message.success {
+    background-color: rgba(0, 217, 145, 0.1);
+    border: 1px solid var(--accent-green);
+    color: var(--accent-green);
+    opacity: 1;
+}
+
+.form-message.error {
+    background-color: rgba(255, 82, 82, 0.1);
+    border: 1px solid #ff5252;
+    color: #ff5252;
+    opacity: 1;
+}
+
 /* Footer */
 footer {
     text-align: center;

@@ -4,10 +4,25 @@ document.addEventListener('DOMContentLoaded', () => {
         formMessage: document.getElementById('formMessage'),
         nameInput: document.getElementById('name'),
         emailInput: document.getElementById('email'),
-        messageInput: document.getElementById('message')
+        explanationInput: document.getElementById('explanation'),
+        fileInput: document.getElementById('file'),
+        fileName: document.getElementById('fileName')
     };
 
-    const BACKEND_URL = 'https://yonasgirma-backend-service.onrender.com/send-message';
+    const BACKEND_URL = '/send-file';
+
+    // Handle file input display
+    if (DOMElements.fileInput) {
+        DOMElements.fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const fileSize = (file.size / (1024 * 1024)).toFixed(2);
+                DOMElements.fileName.textContent = `Selected: ${file.name} (${fileSize} MB)`;
+            } else {
+                DOMElements.fileName.textContent = '';
+            }
+        });
+    }
 
     // Function to display messages to the user
     function showMessage(text, type) {
@@ -32,30 +47,27 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.innerHTML = '<span>Sending...</span>';
             submitBtn.disabled = true;
 
-            const data = {
-                name: DOMElements.nameInput.value,
-                email: DOMElements.emailInput.value,
-                message: DOMElements.messageInput.value,
-            };
+            // Create FormData from form
+            const formData = new FormData(DOMElements.contactForm);
 
             try {
                 const response = await fetch(BACKEND_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
+                    body: formData
                 });
 
                 const result = await response.json();
 
-                if (response.ok) {
-                    showMessage('Message sent successfully! I will get back to you soon.', 'success');
+                if (response.ok && result.success) {
+                    showMessage(result.message || 'Sent successfully! I will get back to you soon.', 'success');
                     DOMElements.contactForm.reset();
+                    DOMElements.fileName.textContent = '';
                 } else {
-                    showMessage(result.message || 'Failed to send message. Please try again.', 'error');
+                    showMessage(result.message || 'Failed to send. Please try again.', 'error');
                     console.error('Backend error:', result);
                 }
             } catch (error) {
-                showMessage('An error occurred. Please check your internet connection and try again.', 'error');
+                showMessage('An error occurred. Please check your connection and try again.', 'error');
                 console.error('Error sending message:', error);
             } finally {
                 submitBtn.innerHTML = originalBtnText;

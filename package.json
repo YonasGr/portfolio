@@ -1,0 +1,20 @@
+{
+  "name": "portfolio-web",
+  "version": "1.0.0",
+  "description": "Yonas Girma's personal portfolio with contact form and file upload",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["portfolio", "express", "telegram", "contact-form"],
+  "author": "Yonas Girma",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "form-data": "^4.0.0",
+    "node-fetch": "^2.7.0",
+    "dotenv": "^16.3.1"
+  }
+}
