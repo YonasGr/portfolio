@@ -22,7 +22,7 @@ Responsive Design: A seamless viewing experience on desktops, tablets, and mobil
 
 Dynamic Animations: Smooth, scroll-triggered animations created with JavaScript to bring the page to life.
 
-Contact Form: A fully functional "Get in Touch" form integrated with a custom backend to ensure direct communication.
+Contact Form with File Upload: A fully functional "Get in Touch" form with optional file upload capability, integrated with Telegram Bot API for direct communication.
 
 Project Showcase: Dedicated sections to highlight my most important projects and channels.
 
@@ -35,7 +35,63 @@ Animations: Vanilla JavaScript with Intersection Observer API
 
 Backend: Node.js, Express.js
 
+File Upload: Multer middleware for handling multipart/form-data
+
+Notifications: Telegram Bot API for receiving contact form submissions
+
 Deployment: Render
+
+🛠️ Setup & Installation
+
+Prerequisites
+- Node.js (v14 or higher)
+- A Telegram Bot (create one via @BotFather on Telegram)
+- Your Telegram Chat ID (get it from @userinfobot on Telegram)
+
+Installation Steps
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/YonasGr/portfolio-web.git
+   cd portfolio-web
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Create a `.env` file in the root directory with your Telegram credentials:
+   ```
+   TELEGRAM_BOT_TOKEN=your_bot_token_here
+   TELEGRAM_CHAT_ID=your_chat_id_here
+   PORT=3000
+   ```
+
+4. Start the server:
+   ```bash
+   npm start
+   ```
+
+5. Open your browser and visit `http://localhost:3000`
+
+📝 Environment Variables
+
+The following environment variables are required for the contact form to work:
+
+- `TELEGRAM_BOT_TOKEN`: Your Telegram bot token (get from @BotFather)
+- `TELEGRAM_CHAT_ID`: Your Telegram chat ID (get from @userinfobot)
+- `PORT`: Server port (optional, defaults to 3000)
+
+See `.env.example` for a template.
+
+📤 File Upload Feature
+
+The contact form now supports optional file uploads:
+- Accepts images, documents, and common media files
+- Maximum file size: 20 MB
+- Files are sent directly to your Telegram bot along with the contact information
+- Supports both file uploads and text-only submissions
 
 🤝 Let's Connect
 Feel free to reach out to me! I'm always open to discussing new opportunities, collaborations, or just sharing ideas.
