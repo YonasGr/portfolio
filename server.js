@@ -13,13 +13,39 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// CORS Middleware
+app.use((req, res, next) => {
+    const allowedOrigins = [
+        'https://yonasgr.github.io',
+        'http://localhost:5500',
+        'http://127.0.0.1:5500'
+    ];
+    const origin = req.headers.origin;
+
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    } else {
+        // Optional: Allow all for development or if specific origins fail
+        // res.setHeader('Access-Control-Allow-Origin', '*');
+    }
+
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+    next();
+});
+
 // Block access to sensitive files
 app.use((req, res, next) => {
     const blockedFiles = [
-        '/server.js', '/package.json', '/package-lock.json', 
+        '/server.js', '/package.json', '/package-lock.json',
         '/.env', '/.env.example', '/.gitignore'
     ];
-    
+
     if (blockedFiles.includes(req.path)) {
         return res.status(403).send('Access denied');
     }
@@ -48,7 +74,7 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, uniqueSuffix + '-' + file.originalname);
+        cb(null, uniqueSuffix + '-' + file.originalname.replace(/\s+/g, '_')); // Sanitize filename
     }
 });
 
@@ -74,7 +100,7 @@ const upload = multer({
             'video/mp4', 'video/mpeg', 'video/quicktime',
             'audio/mpeg', 'audio/wav', 'audio/ogg'
         ];
-        
+
         if (allowedMimes.includes(file.mimetype)) {
             cb(null, true);
         } else {
@@ -93,7 +119,7 @@ function sanitizeInput(text) {
 async function sendTelegramTextMessage(chatId, text) {
     const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-    
+
     const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -103,7 +129,7 @@ async function sendTelegramTextMessage(chatId, text) {
             parse_mode: 'HTML'
         })
     });
-    
+
     return response.json();
 }
 
@@ -112,59 +138,61 @@ async function sendTelegramFile(chatId, file, caption, isImage) {
     const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
     const endpoint = isImage ? 'sendPhoto' : 'sendDocument';
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/${endpoint}`;
-    
+
     // Validate file path is within uploads directory (prevent directory traversal)
     const resolvedPath = path.resolve(file.path);
     const resolvedUploadsPath = path.resolve(uploadsDir);
-    
+
     // Ensure consistent path separator handling across platforms
     const normalizedResolvedPath = resolvedPath + path.sep;
-    const normalizedUploadsPath = resolvedUploadsPath.endsWith(path.sep) 
-        ? resolvedUploadsPath 
+    const normalizedUploadsPath = resolvedUploadsPath.endsWith(path.sep)
+        ? resolvedUploadsPath
         : resolvedUploadsPath + path.sep;
-    
+
     if (!normalizedResolvedPath.startsWith(normalizedUploadsPath)) {
         throw new Error('Invalid file path');
     }
-    
+
     const form = new FormData();
     form.append('chat_id', chatId);
-    
+
     const fieldName = isImage ? 'photo' : 'document';
     form.append(fieldName, fs.createReadStream(file.path), {
         filename: file.originalname
     });
-    
+
     if (caption) {
         form.append('caption', caption);
     }
-    
+
     const response = await fetch(url, {
         method: 'POST',
         body: form,
         headers: form.getHeaders()
     });
-    
+
     return response.json();
 }
 
 // Remove temporary file with path validation
 function removeFile(filePath) {
+    if (!filePath) return;
+
     // Ensure file is within uploads directory for security (prevent directory traversal)
     const resolvedPath = path.resolve(filePath);
     const resolvedUploadsPath = path.resolve(uploadsDir);
-    
+
     // Ensure consistent path separator handling across platforms
     const normalizedResolvedPath = resolvedPath + path.sep;
-    const normalizedUploadsPath = resolvedUploadsPath.endsWith(path.sep) 
-        ? resolvedUploadsPath 
+    const normalizedUploadsPath = resolvedUploadsPath.endsWith(path.sep)
+        ? resolvedUploadsPath
         : resolvedUploadsPath + path.sep;
-    
+
     if (!normalizedResolvedPath.startsWith(normalizedUploadsPath)) {
         console.error('Attempted to remove file outside uploads directory:', filePath);
         return;
     }
-    
+
     if (fs.existsSync(filePath)) {
         fs.unlink(filePath, (err) => {
             if (err) console.error('Error removing file:', err);
@@ -176,17 +204,17 @@ function removeFile(filePath) {
 app.post('/send-message', async (req, res) => {
     try {
         const { name, email, message } = req.body;
-        
+
         if (!name || !email || !message) {
             return res.status(400).json({
                 success: false,
                 message: 'Name, email, and message are required.'
             });
         }
-        
+
         const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
         const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
-        
+
         if (!BOT_TOKEN || !CHAT_ID) {
             console.error('Missing Telegram credentials');
             return res.status(500).json({
@@ -194,18 +222,18 @@ app.post('/send-message', async (req, res) => {
                 message: 'Server configuration error. Please contact administrator.'
             });
         }
-        
+
         const sanitizedName = sanitizeInput(name);
         const sanitizedEmail = sanitizeInput(email);
         const sanitizedMessage = sanitizeInput(message);
-        
+
         const text = `<b>New Contact Form Message</b>\n\n` +
-                     `<b>Name:</b> ${sanitizedName}\n` +
-                     `<b>Email:</b> ${sanitizedEmail}\n` +
-                     `<b>Message:</b>\n${sanitizedMessage}`;
-        
+            `<b>Name:</b> ${sanitizedName}\n` +
+            `<b>Email:</b> ${sanitizedEmail}\n` +
+            `<b>Message:</b>\n${sanitizedMessage}`;
+
         const result = await sendTelegramTextMessage(CHAT_ID, text);
-        
+
         if (result.ok) {
             res.json({
                 success: true,
@@ -230,11 +258,11 @@ app.post('/send-message', async (req, res) => {
 // New endpoint: POST /send-file (multipart/form-data)
 app.post('/send-file', upload.single('file'), async (req, res) => {
     let filePath = null;
-    
+
     try {
         const { name, email, explanation } = req.body;
         const file = req.file;
-        
+
         if (!name || !email) {
             if (file) removeFile(file.path);
             return res.status(400).json({
@@ -242,10 +270,10 @@ app.post('/send-file', upload.single('file'), async (req, res) => {
                 message: 'Name and email are required.'
             });
         }
-        
+
         const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
         const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
-        
+
         if (!BOT_TOKEN || !CHAT_ID) {
             if (file) removeFile(file.path);
             console.error('Missing Telegram credentials');
@@ -254,32 +282,32 @@ app.post('/send-file', upload.single('file'), async (req, res) => {
                 message: 'Server configuration error. Please contact administrator.'
             });
         }
-        
+
         const sanitizedName = sanitizeInput(name);
         const sanitizedEmail = sanitizeInput(email);
         const sanitizedExplanation = sanitizeInput(explanation);
-        
+
         if (file) {
             filePath = file.path;
-            
+
             // Build caption
             let caption = `<b>New File Upload</b>\n\n` +
-                         `<b>Name:</b> ${sanitizedName}\n` +
-                         `<b>Email:</b> ${sanitizedEmail}`;
-            
+                `<b>Name:</b> ${sanitizedName}\n` +
+                `<b>Email:</b> ${sanitizedEmail}`;
+
             if (sanitizedExplanation) {
                 caption += `\n<b>Explanation:</b>\n${sanitizedExplanation}`;
             }
-            
+
             // Determine if file is an image
             const isImage = file.mimetype.startsWith('image/');
-            
+
             // Send file to Telegram
             const result = await sendTelegramFile(CHAT_ID, file, caption, isImage);
-            
+
             // Remove temporary file
             removeFile(filePath);
-            
+
             if (result.ok) {
                 res.json({
                     success: true,
@@ -295,15 +323,15 @@ app.post('/send-file', upload.single('file'), async (req, res) => {
         } else {
             // No file uploaded, send text-only message
             let text = `<b>New Contact Submission (No File)</b>\n\n` +
-                      `<b>Name:</b> ${sanitizedName}\n` +
-                      `<b>Email:</b> ${sanitizedEmail}`;
-            
+                `<b>Name:</b> ${sanitizedName}\n` +
+                `<b>Email:</b> ${sanitizedEmail}`;
+
             if (sanitizedExplanation) {
                 text += `\n<b>Message:</b>\n${sanitizedExplanation}`;
             }
-            
+
             const result = await sendTelegramTextMessage(CHAT_ID, text);
-            
+
             if (result.ok) {
                 res.json({
                     success: true,
@@ -319,9 +347,9 @@ app.post('/send-file', upload.single('file'), async (req, res) => {
         }
     } catch (error) {
         if (filePath) removeFile(filePath);
-        
+
         console.error('Error in /send-file:', error);
-        
+
         // Handle multer errors
         if (error instanceof multer.MulterError) {
             if (error.code === 'LIMIT_FILE_SIZE') {
@@ -335,7 +363,7 @@ app.post('/send-file', upload.single('file'), async (req, res) => {
                 message: `File upload error: ${error.message}`
             });
         }
-        
+
         res.status(500).json({
             success: false,
             message: error.message || 'An error occurred while processing your request.'
@@ -346,7 +374,7 @@ app.post('/send-file', upload.single('file'), async (req, res) => {
 // Global error handler for multer and other errors
 app.use((err, req, res, next) => {
     console.error('Global error handler:', err);
-    
+
     if (err instanceof multer.MulterError) {
         if (err.code === 'LIMIT_FILE_SIZE') {
             return res.status(400).json({
@@ -359,14 +387,14 @@ app.use((err, req, res, next) => {
             message: `File upload error: ${err.message}`
         });
     }
-    
+
     if (err.message && err.message.includes('File type not supported')) {
         return res.status(400).json({
             success: false,
             message: err.message
         });
     }
-    
+
     res.status(500).json({
         success: false,
         message: 'An unexpected error occurred.'

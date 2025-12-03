@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(DOMElements.contactForm);
 
             try {
-                const response = await fetch(BACKEND_URL, {
+                const response = await fetch(`${BACKEND_URL}/send-file`, {
                     method: 'POST',
                     body: formData
                 });
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     progressBars.forEach(bar => {
         const width = bar.style.width;
         bar.style.width = '0%';
-        
+
         const barObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {

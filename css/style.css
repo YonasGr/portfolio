@@ -28,7 +28,9 @@ main {
     padding: 2rem;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     font-family: var(--font-heading);
     font-weight: 700;
 }
@@ -338,7 +340,8 @@ a {
 
 .certificate-img {
     width: 100%;
-    height: 250px; /* Adjust as needed */
+    height: 250px;
+    /* Adjust as needed */
     object-fit: cover;
     border-bottom: 1px solid #222;
 }
@@ -380,7 +383,8 @@ a {
 }
 
 .linkedin-add-btn {
-    background-color: #0A66C2; /* LinkedIn blue */
+    background-color: #0A66C2;
+    /* LinkedIn blue */
     color: var(--dark-text);
     margin-top: 0.5rem;
 }
@@ -440,10 +444,10 @@ a {
     transition: all 0.3s;
 }
 
-.form-group input:focus + label,
-.form-group input:valid + label,
-.form-group textarea:focus + label,
-.form-group textarea:valid + label {
+.form-group input:focus+label,
+.form-group input:valid+label,
+.form-group textarea:focus+label,
+.form-group textarea:valid+label {
     top: -1.25rem;
     font-size: 0.8rem;
     color: var(--accent-green);
@@ -486,13 +490,21 @@ a {
 /* File Upload Styling */
 .file-upload-group {
     margin-top: 1rem;
+    position: relative;
 }
 
 .file-upload-group input[type="file"] {
-    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 10;
 }
 
-.file-label {
+.file-upload-group .file-label {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -503,11 +515,18 @@ a {
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s;
+    position: relative;
+    z-index: 1;
+    pointer-events: auto;
+    top: auto;
+    left: auto;
+    width: 100%;
 }
 
 .file-label:hover {
     border-color: var(--accent-green);
     background-color: rgba(0, 217, 145, 0.1);
+    transform: scale(1.01);
 }
 
 .file-label i {
@@ -535,6 +554,7 @@ a {
     font-size: 0.9rem;
     text-align: center;
     word-break: break-all;
+    min-height: 1.5rem;
 }
 
 /* Form Message Styling */
