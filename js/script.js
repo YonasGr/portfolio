@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fileName: document.getElementById('fileName')
     };
 
-    const BACKEND_URL = 'https://yonasgirma-backend-service.onrender.com';
+    const BACKEND_URL = 'https://portfolio-web-backend-siq7.onrender.com';
 
     // Handle file input display
     if (DOMElements.fileInput) {
