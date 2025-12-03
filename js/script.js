@@ -11,13 +11,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const BACKEND_URL = 'https://portfolio-web-backend-siq7.onrender.com';
 
-    // Handle file input display
+    // Constants
+    const MAX_FILE_SIZE_MB = 20;
+    const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+
+    // Handle file input display and validation
     if (DOMElements.fileInput) {
         DOMElements.fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (file) {
+                if (file.size > MAX_FILE_SIZE_BYTES) {
+                    showMessage(`File is too large. Max size is ${MAX_FILE_SIZE_MB}MB.`, 'error');
+                    e.target.value = ''; // Clear input
+                    DOMElements.fileName.textContent = '';
+                    return;
+                }
                 const fileSize = (file.size / (1024 * 1024)).toFixed(2);
                 DOMElements.fileName.textContent = `Selected: ${file.name} (${fileSize} MB)`;
+                DOMElements.fileName.style.color = 'var(--accent-green)';
             } else {
                 DOMElements.fileName.textContent = '';
             }
@@ -30,10 +41,19 @@ document.addEventListener('DOMContentLoaded', () => {
         DOMElements.formMessage.textContent = text;
         DOMElements.formMessage.className = `form-message ${type}`;
 
-        setTimeout(() => {
-            DOMElements.formMessage.textContent = '';
-            DOMElements.formMessage.className = 'form-message';
-        }, 5000); // Message disappears after 5 seconds
+        // Clear previous timeout if exists
+        if (DOMElements.formMessage.timeoutId) {
+            clearTimeout(DOMElements.formMessage.timeoutId);
+        }
+
+        DOMElements.formMessage.timeoutId = setTimeout(() => {
+            DOMElements.formMessage.style.opacity = '0';
+            setTimeout(() => {
+                DOMElements.formMessage.textContent = '';
+                DOMElements.formMessage.className = 'form-message';
+                DOMElements.formMessage.style.opacity = '1';
+            }, 300);
+        }, 5000);
     }
 
     // Handle form submission
@@ -42,36 +62,53 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
 
             const submitBtn = DOMElements.contactForm.querySelector('.submit-btn');
-            const originalBtnText = submitBtn.innerHTML;
+            const originalBtnContent = submitBtn.innerHTML;
 
-            submitBtn.innerHTML = '<span>Sending...</span>';
+            // Loading state
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Sending...</span>';
             submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.7';
 
-            // Create FormData from form
             const formData = new FormData(DOMElements.contactForm);
 
             try {
+                // Add timeout to fetch
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
+
                 const response = await fetch(`${BACKEND_URL}/send-file`, {
                     method: 'POST',
-                    body: formData
+                    body: formData,
+                    signal: controller.signal
                 });
+
+                clearTimeout(timeoutId);
 
                 const result = await response.json();
 
                 if (response.ok && result.success) {
-                    showMessage(result.message || 'Sent successfully! I will get back to you soon.', 'success');
+                    showMessage(result.message || 'Message sent successfully!', 'success');
                     DOMElements.contactForm.reset();
                     DOMElements.fileName.textContent = '';
                 } else {
-                    showMessage(result.message || 'Failed to send. Please try again.', 'error');
-                    console.error('Backend error:', result);
+                    throw new Error(result.message || 'Failed to send message.');
                 }
             } catch (error) {
-                showMessage('An error occurred. Please check your connection and try again.', 'error');
-                console.error('Error sending message:', error);
+                let errorMessage = 'An error occurred. Please try again.';
+
+                if (error.name === 'AbortError') {
+                    errorMessage = 'Request timed out. Please check your connection.';
+                } else if (error.message) {
+                    errorMessage = error.message;
+                }
+
+                showMessage(errorMessage, 'error');
+                console.error('Submission error:', error);
             } finally {
-                submitBtn.innerHTML = originalBtnText;
+                // Restore button state
+                submitBtn.innerHTML = originalBtnContent;
                 submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
             }
         });
     }
