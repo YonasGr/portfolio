@@ -15,23 +15,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // CORS Middleware
 app.use((req, res, next) => {
-    const allowedOrigins = [
-        'https://yonasgr.github.io',
-        'http://localhost:5500',
-        'http://127.0.0.1:5500'
-    ];
-    const origin = req.headers.origin;
-
-    if (allowedOrigins.includes(origin)) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-    } else {
-        // Optional: Allow all for development or if specific origins fail
-        // res.setHeader('Access-Control-Allow-Origin', '*');
-    }
-
+    // Allow all origins for easier testing and usage
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    // res.setHeader('Access-Control-Allow-Credentials', 'true'); // Cannot be true when Origin is *
 
     if (req.method === 'OPTIONS') {
         return res.sendStatus(200);
