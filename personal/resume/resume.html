@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professional Resume</title>
+  <style>
+    :root {
+      --primary: #0f172a;
+      --secondary: #64748b;
+      --accent: #2563eb;
+      --bg: #f8fafc;
+      --card: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--primary);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      background: var(--card);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 20px;
+      gap: 20px;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .profile img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #e2e8f0;
+    }
+
+    .name {
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .title {
+      color: var(--accent);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .contact {
+      text-align: right;
+      font-size: 14px;
+      color: var(--secondary);
+    }
+
+    section {
+      margin-top: 30px;
+    }
+
+    h2 {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      color: var(--secondary);
+    }
+
+    .summary {
+      font-size: 15px;
+      color: var(--primary);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .item {
+      margin-bottom: 15px;
+    }
+
+    .item-title {
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .item-subtitle {
+      font-size: 13px;
+      color: var(--secondary);
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill {
+      background: #e2e8f0;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .contact {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="profile">
+        <img src="https://avatars.githubusercontent.com/u/139625821?v=4" alt="Yonas Girma">
+        <div>
+          <div class="name">Yonas Girma</div>
+          <div class="title">Software Engineer / IT Professional</div>
+        </div>
+      </div>
+      <div class="contact">
+        yonasgirma222@gmail.com<br>
+        +251909823587<br>
+        github.com/yonasgr
+      </div>
+    </header>
+
+    <section>
+      <h2>Profile</h2>
+      <p class="summary">
+        Results-driven IT professional with strong experience in software development, system design, and modern technologies. Skilled in building scalable applications, problem-solving, and delivering efficient solutions in fast-paced environments.
+      </p>
+    </section>
+
+    <section class="grid">
+      <div>
+        <h2>Experience</h2>
+        <div class="item">
+          <div class="item-title">Software Developer</div>
+          <div class="item-subtitle">Company Name • 2023 - Present</div>
+          <p>Developed and maintained applications, improved performance, and implemented modern UI/UX solutions.</p>
+        </div>
+
+        <div class="item">
+          <div class="item-title">IT Support Specialist</div>
+          <div class="item-subtitle">Company Name • 2021 - 2023</div>
+          <p>Provided technical support, managed systems, and ensured reliability of IT infrastructure.</p>
+        </div>
+      </div>
+
+      <div>
+        <h2>Education</h2>
+        <div class="item">
+          <div class="item-title">Bachelor's Degree in Computer Science</div>
+          <div class="item-subtitle">University Name • 2017 - 2021</div>
+        </div>
+
+        <h2 style="margin-top:20px;">Skills</h2>
+        <div class="skills">
+          <div class="skill">JavaScript</div>
+          <div class="skill">React</div>
+          <div class="skill">Node.js</div>
+          <div class="skill">Linux</div>
+          <div class="skill">Docker</div>
+          <div class="skill">Git</div>
+          <div class="skill">Firebase</div>
+          <div class="skill">REST APIs</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Projects</h2>
+      <div class="item">
+        <div class="item-title">AI-Powered Mobile App</div>
+        <p>Built a lightweight AI-integrated Android application using modern frameworks and optimized performance for low-resource environments.</p>
+      </div>
+
+      <div class="item">
+        <div class="item-title">Web Platform</div>
+        <p>Designed and developed a scalable web application with secure authentication and real-time data handling.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Certifications</h2>
+      <div class="item">
+        <div class="item-title">Cloud & DevOps Certification</div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
+
