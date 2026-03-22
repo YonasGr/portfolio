@@ -15,11 +15,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // CORS Middleware
 app.use((req, res, next) => {
-    // Allow all origins for easier testing and usage
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    // res.setHeader('Access-Control-Allow-Credentials', 'true'); // Cannot be true when Origin is *
 
     if (req.method === 'OPTIONS') {
         return res.sendStatus(200);
@@ -40,12 +38,9 @@ app.use((req, res, next) => {
     next();
 });
 
-// Serve static files from the current directory, with security considerations
-// Note: This serves the root directory since the site structure has files at root.
-// The .gitignore ensures node_modules, .env, and uploads are not exposed.
-// For production, consider reorganizing files into a 'public' directory.
+// Serve static files
 app.use(express.static(__dirname, {
-    dotfiles: 'deny', // Deny access to dotfiles like .env
+    dotfiles: 'deny',
     index: 'index.html'
 }));
 
@@ -62,7 +57,7 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, uniqueSuffix + '-' + file.originalname.replace(/\s+/g, '_')); // Sanitize filename
+        cb(null, uniqueSuffix + '-' + file.originalname.replace(/\s+/g, '_'));
     }
 });
 
@@ -72,7 +67,6 @@ const upload = multer({
         fileSize: 20 * 1024 * 1024 // 20 MB limit
     },
     fileFilter: (req, file, cb) => {
-        // Accept common document and media types
         const allowedMimes = [
             'image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml',
             'application/pdf',
@@ -95,6 +89,11 @@ const upload = multer({
             cb(new Error('File type not supported. Please upload images, documents, or common media files.'));
         }
     }
+});
+
+// Health check endpoint – keeps Render free-tier awake and confirms server is running
+app.get('/health', (req, res) => {
+    res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
 // Sanitize user input
@@ -131,7 +130,6 @@ async function sendTelegramFile(chatId, file, caption, isImage) {
     const resolvedPath = path.resolve(file.path);
     const resolvedUploadsPath = path.resolve(uploadsDir);
 
-    // Ensure consistent path separator handling across platforms
     const normalizedResolvedPath = resolvedPath + path.sep;
     const normalizedUploadsPath = resolvedUploadsPath.endsWith(path.sep)
         ? resolvedUploadsPath
@@ -166,11 +164,9 @@ async function sendTelegramFile(chatId, file, caption, isImage) {
 function removeFile(filePath) {
     if (!filePath) return;
 
-    // Ensure file is within uploads directory for security (prevent directory traversal)
     const resolvedPath = path.resolve(filePath);
     const resolvedUploadsPath = path.resolve(uploadsDir);
 
-    // Ensure consistent path separator handling across platforms
     const normalizedResolvedPath = resolvedPath + path.sep;
     const normalizedUploadsPath = resolvedUploadsPath.endsWith(path.sep)
         ? resolvedUploadsPath
@@ -186,6 +182,36 @@ function removeFile(filePath) {
             if (err) console.error('Error removing file:', err);
         });
     }
+}
+
+// Multer error handler middleware (must wrap the upload call)
+function handleMulterUpload(req, res, next) {
+    upload.single('file')(req, res, (err) => {
+        if (!err) return next();
+
+        if (err instanceof multer.MulterError) {
+            if (err.code === 'LIMIT_FILE_SIZE') {
+                return res.status(400).json({
+                    success: false,
+                    message: 'File size exceeds the 20 MB limit.'
+                });
+            }
+            return res.status(400).json({
+                success: false,
+                message: `File upload error: ${err.message}`
+            });
+        }
+
+        // Custom file filter error
+        if (err && err.message) {
+            return res.status(400).json({
+                success: false,
+                message: err.message
+            });
+        }
+
+        next(err);
+    });
 }
 
 // Existing endpoint: POST /send-message (JSON)
@@ -223,10 +249,7 @@ app.post('/send-message', async (req, res) => {
         const result = await sendTelegramTextMessage(CHAT_ID, text);
 
         if (result.ok) {
-            res.json({
-                success: true,
-                message: 'Message sent successfully!'
-            });
+            res.json({ success: true, message: 'Message sent successfully!' });
         } else {
             console.error('Telegram API error:', result);
             res.status(500).json({
@@ -243,8 +266,8 @@ app.post('/send-message', async (req, res) => {
     }
 });
 
-// New endpoint: POST /send-file (multipart/form-data)
-app.post('/send-file', upload.single('file'), async (req, res) => {
+// Main endpoint: POST /send-file (multipart/form-data)
+app.post('/send-file', handleMulterUpload, async (req, res) => {
     let filePath = null;
 
     try {
@@ -278,39 +301,31 @@ app.post('/send-file', upload.single('file'), async (req, res) => {
         if (file) {
             filePath = file.path;
 
-            // Build caption
-            let caption = `<b>New File Upload</b>\n\n` +
+            let caption = `<b>📬 New Form Submission</b>\n\n` +
                 `<b>Name:</b> ${sanitizedName}\n` +
                 `<b>Email:</b> ${sanitizedEmail}`;
 
             if (sanitizedExplanation) {
-                caption += `\n<b>Explanation:</b>\n${sanitizedExplanation}`;
+                caption += `\n<b>Message:</b>\n${sanitizedExplanation}`;
             }
 
-            // Determine if file is an image
             const isImage = file.mimetype.startsWith('image/');
-
-            // Send file to Telegram
             const result = await sendTelegramFile(CHAT_ID, file, caption, isImage);
 
-            // Remove temporary file
             removeFile(filePath);
 
             if (result.ok) {
-                res.json({
-                    success: true,
-                    message: 'File and information sent successfully!'
-                });
+                res.json({ success: true, message: 'Your message and file were sent successfully! 🎉' });
             } else {
                 console.error('Telegram API error:', result);
                 res.status(500).json({
                     success: false,
-                    message: 'Failed to send file. Please try again.'
+                    message: 'Failed to deliver your message. Please try again.'
                 });
             }
         } else {
-            // No file uploaded, send text-only message
-            let text = `<b>New Contact Submission (No File)</b>\n\n` +
+            // No file – text-only message
+            let text = `<b>📬 New Contact Submission</b>\n\n` +
                 `<b>Name:</b> ${sanitizedName}\n` +
                 `<b>Email:</b> ${sanitizedEmail}`;
 
@@ -321,37 +336,18 @@ app.post('/send-file', upload.single('file'), async (req, res) => {
             const result = await sendTelegramTextMessage(CHAT_ID, text);
 
             if (result.ok) {
-                res.json({
-                    success: true,
-                    message: 'Message sent successfully!'
-                });
+                res.json({ success: true, message: 'Message sent successfully! 🎉' });
             } else {
                 console.error('Telegram API error:', result);
                 res.status(500).json({
                     success: false,
-                    message: 'Failed to send message. Please try again.'
+                    message: 'Failed to deliver your message. Please try again.'
                 });
             }
         }
     } catch (error) {
         if (filePath) removeFile(filePath);
-
         console.error('Error in /send-file:', error);
-
-        // Handle multer errors
-        if (error instanceof multer.MulterError) {
-            if (error.code === 'LIMIT_FILE_SIZE') {
-                return res.status(400).json({
-                    success: false,
-                    message: 'File size exceeds 20 MB limit.'
-                });
-            }
-            return res.status(400).json({
-                success: false,
-                message: `File upload error: ${error.message}`
-            });
-        }
-
         res.status(500).json({
             success: false,
             message: error.message || 'An error occurred while processing your request.'
@@ -359,7 +355,7 @@ app.post('/send-file', upload.single('file'), async (req, res) => {
     }
 });
 
-// Global error handler for multer and other errors
+// Global error handler
 app.use((err, req, res, next) => {
     console.error('Global error handler:', err);
 
@@ -373,13 +369,6 @@ app.use((err, req, res, next) => {
         return res.status(400).json({
             success: false,
             message: `File upload error: ${err.message}`
-        });
-    }
-
-    if (err.message && err.message.includes('File type not supported')) {
-        return res.status(400).json({
-            success: false,
-            message: err.message
         });
     }
 
