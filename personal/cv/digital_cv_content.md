@@ -1,92 +1,134 @@
 # Yonas Girma
 
-**IT Professional / Software Developer**
+### 💼 Software Engineer · IT Professional
 
 ---
 
-## Contact
+## 📬 Contact
 
-- Email: [yonasgirma222@gmail.com](mailto\:yonasgirma222@gmail.com)
-- Phone: +251909823587
-- GitHub: [https://github.com/](https://github.com/yourusername)yonasgr
-- Location: Ethiopia
-
----
-
-## Professional Summary
-
-Results-driven IT professional with hands-on experience in software development, system configuration, and modern application technologies. Strong background in Linux environments, mobile and web development, and integrating emerging AI tools into practical solutions. Focused on building efficient, scalable, and user-centered systems.
+| | |
+|---|---|
+| 📧 **Email** | [yonasgirma222@gmail.com](mailto:yonasgirma222@gmail.com) |
+| 📱 **Phone** | +251 909 823 587 |
+| 🐙 **GitHub** | [github.com/yonasgr](https://github.com/yonasgr) |
+| 📍 **Location** | Addis Ababa, Ethiopia |
 
 ---
 
-## Technical Skills
+## 👤 Professional Summary
 
-- **Programming:** JavaScript, TypeScript, VB.NET
-- **Frontend:** React, Expo
-- **Backend:** Node.js, REST APIs
-- **Mobile Development:** Android (Expo / React Native)
-- **Tools & Platforms:** Git, Docker, Firebase
-- **Operating Systems:** Linux (Arch Linux)
-- **Other:** API Integration, Debugging, System Optimization
+Results-driven IT Professional and Software Developer with hands-on experience building mobile, web, and desktop applications. Skilled in the JavaScript/TypeScript ecosystem (React, Node.js, React Native) and comfortable operating in Linux-first environments. Passionate about integrating AI capabilities into practical products, optimizing system performance, and delivering elegant, scalable solutions.
 
 ---
 
-## Projects
+## 🛠️ Technical Skills
 
-### AI-Integrated Mobile Application
+### Languages & Frameworks
 
-- Built an Android application integrating lightweight AI capabilities
-- Optimized performance for low-resource environments
-- Implemented secure authentication and API communication
+| Category | Technologies |
+|---|---|
+| **Programming** | JavaScript (ES2022+), TypeScript, VB.NET |
+| **Frontend** | React, HTML5, CSS3 |
+| **Backend** | Node.js, Express.js, REST APIs |
+| **Mobile** | React Native, Expo, Android |
 
-### Web Application Platform
+### Tools & Platforms
 
-- Developed scalable web application using modern frameworks
-- Implemented real-time data handling and responsive UI
-- Managed authentication and backend integration
-
-### Linux-Based Development Environment Setup
-
-- Configured Arch Linux for development workflows
-- Managed packages, dependencies, and system optimization
+| Category | Technologies |
+|---|---|
+| **Cloud & Database** | Firebase (Firestore, Auth, Storage) |
+| **DevOps** | Docker, Git, GitHub Actions |
+| **Operating Systems** | Arch Linux, Ubuntu |
+| **Other** | Telegram Bot API, Multer, JWT, dotenv |
 
 ---
 
-## Experience
+## 💼 Work Experience
 
-### Software Developer (Self / Projects)
+### 🚀 Software Developer — Self-Employed / Freelance Projects
 
 **2023 – Present**
 
-- Designed and developed multiple applications
-- Integrated APIs and third-party services
-- Improved performance and usability of applications
+- Designed and built cross-platform mobile applications using **React Native & Expo**
+- Developed full-stack web platforms with **React** front-ends and **Node.js/Express** back-ends
+- Integrated third-party APIs (Firebase, Telegram Bot API) and AI services into live applications
+- Set up CI/CD pipelines, containerized services with **Docker**, and managed **Linux** servers
+- Practiced clean-code principles, component-driven architecture, and RESTful API design
 
-### IT Support & System Handling
+---
+
+### 🖥️ IT Support & Systems Specialist — Various Organizations
 
 **2021 – 2023**
 
-- Troubleshot system and software issues
-- Maintained system reliability and configurations
-- Assisted in technical problem-solving
+- Diagnosed and resolved hardware, software, and network issues across enterprise environments
+- Maintained system configurations, user accounts, and software deployments at scale
+- Improved team efficiency through documentation and automation of repetitive tasks
+- Provided on-site and remote technical support to end users
 
 ---
 
-## Education
+## 📂 Projects
 
-Bachelor’s Degree in Information Technology (or related field)
+### 🤖 AI-Integrated Mobile Application
+
+> **Stack:** React Native · Expo · REST API · Android
+
+- Built an Android application integrating lightweight AI capabilities for low-resource devices
+- Implemented secure authentication and encrypted API communication
+- Optimized bundle size and startup time for smooth performance on budget hardware
 
 ---
 
-## Certifications
+### 🌐 Portfolio Web Platform
 
-- Cloud & DevOps
+> **Stack:** Node.js · Express.js · HTML/CSS · Telegram API · Multer
+
+- Full-stack portfolio site with contact form, file uploads, and real-time Telegram notifications
+- Dark clay-morphism UI with responsive design and accessibility features
+- Deployed on a Linux VPS with environment-variable-driven configuration
 
 ---
 
-## Additional Information
+### 🐧 Linux Development Environment
 
-- Strong problem-solving mindset
-- Fast learner with interest in AI and modern technologies
-- Comfortable working in Linux-based environments
+> **Stack:** Arch Linux · Bash · Docker · Git
 
+- Configured a custom Arch Linux workspace with automated dotfile management
+- Optimized developer tooling and window management for maximum productivity
+- Containerized development services using Docker Compose
+
+---
+
+### ⚙️ RESTful API Services
+
+> **Stack:** Node.js · Firebase Firestore · Docker · JWT
+
+- Designed RESTful micro-services with JWT-based authentication
+- Integrated Firebase Firestore for real-time data storage and retrieval
+- Packaged services in Docker containers for portable, reproducible deployments
+
+---
+
+## 🎓 Education
+
+**Bachelor of Science — Information Technology**
+Addis Ababa, Ethiopia · *Graduated 2021*
+
+---
+
+## 🏆 Certifications
+
+| Certification | Domain |
+|---|---|
+| ☁️ Cloud & DevOps Fundamentals | Cloud Computing · Infrastructure · CI/CD |
+
+---
+
+## ✨ Additional Information
+
+- 🔍 Strong problem-solving mindset with attention to detail
+- ⚡ Fast learner — quickly adapts to new technologies and frameworks
+- 🤖 Deep interest in AI/ML tools and their practical integration into software
+- 🐧 Daily driver on Linux; comfortable with CLI-first workflows
+- 🤝 Team player with experience collaborating in asynchronous remote environments
