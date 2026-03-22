@@ -3,226 +3,780 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Professional Resume</title>
+  <title>Yonas Girma — Resume</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+    /* ── Reset & Variables ───────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
     :root {
-      --primary: #0f172a;
-      --secondary: #64748b;
-      --accent: #2563eb;
-      --bg: #f8fafc;
-      --card: #ffffff;
+      --sidebar-bg:      #0f172a;
+      --sidebar-surface: #1e293b;
+      --sidebar-border:  rgba(99,102,241,.25);
+      --accent:          #6366f1;
+      --accent-alt:      #818cf8;
+      --accent-glow:     rgba(99,102,241,.18);
+      --main-bg:         #f8fafc;
+      --main-surface:    #ffffff;
+      --text-dark:       #0f172a;
+      --text-mid:        #334155;
+      --text-muted:      #64748b;
+      --text-light:      #94a3b8;
+      --divider:         #e2e8f0;
+      --chip-bg:         #eff6ff;
+      --chip-text:       #3730a3;
+      --chip-border:     #c7d2fe;
+      --timeline-dot:    #6366f1;
+      --success:         #22c55e;
+      --sidebar-w:       290px;
+      --font:            'Inter', system-ui, -apple-system, sans-serif;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    }
+    html { font-size: 15px; }
 
     body {
-      background: var(--bg);
-      color: var(--primary);
-      line-height: 1.6;
+      font-family: var(--font);
+      background: var(--main-bg);
+      color: var(--text-dark);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .container {
-      max-width: 1000px;
-      margin: 40px auto;
-      background: var(--card);
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    /* ── Outer Wrapper ───────────────────────────────────────────── */
+    .resume-wrap {
+      max-width: 1060px;
+      margin: 36px auto;
+      display: flex;
+      background: var(--main-surface);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(15,23,42,.14), 0 4px 16px rgba(15,23,42,.08);
     }
 
-    header {
+    /* ══════════════════════════════════════════════════════════════
+       SIDEBAR
+    ══════════════════════════════════════════════════════════════ */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-width: var(--sidebar-w);
+      background: var(--sidebar-bg);
+      color: #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      padding: 40px 28px;
+      gap: 32px;
+    }
+
+    /* Profile ---------------------------------------------------- */
+    .sb-profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 14px;
+    }
+
+    .avatar-ring {
+      padding: 3px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #a78bfa);
+      box-shadow: 0 0 28px var(--accent-glow);
+    }
+
+    .avatar-ring img {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 3px solid var(--sidebar-bg);
+      object-fit: cover;
+      display: block;
+    }
+
+    .sb-name {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #f1f5f9;
+      line-height: 1.2;
+    }
+
+    .sb-title {
+      font-size: .78rem;
+      font-weight: 500;
+      color: var(--accent-alt);
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      margin-top: -6px;
+    }
+
+    .available-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(34,197,94,.12);
+      border: 1px solid rgba(34,197,94,.3);
+      color: #86efac;
+      border-radius: 99px;
+      padding: 3px 10px;
+      font-size: .7rem;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .available-badge span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 6px var(--success);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: .6; transform: scale(.8); }
+    }
+
+    /* Section heading in sidebar --------------------------------- */
+    .sb-section-title {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--accent-alt);
+      border-bottom: 1px solid var(--sidebar-border);
+      padding-bottom: 7px;
+      margin-bottom: 12px;
+    }
+
+    /* Contact ---------------------------------------------------- */
+    .sb-contact a, .sb-contact span {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: .82rem;
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: color .2s;
+      word-break: break-all;
+      margin-bottom: 9px;
+    }
+
+    .sb-contact a:hover { color: var(--accent-alt); }
+
+    .sb-contact i {
+      width: 16px;
+      color: var(--accent);
+      font-size: .82rem;
+      flex-shrink: 0;
+    }
+
+    /* Skills ----------------------------------------------------- */
+    .skill-group { margin-bottom: 14px; }
+
+    .skill-group-label {
+      font-size: .72rem;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      margin-bottom: 7px;
+    }
+
+    .skill-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .skill-chip {
+      background: var(--sidebar-surface);
+      border: 1px solid var(--sidebar-border);
+      color: #cbd5e1;
+      border-radius: 6px;
+      padding: 3px 9px;
+      font-size: .74rem;
+      font-weight: 500;
+      transition: background .2s, border-color .2s, color .2s;
+    }
+
+    .skill-chip:hover {
+      background: var(--accent-glow);
+      border-color: var(--accent);
+      color: #e0e7ff;
+    }
+
+    /* Languages spoken ------------------------------------------- */
+    .lang-list { display: flex; flex-direction: column; gap: 8px; }
+
+    .lang-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 30px;
-      border-bottom: 1px solid #e2e8f0;
-      padding-bottom: 20px;
-      gap: 20px;
     }
 
-    .profile {
+    .lang-name { font-size: .8rem; color: #cbd5e1; }
+
+    .lang-level {
+      font-size: .7rem;
+      color: var(--accent-alt);
+      background: rgba(99,102,241,.12);
+      border-radius: 99px;
+      padding: 1px 8px;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       MAIN CONTENT
+    ══════════════════════════════════════════════════════════════ */
+    .main {
+      flex: 1;
+      padding: 42px 44px;
+      display: flex;
+      flex-direction: column;
+      gap: 34px;
+      overflow: hidden;
+    }
+
+    /* Main section heading --------------------------------------- */
+    .section-heading {
       display: flex;
       align-items: center;
-      gap: 20px;
-    }
-
-    .profile img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #e2e8f0;
-    }
-
-    .name {
-      font-size: 28px;
+      gap: 10px;
+      font-size: .72rem;
       font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--text-muted);
+      margin-bottom: 18px;
     }
 
-    .title {
+    .section-heading i {
       color: var(--accent);
-      font-size: 14px;
+      font-size: .85rem;
+    }
+
+    .section-heading::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--divider);
+      margin-left: 8px;
+    }
+
+    /* Summary ---------------------------------------------------- */
+    .summary-text {
+      font-size: .92rem;
+      color: var(--text-mid);
+      line-height: 1.75;
+      border-left: 3px solid var(--accent);
+      padding-left: 16px;
+    }
+
+    /* Timeline (Experience) ------------------------------------- */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+
+    .tl-item {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 0 16px;
+      position: relative;
+    }
+
+    .tl-item:not(:last-child) { padding-bottom: 24px; }
+
+    .tl-line {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .tl-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid white;
+      box-shadow: 0 0 0 2px var(--accent);
+      flex-shrink: 0;
       margin-top: 4px;
     }
 
-    .contact {
-      text-align: right;
-      font-size: 14px;
-      color: var(--secondary);
+    .tl-connector {
+      width: 2px;
+      flex: 1;
+      background: linear-gradient(to bottom, var(--accent), var(--divider));
+      margin-top: 4px;
     }
 
-    section {
-      margin-top: 30px;
+    .tl-body { padding-bottom: 0; }
+
+    .tl-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 4px;
     }
 
-    h2 {
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 12px;
-      color: var(--secondary);
+    .tl-role {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--text-dark);
     }
 
-    .summary {
-      font-size: 15px;
-      color: var(--primary);
+    .tl-period {
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--chip-bg);
+      border: 1px solid var(--chip-border);
+      border-radius: 99px;
+      padding: 2px 10px;
+      white-space: nowrap;
     }
 
-    .grid {
+    .tl-company {
+      font-size: .8rem;
+      color: var(--text-muted);
+      margin-top: 1px;
+      margin-bottom: 7px;
+    }
+
+    .tl-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .tl-bullets li {
+      font-size: .83rem;
+      color: var(--text-mid);
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+    }
+
+    .tl-bullets li::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    /* Project Cards ---------------------------------------------- */
+    .project-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: 14px;
     }
 
-    .item {
-      margin-bottom: 15px;
+    .project-card {
+      background: #f8fafc;
+      border: 1px solid var(--divider);
+      border-radius: 12px;
+      padding: 16px 18px;
+      transition: box-shadow .2s, border-color .2s, transform .2s;
+      position: relative;
+      overflow: hidden;
     }
 
-    .item-title {
-      font-weight: 600;
-      font-size: 15px;
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), #a78bfa);
     }
 
-    .item-subtitle {
-      font-size: 13px;
-      color: var(--secondary);
+    .project-card:hover {
+      box-shadow: 0 8px 28px rgba(99,102,241,.12);
+      border-color: var(--chip-border);
+      transform: translateY(-2px);
     }
 
-    .skills {
+    .project-title {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+    }
+
+    .project-desc {
+      font-size: .8rem;
+      color: var(--text-mid);
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .project-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 4px;
     }
 
-    .skill {
-      background: #e2e8f0;
-      padding: 6px 10px;
+    .tag {
+      background: var(--chip-bg);
+      border: 1px solid var(--chip-border);
+      color: var(--chip-text);
+      border-radius: 5px;
+      padding: 1px 7px;
+      font-size: .7rem;
+      font-weight: 500;
+    }
+
+    /* Education -------------------------------------------------- */
+    .edu-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .edu-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--chip-bg);
+      border: 1px solid var(--chip-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: .95rem;
+      color: var(--accent);
+    }
+
+    .edu-degree {
+      font-size: .92rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .edu-school {
+      font-size: .8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .edu-period {
+      font-size: .75rem;
+      color: var(--text-light);
+      margin-top: 2px;
+    }
+
+    /* Certifications --------------------------------------------- */
+    .cert-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .cert-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #f8fafc;
+      border: 1px solid var(--divider);
+      border-radius: 10px;
+      padding: 10px 14px;
+    }
+
+    .cert-icon {
+      width: 34px;
+      height: 34px;
       border-radius: 8px;
-      font-size: 13px;
+      background: linear-gradient(135deg, var(--accent), #a78bfa);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: .8rem;
+      flex-shrink: 0;
     }
 
-    @media (max-width: 768px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
+    .cert-name {
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
 
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+    .cert-issuer {
+      font-size: .75rem;
+      color: var(--text-muted);
+    }
 
-      .contact {
-        text-align: left;
+    /* ── Print styles ─────────────────────────────────────────── */
+    @media print {
+      body { background: white; }
+      .resume-wrap {
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+        max-width: 100%;
       }
+      .project-card:hover { transform: none; box-shadow: none; }
+      @page { margin: 0; size: A4; }
+    }
+
+    /* ── Responsive ─────────────────────────────────────────────── */
+    @media (max-width: 820px) {
+      .resume-wrap { flex-direction: column; margin: 0; border-radius: 0; }
+      .sidebar { width: 100%; min-width: 0; }
+      .main { padding: 30px 24px; }
+      .project-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="profile">
-        <img src="https://avatars.githubusercontent.com/u/139625821?v=4" alt="Yonas Girma">
-        <div>
-          <div class="name">Yonas Girma</div>
-          <div class="title">Software Engineer / IT Professional</div>
+<div class="resume-wrap">
+
+  <!-- ══════════  SIDEBAR  ══════════ -->
+  <aside class="sidebar">
+
+    <!-- Profile -->
+    <div class="sb-profile">
+      <div class="avatar-ring">
+        <img src="https://avatars.githubusercontent.com/u/139625821?v=4" alt="Yonas Girma" loading="lazy">
+      </div>
+      <div>
+        <div class="sb-name">Yonas Girma</div>
+        <div class="sb-title">Software Engineer &amp; IT Professional</div>
+      </div>
+      <div class="available-badge"><span></span> Open to Work</div>
+    </div>
+
+    <!-- Contact -->
+    <div>
+      <div class="sb-section-title">Contact</div>
+      <div class="sb-contact">
+        <a href="mailto:yonasgirma222@gmail.com">
+          <i class="fa-solid fa-envelope"></i>yonasgirma222@gmail.com
+        </a>
+        <a href="tel:+251909823587">
+          <i class="fa-solid fa-phone"></i>+251 909 823 587
+        </a>
+        <a href="https://github.com/yonasgr" target="_blank" rel="noopener">
+          <i class="fa-brands fa-github"></i>github.com/yonasgr
+        </a>
+        <span>
+          <i class="fa-solid fa-location-dot"></i>Addis Ababa, Ethiopia
+        </span>
+      </div>
+    </div>
+
+    <!-- Technical Skills -->
+    <div>
+      <div class="sb-section-title">Technical Skills</div>
+
+      <div class="skill-group">
+        <div class="skill-group-label">Frontend</div>
+        <div class="skill-chips">
+          <span class="skill-chip">React</span>
+          <span class="skill-chip">TypeScript</span>
+          <span class="skill-chip">JavaScript</span>
+          <span class="skill-chip">HTML/CSS</span>
         </div>
       </div>
-      <div class="contact">
-        yonasgirma222@gmail.com<br>
-        +251909823587<br>
-        github.com/yonasgr
-      </div>
-    </header>
 
+      <div class="skill-group">
+        <div class="skill-group-label">Backend</div>
+        <div class="skill-chips">
+          <span class="skill-chip">Node.js</span>
+          <span class="skill-chip">Express.js</span>
+          <span class="skill-chip">REST APIs</span>
+          <span class="skill-chip">VB.NET</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-label">Mobile</div>
+        <div class="skill-chips">
+          <span class="skill-chip">React Native</span>
+          <span class="skill-chip">Expo</span>
+          <span class="skill-chip">Android</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-label">DevOps &amp; Tools</div>
+        <div class="skill-chips">
+          <span class="skill-chip">Git</span>
+          <span class="skill-chip">Docker</span>
+          <span class="skill-chip">Firebase</span>
+          <span class="skill-chip">Linux</span>
+          <span class="skill-chip">Arch Linux</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Languages -->
+    <div>
+      <div class="sb-section-title">Languages</div>
+      <div class="lang-list">
+        <div class="lang-row">
+          <span class="lang-name">Amharic</span>
+          <span class="lang-level">Native</span>
+        </div>
+        <div class="lang-row">
+          <span class="lang-name">English</span>
+          <span class="lang-level">Professional</span>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ══════════  MAIN  ══════════ -->
+  <main class="main">
+
+    <!-- Summary -->
     <section>
-      <h2>Profile</h2>
-      <p class="summary">
-        Results-driven IT professional with strong experience in software development, system design, and modern technologies. Skilled in building scalable applications, problem-solving, and delivering efficient solutions in fast-paced environments.
+      <div class="section-heading"><i class="fa-solid fa-user"></i>Profile</div>
+      <p class="summary-text">
+        Results-driven IT Professional and Software Developer with hands-on experience building mobile, web, and desktop applications. Skilled in JavaScript/TypeScript ecosystems (React, Node.js, React Native) and comfortable operating in Linux-first environments. Passionate about integrating AI capabilities into practical products, optimizing system performance, and delivering elegant, scalable solutions.
       </p>
     </section>
 
-    <section class="grid">
-      <div>
-        <h2>Experience</h2>
-        <div class="item">
-          <div class="item-title">Software Developer</div>
-          <div class="item-subtitle">Company Name • 2023 - Present</div>
-          <p>Developed and maintained applications, improved performance, and implemented modern UI/UX solutions.</p>
-        </div>
-
-        <div class="item">
-          <div class="item-title">IT Support Specialist</div>
-          <div class="item-subtitle">Company Name • 2021 - 2023</div>
-          <p>Provided technical support, managed systems, and ensured reliability of IT infrastructure.</p>
-        </div>
-      </div>
-
-      <div>
-        <h2>Education</h2>
-        <div class="item">
-          <div class="item-title">Bachelor's Degree in Computer Science</div>
-          <div class="item-subtitle">University Name • 2017 - 2021</div>
-        </div>
-
-        <h2 style="margin-top:20px;">Skills</h2>
-        <div class="skills">
-          <div class="skill">JavaScript</div>
-          <div class="skill">React</div>
-          <div class="skill">Node.js</div>
-          <div class="skill">Linux</div>
-          <div class="skill">Docker</div>
-          <div class="skill">Git</div>
-          <div class="skill">Firebase</div>
-          <div class="skill">REST APIs</div>
-        </div>
-      </div>
-    </section>
-
+    <!-- Experience -->
     <section>
-      <h2>Projects</h2>
-      <div class="item">
-        <div class="item-title">AI-Powered Mobile App</div>
-        <p>Built a lightweight AI-integrated Android application using modern frameworks and optimized performance for low-resource environments.</p>
-      </div>
+      <div class="section-heading"><i class="fa-solid fa-briefcase"></i>Experience</div>
+      <div class="timeline">
 
-      <div class="item">
-        <div class="item-title">Web Platform</div>
-        <p>Designed and developed a scalable web application with secure authentication and real-time data handling.</p>
+        <div class="tl-item">
+          <div class="tl-line">
+            <div class="tl-dot"></div>
+            <div class="tl-connector"></div>
+          </div>
+          <div class="tl-body">
+            <div class="tl-header">
+              <span class="tl-role">Software Developer</span>
+              <span class="tl-period">2023 — Present</span>
+            </div>
+            <div class="tl-company"><i class="fa-solid fa-building fa-xs"></i>&ensp;Self-Employed / Freelance Projects</div>
+            <ul class="tl-bullets">
+              <li>Designed and built cross-platform mobile applications using React Native &amp; Expo</li>
+              <li>Developed responsive web platforms with React front-ends and Node.js/Express back-ends</li>
+              <li>Integrated third-party APIs (Firebase, Telegram Bot API) and AI services into live applications</li>
+              <li>Established CI/CD pipelines, containerized services with Docker, and managed Linux servers</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-line">
+            <div class="tl-dot"></div>
+          </div>
+          <div class="tl-body">
+            <div class="tl-header">
+              <span class="tl-role">IT Support &amp; Systems Specialist</span>
+              <span class="tl-period">2021 — 2023</span>
+            </div>
+            <div class="tl-company"><i class="fa-solid fa-building fa-xs"></i>&ensp;IT Department — Various Organizations</div>
+            <ul class="tl-bullets">
+              <li>Diagnosed and resolved hardware, software, and network issues across enterprise environments</li>
+              <li>Maintained system configurations, user accounts, and software deployments</li>
+              <li>Improved team efficiency through documentation and automation of repetitive tasks</li>
+            </ul>
+          </div>
+        </div>
+
       </div>
     </section>
 
+    <!-- Projects -->
     <section>
-      <h2>Certifications</h2>
-      <div class="item">
-        <div class="item-title">Cloud & DevOps Certification</div>
+      <div class="section-heading"><i class="fa-solid fa-code"></i>Projects</div>
+      <div class="project-grid">
+
+        <div class="project-card">
+          <div class="project-title">
+            <i class="fa-solid fa-robot" style="color:var(--accent);margin-right:6px;font-size:.85rem;"></i>
+            AI-Integrated Mobile App
+          </div>
+          <p class="project-desc">Android application powered by lightweight AI models. Optimized for low-resource devices with secure auth and REST API communication.</p>
+          <div class="project-tags">
+            <span class="tag">React Native</span>
+            <span class="tag">Expo</span>
+            <span class="tag">AI / ML</span>
+            <span class="tag">REST API</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-title">
+            <i class="fa-solid fa-globe" style="color:var(--accent);margin-right:6px;font-size:.85rem;"></i>
+            Portfolio Web Platform
+          </div>
+          <p class="project-desc">Full-stack portfolio site with contact form, Telegram notifications, file uploads via Multer, and dark clay-morphism UI.</p>
+          <div class="project-tags">
+            <span class="tag">Node.js</span>
+            <span class="tag">Express</span>
+            <span class="tag">Telegram API</span>
+            <span class="tag">CSS</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-title">
+            <i class="fa-brands fa-linux" style="color:var(--accent);margin-right:6px;font-size:.85rem;"></i>
+            Linux Dev Environment
+          </div>
+          <p class="project-desc">Custom Arch Linux workspace with automated dotfiles, package management, and optimized developer tooling for productivity.</p>
+          <div class="project-tags">
+            <span class="tag">Arch Linux</span>
+            <span class="tag">Bash</span>
+            <span class="tag">Docker</span>
+            <span class="tag">DevTools</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-title">
+            <i class="fa-solid fa-server" style="color:var(--accent);margin-right:6px;font-size:.85rem;"></i>
+            Backend API Services
+          </div>
+          <p class="project-desc">RESTful API micro-services featuring JWT authentication, Firebase Firestore integration, and containerized Docker deployments.</p>
+          <div class="project-tags">
+            <span class="tag">Node.js</span>
+            <span class="tag">Firebase</span>
+            <span class="tag">Docker</span>
+            <span class="tag">JWT</span>
+          </div>
+        </div>
+
       </div>
     </section>
-  </div>
+
+    <!-- Education -->
+    <section>
+      <div class="section-heading"><i class="fa-solid fa-graduation-cap"></i>Education</div>
+      <div class="edu-item">
+        <div class="edu-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div>
+          <div class="edu-degree">Bachelor of Science — Information Technology</div>
+          <div class="edu-school">Addis Ababa, Ethiopia</div>
+          <div class="edu-period">Graduated 2021</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certifications -->
+    <section>
+      <div class="section-heading"><i class="fa-solid fa-certificate"></i>Certifications</div>
+      <div class="cert-list">
+        <div class="cert-item">
+          <div class="cert-icon"><i class="fa-solid fa-cloud"></i></div>
+          <div>
+            <div class="cert-name">Cloud &amp; DevOps Fundamentals</div>
+            <div class="cert-issuer">Cloud Computing — Infrastructure &amp; CI/CD</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
 </body>
 </html>
 
