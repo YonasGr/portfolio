@@ -21,10 +21,34 @@
 </head>
 
 <body>
+    <!-- ── PDF Viewer Modal ── -->
+    <div id="cvModal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="CV Viewer">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3><i class="fas fa-file-pdf"></i> Curriculum Vitae — Yonas Girma</h3>
+                <button class="modal-close" id="modalClose" aria-label="Close modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe id="cvIframe" src="" title="Yonas Girma CV" loading="lazy"></iframe>
+            </div>
+            <div class="modal-footer">
+                <a href="personal/cv/Digital%20Cv%20Content.pdf" download class="btn-primary">
+                    <i class="fas fa-download"></i> Download PDF
+                </a>
+                <button class="btn-secondary" id="modalCloseBtn">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+
     <header class="navbar">
-        <div class="logo">Portfolio</div>
+        <div class="logo">YG·Portfolio</div>
         <nav class="nav-links">
             <a href="#about">About</a>
+            <a href="#cv">CV</a>
             <a href="#projects">Projects</a>
             <a href="#certificates">Certificates</a>
             <a href="#services">Services</a>
@@ -33,26 +57,36 @@
     </header>
 
     <main>
+        <!-- ── HERO ── -->
         <section id="home" class="hero-section">
             <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="dot"></span>
+                    Available for opportunities
+                </div>
                 <p class="greeting">Hello, I'm</p>
                 <h1 class="name">Yonas Girma</h1>
-                <h2 class="role">IT Visionary | Tech Innovator | Digital Creator</h2>
+                <h2 class="role">IT Visionary · Tech Innovator · Digital Creator</h2>
                 <p class="description">
-                    I am an IT student from Ethiopia, passionate about technology, programming, and creating digital
-                    solutions. My focus is on web development, cybersecurity, and providing value through various
-                    digital services.
+                    IT student from Ethiopia passionate about web development, cybersecurity,
+                    and building innovative digital solutions that create real-world value.
                 </p>
-                <a href="https://t.me/x_Jonah" class="contact-btn">Let's Talk</a>
+                <div class="hero-actions">
+                    <a href="https://t.me/x_Jonah" class="contact-btn" target="_blank">
+                        <i class="fas fa-paper-plane"></i> Let's Talk
+                    </a>
+                    <button class="cv-btn" id="openCvBtn">
+                        <i class="fas fa-file-alt"></i> View CV
+                    </button>
+                </div>
                 <div class="social-links-hero">
-                    <p>Connect with me</p>
-                    <a href="https://t.me/x_Jonah" target="_blank"><i class="fab fa-telegram"></i></a>
-                    <a href="https://github.com/YonasGr" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="https://wa.me/qr/DIDRTHI6OTDDB1" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                    <a href="mailto:yonasGirma222@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
-                    <a href="https://www.x.com/Jonah_Girma" target="_blank"><i class="fab fa-twitter"></i></a>
-                    <a href="https://discord.com/users/1030442987278315552" target="_blank"><i
-                            class="fab fa-discord"></i></a>
+                    <p>Connect</p>
+                    <a href="https://t.me/x_Jonah" target="_blank" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                    <a href="https://github.com/YonasGr" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://wa.me/qr/DIDRTHI6OTDDB1" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="mailto:yonasGirma222@gmail.com" target="_blank" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    <a href="https://www.x.com/Jonah_Girma" target="_blank" aria-label="X / Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://discord.com/users/1030442987278315552" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
                 </div>
             </div>
             <div class="hero-image-container">
@@ -60,152 +94,239 @@
             </div>
         </section>
 
+        <!-- ── ABOUT ── -->
         <section id="about" class="standard-section">
             <p class="section-subtitle">A quick overview</p>
-            <h2 class="section-title">About Me & My Skills</h2>
+            <h2 class="section-title">About Me &amp; My Skills</h2>
+            <p class="section-desc">3rd-year IT student at Haramaya University, building impactful tech solutions.</p>
             <div class="info-grid">
                 <div class="info-card">
-                    <h3>Personal Background</h3>
+                    <h3><i class="fas fa-user"></i> Personal Background</h3>
                     <ul>
                         <li><strong>Name:</strong> Yonas Girma (ዮናስ)</li>
                         <li><strong>Age:</strong> 22</li>
                         <li><strong>Education:</strong> 3rd Year IT, Haramaya University</li>
-                        <li><strong>Location:</strong> Arba Minch, Ethiopia (Currently Haramaya)</li>
+                        <li><strong>Location:</strong> Arba Minch, Ethiopia</li>
                         <li><strong>Languages:</strong> Amharic (native), English (fluent)</li>
                     </ul>
                 </div>
                 <div class="info-card">
-                    <h3>Programming & Tech Skills</h3>
+                    <h3><i class="fas fa-code"></i> Programming &amp; Tech Skills</h3>
                     <div class="progress-container">
-                        <div class="skill-name"><span>FE Web Development (HTML5, CSS, JS)</span><span>85%</span></div>
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 85%;"></div>
-                        </div>
+                        <div class="skill-name"><span>Web Dev (HTML5, CSS3, JS)</span><span>85%</span></div>
+                        <div class="progress-bar"><div class="progress" style="width: 85%;"></div></div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="skill-name"><span>Node.js / Express</span><span>75%</span></div>
+                        <div class="progress-bar"><div class="progress" style="width: 75%;"></div></div>
                     </div>
                     <div class="progress-container">
                         <div class="skill-name"><span>C++</span><span>70%</span></div>
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 70%;"></div>
-                        </div>
+                        <div class="progress-bar"><div class="progress" style="width: 70%;"></div></div>
                     </div>
                     <div class="progress-container">
                         <div class="skill-name"><span>Python</span><span>60%</span></div>
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 60%;"></div>
-                        </div>
+                        <div class="progress-bar"><div class="progress" style="width: 60%;"></div></div>
                     </div>
                 </div>
                 <div class="info-card">
-                    <h3>Hobbies & Interests</h3>
+                    <h3><i class="fas fa-heart"></i> Hobbies &amp; Interests</h3>
                     <ul>
                         <li>Open-source contributions</li>
                         <li>Building personal web apps</li>
-                        <li>Ethical hacking & cybersecurity</li>
+                        <li>Ethical hacking &amp; cybersecurity</li>
                         <li>Mathematics and online courses</li>
-                        <li>Learning new languages & frameworks</li>
+                        <li>Learning new languages &amp; frameworks</li>
+                        <li>Linux &amp; system configuration</li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <section id="projects" class="standard-section">
-            <p class="section-subtitle">Showcasing my work</p>
-            <h2 class="section-title">Projects & Channels</h2>
-            <div class="projects-container">
-                <div class="project-card">
-                    <img src="https://www.rudaw.net/s3/rudaw.net/ContentFiles/748082Image1.jpg?version=5478780"
-                        alt="Jonah Store" class="project-img">
-                    <div class="project-content">
-                        <h3 class="project-title">Jonah</h3>
-                        <p>A Telegram channel for daily tech tips, business updates, and motivational content to help
-                            you grow your knowledge and digital skills.</p>
-                        <a href="https://t.me/Jonah_Store" class="project-link" target="_blank">View Channel</a>
+        <!-- ── CV & PORTFOLIO ── -->
+        <section id="cv" class="standard-section">
+            <p class="section-subtitle">Professional documents</p>
+            <h2 class="section-title">CV &amp; Portfolio</h2>
+            <p class="section-desc">View or download my curriculum vitae, or explore my interactive resume portfolio.</p>
+            <div class="cv-portfolio-grid">
+                <!-- CV Card -->
+                <div class="cv-doc-card">
+                    <div class="cv-card-header">
+                        <div class="cv-card-icon green">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="cv-card-meta">
+                            <h3>Curriculum Vitae</h3>
+                            <p>PDF &amp; Markdown formats available</p>
+                        </div>
+                    </div>
+                    <div class="cv-card-body">
+                        <p>
+                            A comprehensive overview of my technical skills, project experience, education, and
+                            certifications — crafted for professional opportunities.
+                        </p>
+                        <div class="cv-actions">
+                            <button class="btn-primary" id="openCvBtn2">
+                                <i class="fas fa-eye"></i> View CV
+                            </button>
+                            <a href="personal/cv/Digital%20Cv%20Content.pdf" download class="btn-secondary">
+                                <i class="fas fa-download"></i> Download PDF
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="project-card">
-                    <img src="https://blog.tiinfotech.com/wp-content/uploads/2023/09/Ua22867841_g.jpg"
-                        alt="Airline Reservation System" class="project-img">
-                    <div class="project-content">
-                        <h3 class="project-title">Airline Reservation System</h3>
-                        <p>A console-based C++ application for managing airline bookings, flight availability, and
-                            ticket generation, demonstrating a solid grasp of back-end logic.</p>
-                        <a href="https://github.com/YonasGr/AirlineReservationSystem" class="project-link"
-                            target="_blank">View Project</a>
+
+                <!-- Portfolio Resume Card -->
+                <div class="cv-doc-card">
+                    <div class="cv-card-header">
+                        <div class="cv-card-icon purple">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                        <div class="cv-card-meta">
+                            <h3>Interactive Resume</h3>
+                            <p>Clean, print-ready HTML portfolio</p>
+                        </div>
                     </div>
-                </div>
-                <div class="project-card">
-                    <img src="assets/preview/quantom.png" alt="Quantum Registration Form" class="project-img">
-                    <div class="project-content">
-                        <h3 class="project-title">Quantum Registration Form Mockup</h3>
-                        <p>A futuristic neon registration form that showcases modern web design techniques using
-                            advanced CSS animations. This is a demonstration of my front-end potential.</p>
-                        <a href="pages/quantum/index.html" class="project-link">View Page</a>
+                    <div class="cv-card-body">
+                        <p>
+                            A polished, interactive HTML resume page with a clean layout highlighting my experience,
+                            projects, and skills — perfect for sharing with recruiters.
+                        </p>
+                        <div class="cv-actions">
+                            <a href="personal/resume/resume.html" class="btn-purple" target="_blank">
+                                <i class="fas fa-external-link-alt"></i> Open Portfolio
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- ── PROJECTS ── -->
+        <section id="projects" class="standard-section">
+            <p class="section-subtitle">Showcasing my work</p>
+            <h2 class="section-title">Projects &amp; Channels</h2>
+            <p class="section-desc">A selection of projects that demonstrate my technical abilities and creativity.</p>
+            <div class="projects-container">
+                <div class="project-card">
+                    <div class="project-img-wrapper">
+                        <img src="https://www.rudaw.net/s3/rudaw.net/ContentFiles/748082Image1.jpg?version=5478780"
+                            alt="Jonah Store" class="project-img">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Jonah Channel</h3>
+                        <p>A Telegram channel for daily tech tips, business updates, and motivational content to help
+                            you grow your knowledge and digital skills.</p>
+                        <a href="https://t.me/Jonah_Store" class="project-link" target="_blank">
+                            <i class="fab fa-telegram"></i> View Channel
+                        </a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img-wrapper">
+                        <img src="https://blog.tiinfotech.com/wp-content/uploads/2023/09/Ua22867841_g.jpg"
+                            alt="Airline Reservation System" class="project-img">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Airline Reservation System</h3>
+                        <p>A console-based C++ application for managing airline bookings, flight availability, and
+                            ticket generation, demonstrating solid back-end logic.</p>
+                        <a href="https://github.com/YonasGr/AirlineReservationSystem" class="project-link"
+                            target="_blank">
+                            <i class="fab fa-github"></i> View Project
+                        </a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img-wrapper">
+                        <img src="assets/preview/quantom.png" alt="Quantum Registration Form" class="project-img">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Quantum Registration Form</h3>
+                        <p>A futuristic neon registration form showcasing modern web design with advanced CSS
+                            animations — a demonstration of front-end creativity.</p>
+                        <a href="pages/quantum/index.html" class="project-link">
+                            <i class="fas fa-external-link-alt"></i> View Page
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── CERTIFICATES ── -->
         <section id="certificates" class="standard-section">
             <p class="section-subtitle">My professional achievements</p>
-            <h2 class="section-title">Certificates & Awards</h2>
+            <h2 class="section-title">Certificates &amp; Awards</h2>
+            <p class="section-desc">Verified credentials that reflect my commitment to continuous learning.</p>
             <div class="certificates-container">
                 <div class="certificate-card">
                     <img src="assets/certificates/freecodecampcertificate.png" alt="Responsive Web Design Certificate"
                         class="certificate-img">
                     <div class="certificate-content">
                         <h3 class="certificate-title">Responsive Web Design</h3>
-                        <p>Issued by freeCodeCamp on December 25, 2024</p>
+                        <p>Issued by freeCodeCamp · December 25, 2024</p>
                         <a href="https://www.freecodecamp.org/certification/jonahpro/responsive-web-design"
-                            class="certificate-link" target="_blank">View Credential</a>
+                            class="certificate-link" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> View Credential
+                        </a>
                     </div>
                 </div>
                 <div class="certificate-card">
                     <img src="assets/certificates/109-founder-academy-6-week-certificate-yonas-ethiopia.png"
-                        alt="ALX Certificate" class="certificate-img">
+                        alt="ALX Founder Academy Certificate" class="certificate-img">
                     <div class="certificate-content">
-                        <h3 class="certificate-title">Another Certification</h3>
-                        <p>Issued by ALX Ventures Founder academy on November 10, 2024</p>
+                        <h3 class="certificate-title">Founder Academy</h3>
+                        <p>Issued by ALX Ventures · November 10, 2024</p>
                         <a href="https://intranet.alxswe.com/certificates/3pBeX2JymM" class="certificate-link"
-                            target="_blank">View Credential</a>
+                            target="_blank">
+                            <i class="fas fa-external-link-alt"></i> View Credential
+                        </a>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- ── SERVICES ── -->
         <section id="services" class="standard-section">
-            <p class="section-subtitle">Professional & digital services</p>
+            <p class="section-subtitle">Professional &amp; digital services</p>
             <h2 class="section-title">What I Offer</h2>
-            <div class="info-grid">
-                <div class="info-card">
-                    <h3>Web & App Services</h3>
-                    <p>From custom web development to mobile app automation, I build functional and clean digital
-                        products. I specialize in HTML, CSS, and JavaScript with a keen eye for user experience.</p>
+            <p class="section-desc">Tailored digital solutions to help you build, grow, and succeed.</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-laptop-code"></i></div>
+                    <h3>Web &amp; App Services</h3>
+                    <p>Custom web development and digital products built with HTML, CSS, and JavaScript — clean,
+                        functional, and user-focused.</p>
                 </div>
-                <div class="info-card">
-                    <h3>Crypto & Digital Goods</h3>
-                    <p>I provide fast and secure crypto services, including buying/selling USDT and TON. I also offer
-                        digital subscriptions for popular services like Telegram Premium and various game top-ups.</p>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-coins"></i></div>
+                    <h3>Crypto &amp; Digital Goods</h3>
+                    <p>Fast and secure crypto services including USDT and TON. Digital subscriptions like Telegram
+                        Premium and game top-ups also available.</p>
                 </div>
-                <div class="info-card">
-                    <h3>Consulting & Support</h3>
-                    <p>With expertise in Linux, VS Code, and a variety of digital wallets, I offer consulting and
-                        technical support to help you navigate complex tech challenges and optimize your workflow.</p>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-headset"></i></div>
+                    <h3>Consulting &amp; Support</h3>
+                    <p>Linux expertise, VS Code configuration, and digital wallet consulting to help you navigate
+                        complex tech challenges.</p>
                 </div>
             </div>
         </section>
 
+        <!-- ── CONTACT ── -->
         <section id="contact" class="standard-section">
             <p class="section-subtitle">Let's connect</p>
             <h2 class="section-title">Get In Touch</h2>
+            <p class="section-desc">Have a project in mind or want to collaborate? Drop me a message.</p>
             <div class="contact-form-container">
                 <form id="contactForm" class="contact-form" enctype="multipart/form-data">
                     <div class="form-grid">
                         <div class="form-group">
-                            <input type="text" id="name" name="name" required>
+                            <input type="text" id="name" name="name" required autocomplete="name">
                             <label for="name">Name</label>
                         </div>
                         <div class="form-group">
-                            <input type="email" id="email" name="email" required>
+                            <input type="email" id="email" name="email" required autocomplete="email">
                             <label for="email">Email</label>
                         </div>
                     </div>
@@ -213,23 +334,23 @@
                         <textarea id="explanation" name="explanation" rows="4"></textarea>
                         <label for="explanation">Message or Explanation (Optional)</label>
                     </div>
-                    <div class="form-group full-width file-upload-group">
-                        <label for="file" class="file-label">
+                    <div class="form-group full-width file-upload-group" id="fileUploadGroup">
+                        <label for="file" class="file-label" id="fileLabel">
                             <i class="fas fa-cloud-upload-alt"></i>
-                            <span class="file-label-text">Upload File (Optional)</span>
+                            <span class="file-label-text">Drag &amp; drop or click to upload</span>
                             <span class="file-info">Images, documents, up to 20 MB</span>
                         </label>
                         <input type="file" id="file" name="file"
                             accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.zip,.rar,video/*,audio/*">
                         <div id="fileName" class="file-name"></div>
+                        <div class="upload-progress-wrapper" id="uploadProgressWrapper">
+                            <div class="upload-progress-bar" id="uploadProgressBar"></div>
+                        </div>
                     </div>
                     <div class="form-footer">
-                        <button type="submit" class="submit-btn">
-                            <span>Submit</span>
-                            <svg viewBox="0 0 24 24" width="24" height="24">
-                                <path fill="currentColor"
-                                    d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
-                            </svg>
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            <i class="fas fa-paper-plane"></i>
+                            <span>Send Message</span>
                         </button>
                     </div>
                     <div id="formMessage" class="form-message"></div>
@@ -239,7 +360,16 @@
     </main>
 
     <footer>
-        <p class="copyright">© 2025 Yonas Girma. All Rights Reserved.</p>
+        <div class="footer-content">
+            <div class="footer-social">
+                <a href="https://t.me/x_Jonah" target="_blank" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                <a href="https://github.com/YonasGr" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://wa.me/qr/DIDRTHI6OTDDB1" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="mailto:yonasGirma222@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://www.x.com/Jonah_Girma" target="_blank" aria-label="X"><i class="fab fa-twitter"></i></a>
+            </div>
+            <p class="copyright">© 2025 Yonas Girma. All Rights Reserved.</p>
+        </div>
     </footer>
 
     <script src="js/script.js"></script>
