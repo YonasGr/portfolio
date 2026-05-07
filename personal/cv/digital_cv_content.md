@@ -11,7 +11,7 @@
 | 📧 **Email** | [yonasgirma222@gmail.com](mailto:yonasgirma222@gmail.com) |
 | 📱 **Phone** | +251 909 823 587 |
 | 🐙 **GitHub** | [github.com/yonasgr](https://github.com/yonasgr) |
-| 📍 **Location** | Addis Ababa, Ethiopia |
+| 📍 **Location** | Arba Minch, Ethiopia |
 
 ---
 
@@ -113,7 +113,7 @@ Results-driven IT Professional and Software Developer with hands-on experience b
 ## 🎓 Education
 
 **Bachelor of Science — Information Technology**
-Addis Ababa, Ethiopia · *Graduated 2021*
+Haramaya University, Ethiopia · *Expected 2026 (Currently 3rd Year)*
 
 ---
 

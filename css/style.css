@@ -59,6 +59,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 html {
@@ -153,7 +155,7 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 0.75rem 2rem;
     background: rgba(8, 8, 24, 0.75);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
@@ -184,7 +186,7 @@ a {
 .nav-links a {
     padding: 0.45rem 0.9rem;
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     font-weight: 500;
     border-radius: var(--r-sm);
     transition: color 0.25s, background 0.25s;
@@ -202,7 +204,7 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 7rem 0 5rem;
+    padding: 6rem 0 5rem;
     gap: 3rem;
     flex-wrap: wrap;
     position: relative;

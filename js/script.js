@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const MAX_FILE_SIZE_MB    = 20;
     const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
-    const CV_PDF_PATH         = 'personal/cv/Digital%20Cv%20Content.pdf';
+    const CV_PDF_PATH         = 'personal/cv/Digital_Cv_Content.pdf';
 
     /* ────────────────────────────────────────────
        PDF MODAL
