@@ -1,0 +1,127 @@
+---
+import { Icon } from 'astro-icon/components';
+import localData from '../data/home.json';
+
+---
+
+<section id="contact" class="section-container">
+  <div class="container mx-auto">
+    <div class="space-y-12">
+      <div class="contact-header opacity-0 mb-16">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold text-maintext mb-2 flex items-center gap-4">
+            <span class="text-accent">/</span> Contact Me
+          </h2>
+        <p class="text-subtext font-body text-sm max-w-md">
+          Feel free to reach out. I'm always open to discussing new projects and opportunities.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+        {localData.socials
+        .filter((social) => social.showInContact && social.url && social.url !== "#" && social.url !== "")
+        .map((social) => (
+          <!-- Added 'contact-card' and 'opacity-0' here -->
+          <a 
+            href={social.url} 
+            target="_blank" 
+            class="contact-card opacity-0 group p-8 bg-accent/5 border border-accent/10 rounded-2xl hover:border-accent/40 hover:bg-accent/10 transition-all duration-300"
+          >
+            <Icon 
+              name={social.icon} 
+              class="w-10 h-10 text-accent mb-4 mx-auto group-hover:scale-110 transition-transform" 
+            />
+            <h3 class="text-maintext font-bold mb-1">{social.name}</h3>
+            <p class="text-subtext text-xs truncate px-2">
+              {social.url.replace('https://', '').replace('mailto:', '').replace('wa.me/', '+')}
+            </p>
+          </a>
+        ))}
+      </div>
+
+      <!-- /* FOOTER */ -->
+      <div class="contact-footer opacity-0 pt-20 border-t border-white/5">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+          <p class="text-subtext text-sm font-body order-2 md:order-1">
+            {localData.name} © 2026
+          </p>
+          <div class="flex items-center flex-wrap justify-center gap-3 text-subtext text-xs font-body order-1 md:order-2">
+            <span>Built using </span>
+            <span class="text-subtext hidden sm:inline">•</span>
+            <div class="flex gap-4">
+              <a href="https://astro.build" target="_blank" class="hover:text-accent transition-colors flex items-center gap-1.5 group">
+                <Icon name="skill-icons:astro" class="w-4 h-4 group-hover:drop-shadow-[0_0_5px_var(--color-accent)]" />
+                <span>Astro</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Header & Footer Initial State */
+  .contact-header,
+  .contact-footer {
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Cards Initial State */
+  .contact-card {
+    transform: translateY(20px) scale(0.95);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Shared Revealed State */
+  .contact-header.reveal,
+  .contact-card.reveal,
+  .contact-footer.reveal {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1);
+  }
+</style>
+
+<script>
+  const revealContact = () => {
+    const header = document.querySelector('.contact-header');
+    const footer = document.querySelector('.contact-footer');
+    const cards = document.querySelectorAll('.contact-card');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = entry.target as HTMLElement;
+
+          if (target.classList.contains('contact-card')) {
+            const index = Array.from(cards).indexOf(target);
+            // Stagger effect for the 4-column grid
+            setTimeout(() => {
+              target.classList.add('reveal');
+            }, (index % 4) * 150);
+          } else {
+            // Header and Footer reveal immediately
+            target.classList.add('reveal');
+          }
+          
+          observer.unobserve(target);
+        }
+      });
+    }, { 
+      threshold: 0.15,
+      rootMargin: '0px 0px -10px 0px'
+    });
+
+    if (header) observer.observe(header);
+    if (footer) observer.observe(footer);
+    cards.forEach(card => observer.observe(card));
+  }
+  
+  // Runs on initial load
+  window.addEventListener('load', revealContact);
+  
+  // Support for Astro View Transitions
+  document.addEventListener('astro:after-swap', revealContact);
+</script>

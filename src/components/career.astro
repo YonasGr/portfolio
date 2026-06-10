@@ -1,0 +1,127 @@
+---
+// Import your data and the new component at the top of the file
+import careerData from '../data/career.json';
+import CareerCard from './career-card.astro';
+---
+
+<section id="career" class="section-container max-w-6xl mx-auto overflow-hidden">
+  <div class="container mx-auto reveal-content" style="animation-delay: 1000ms;">
+    <div>
+      <h2 class="text-3xl md:text-4xl font-heading font-bold text-maintext mb-2 flex items-center gap-4">
+        <span class="text-accent">/</span> Career
+      </h2>
+      <p class="text-subtext font-body text-sm max-w-md pb-8">
+        A brief overview of my career
+      </p>
+    </div>
+
+    <div class="relative">
+      {/* Vertical Line*/}
+      <div class="absolute left-2 md:left-1/2 md:-translate-x-1/2 top-5 bottom-0 w-0.5 bg-linear-to-b from-accent via-white/10 to-transparent"></div>
+
+      {/* Mobile View */}
+      <div class="md:hidden space-y-8">
+        {careerData.map((item, index) => (
+          <div class="scroll-stat relative pl-6">
+            {/* Dot for mobile view*/}
+            <div class="absolute left-0 top-1 z-10">
+              <div class={`w-4 h-4 rounded-full border-4 border-[#0a0a0a] 
+                          ${index === 0 ? 'bg-accent shadow-[0_0_15px_var(--color-accent)] animate-pulse' : 'bg-accent/50'}`}>
+              </div>
+            </div>
+            
+            <CareerCard item={item} variant="mobile" />
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop View */}
+      <div class="hidden md:block space-y-4">
+        {careerData.map((item, index) => (
+          <div class="scroll-stat relative grid grid-cols-2">
+            {/* Center Dot */}
+            <div class="absolute left-1/2 -translate-x-1/2 top-1 z-10">
+              <div class={`w-4 h-4 rounded-full border-4 border-[#0a0a0a] 
+                          ${index === 0 ? 'bg-accent shadow-[0_0_15px_var(--color-accent)] animate-pulse' : 'bg-accent/50'}`}>
+              </div>
+            </div>
+
+            {/* Left Side (even items) */}
+            <div class="md:px-6 md:py-0">
+              {index % 2 === 0 ? (
+                <CareerCard item={item} variant="desktop-left" />
+              ) : <div class="h-full pointer-events-none"></div>}
+            </div>
+
+            {/* Right Side (odd items) */}
+            <div class="md:px-6 md:py-0">
+              {index % 2 !== 0 ? (
+                <CareerCard item={item} variant="desktop-right" />
+              ) : <div class="h-full pointer-events-none"></div>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Reveal whole section when website loads */
+  .reveal-content {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: revealIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+
+  @keyframes revealIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Initial state of the card */
+  .scroll-stat {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Revealed state while scrolling*/
+  .scroll-stat.reveal {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+</style>
+
+<script>
+  function revealCards() {
+    const cards = document.querySelectorAll('.scroll-stat');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Add a slight delay based on the card's position to create a wave effect
+          const index = Array.from(cards).indexOf(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('reveal');
+          }, (index % 3) * 150); // Delay resets every row for a clean staggered look
+          
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.15, // Trigger when 15% of the card is visible
+      rootMargin: '0px 0px -10px 0px' // Trigger slightly before it hits the viewport
+    });
+
+    cards.forEach(card => observer.observe(card));
+  }
+
+  // Runs on initial load
+  revealCards();
+  
+  // Necessary for Astro View Transitions if you use them
+  document.addEventListener('astro:after-swap', revealCards);
+</script>

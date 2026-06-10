@@ -1,0 +1,72 @@
+{
+  "categories": [
+    {
+  "title": "Programming Languages",
+  "skills": [
+    { "name": "TypeScript", "level": 3, "icon": "skill-icons:typescript" },
+    { "name": "JavaScript", "level": 3, "icon": "skill-icons:javascript" },
+    { "name": "Python", "level": 2, "icon": "skill-icons:python-dark" },
+
+    { "name": "Java", "level": 2, "icon": "skill-icons:java-dark" },
+    { "name": "C++", "level": 2, "icon": "skill-icons:cpp" },
+    { "name": "PHP", "level": 2, "icon": "skill-icons:php-dark" }
+  ]
+},
+    {
+  "title": "Mobile Development",
+  "skills": [
+    { "name": "React Native", "level": 3, "icon": "skill-icons:react-dark" },
+    { "name": "TypeScript", "level": 3, "icon": "skill-icons:typescript" },
+    { "name": "Kotlin", "level": 1, "icon": "skill-icons:kotlin-dark" }
+  ]
+    },
+{
+  "title": "Frontend",
+  "skills": [
+    { "name": "JavaScript", "level": 3, "icon": "skill-icons:javascript" },
+    { "name": "React", "level": 3, "icon": "skill-icons:react-dark" },
+    { "name": "Next.js", "level": 3, "icon": "skill-icons:nextjs-dark" },
+    { "name": "Astro", "level": 2, "icon": "skill-icons:astro" },
+    { "name": "TypeScript", "level": 3, "icon": "skill-icons:typescript" },
+    { "name": "HTML", "level": 2, "icon": "skill-icons:html" },
+    { "name": "CSS", "level": 2, "icon": "skill-icons:css" },
+    { "name": "Tailwind CSS", "level": 2, "icon": "skill-icons:tailwindcss-dark" },
+    { "name": "Redux", "level": 2, "icon": "skill-icons:redux" },
+    { "name": "React Query", "level": 2, "icon": "skill-icons:react-dark" }
+  ]
+},
+{
+  "title": "Backend",
+  "skills": [
+    { "name": "Node.js", "level": 3, "icon": "skill-icons:nodejs-dark" },
+    { "name": "Python", "level": 2, "icon": "skill-icons:python-dark" },
+    { "name": "FastAPI", "level": 2, "icon": "skill-icons:fastapi" },
+
+    { "name": "Supabase", "level": 3, "icon": "skill-icons:supabase-dark" },
+    { "name": "Firebase", "level": 3, "icon": "vscode-icons:file-type-firebase" },
+
+    { "name": "PostgreSQL", "level": 2, "icon": "skill-icons:postgresql-dark" },
+    { "name": "Redis", "level": 1, "icon": "skill-icons:redis-dark" },
+
+    { "name": "Docker", "level": 2, "icon": "skill-icons:docker" },
+
+    { "name": "Vercel", "level": 2, "icon": "skill-icons:vercel-dark" },
+    { "name": "Render", "level": 1, "icon": "skill-icons:vercel-dark" }
+  ]
+},
+{
+  "title": "Database",
+  "skills": [
+    { "name": "PostgreSQL", "level": 2, "icon": "skill-icons:postgresql-dark" },
+    { "name": "SQLite", "level": 3, "icon": "skill-icons:sqlite" },
+
+    { "name": "MongoDB", "level": 2, "icon": "skill-icons:mongodb" },
+    { "name": "Firestore", "level": 3, "icon": "vscode-icons:file-type-firestore" },
+
+    { "name": "Supabase (PostgreSQL)", "level": 3, "icon": "skill-icons:supabase-dark" },
+
+    { "name": "Redis", "level": 1, "icon": "skill-icons:redis-dark" }
+  ]
+}
+  ]
+}
