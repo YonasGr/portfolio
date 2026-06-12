@@ -43,27 +43,33 @@ const profileImage = await resolveAssetImage(photoUrl);
 ---
 
 <section id="home" class="flex flex-col items-center justify-center section-container md:pt-30 gap-1 min-h-[80vh] text-center">
-  <div class="relative group mb-2 reveal-content" style="animation-delay: 100ms;">
-    <div class="balloon-float w-20 h-20 md:w-24 md:h-24 rounded-full border-2 border-accent overflow-hidden shadow-[0_0_50px_color-mix(in_srgb,var(--color-accent)_33%,transparent)]">
-      <!-- Use Astro Image tag for optimization, fallback to img-->
-      {profileImage ? (
-        <Image
-          src={profileImage}
-          alt={name}
-          class="w-full h-full object-cover scale-110"
-          loading="eager"
-        />
-      ) : (
-        <img
-          src={photoUrl || "/placeholder.jpeg"}
-          alt={name}
-          class="w-full h-full object-cover scale-110"
-          onerror="this.onerror=null;this.src='/placeholder.jpeg';"
-          loading="eager"
-        />
-      )}
+  <div class="reveal-content" style="animation-delay: 100ms;">
+    <div class="hero-portrait">
+      <div class="portrait-orbit portrait-orbit-1"></div>
+      <div class="portrait-orbit portrait-orbit-2"></div>
+      <div class="portrait-panel">
+        <div class="portrait-scanline"></div>
+        <div class="portrait-edge portrait-edge-top"></div>
+        <div class="portrait-edge portrait-edge-bottom"></div>
+        <!-- Use Astro Image tag for optimization, fallback to img-->
+        {profileImage ? (
+          <Image
+            src={profileImage}
+            alt={name}
+            class="portrait-image"
+            loading="eager"
+          />
+        ) : (
+          <img
+            src={photoUrl || "/placeholder.jpeg"}
+            alt={name}
+            class="portrait-image"
+            onerror="this.onerror=null;this.src='/placeholder.jpeg';"
+            loading="eager"
+          />
+        )}
+      </div>
     </div>
-    <div class="balloon-float absolute -z-10 top-0 left-0 w-full h-full bg-accent rounded-full blur-[80px] opacity-20"></div>
   </div>
 
     <div class="reveal-content" style="animation-delay: 200ms;">
@@ -150,33 +156,147 @@ const profileImage = await resolveAssetImage(photoUrl);
     }
   }
   
-  /* profile photo floating animation */
-
-  /* When combined, the animation rule automatically merges these transforms */
-  .avatar-container {
-    animation: float 5s ease-in-out infinite alternate, wobble 7s ease-in-out infinite alternate;
+  .hero-portrait {
+    position: relative;
+    width: clamp(8.75rem, 24vw, 14rem);
+    height: clamp(11rem, 30vw, 17.25rem);
+    margin-bottom: 1.25rem;
+    isolation: isolate;
+    animation: portrait-drift 8s ease-in-out infinite;
   }
 
-  .balloon-float {
-    will-change: transform;
-    animation: floating-balloon 8s ease-in-out infinite;
+  .portrait-panel {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
+    background:
+      linear-gradient(150deg, color-mix(in srgb, var(--color-maintext) 12%, transparent), transparent 44%),
+      linear-gradient(180deg, color-mix(in srgb, var(--color-background) 28%, transparent), color-mix(in srgb, var(--color-background) 78%, transparent));
+    border: 1px solid color-mix(in srgb, var(--color-maintext) 18%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color-accent) 22%, transparent),
+      0 24px 80px color-mix(in srgb, var(--color-accent) 22%, transparent),
+      inset 0 1px 0 color-mix(in srgb, var(--color-maintext) 28%, transparent);
+    backdrop-filter: blur(14px);
+    clip-path: polygon(13% 0, 100% 0, 100% 83%, 87% 100%, 0 100%, 0 17%);
   }
 
-  @keyframes floating-balloon {
-    0% {
-      transform: translate(0, 0) rotate(0deg);
+  .portrait-panel::before,
+  .portrait-panel::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .portrait-panel::before {
+    inset: 10px;
+    z-index: 3;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+    clip-path: polygon(12% 0, 100% 0, 100% 82%, 86% 100%, 0 100%, 0 18%);
+    opacity: 0.75;
+  }
+
+  .portrait-panel::after {
+    inset: auto 0 0;
+    z-index: 0;
+    height: 42%;
+    background: linear-gradient(0deg, color-mix(in srgb, var(--color-accent) 18%, transparent), transparent);
+    opacity: 0.8;
+  }
+
+  .portrait-image {
+    position: relative;
+    z-index: 2;
+    width: 108%;
+    height: 108%;
+    max-width: none;
+    object-fit: contain;
+    object-position: center bottom;
+    filter: saturate(1.04) contrast(1.03) drop-shadow(0 24px 30px rgb(0 0 0 / 0.35));
+    transform: translateY(4%) scale(1.02);
+  }
+
+  .portrait-orbit {
+    position: absolute;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .portrait-orbit-1 {
+    inset: 10% -12% -8% 18%;
+    background: color-mix(in srgb, var(--color-accent) 42%, transparent);
+    filter: blur(48px);
+    opacity: 0.42;
+    transform: skew(-10deg);
+  }
+
+  .portrait-orbit-2 {
+    inset: 18% 18% 12% -14%;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 45%, transparent);
+    clip-path: polygon(18% 0, 100% 0, 82% 100%, 0 100%);
+    opacity: 0.65;
+    transform: translate(12px, 10px);
+  }
+
+  .portrait-scanline {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      color-mix(in srgb, var(--color-maintext) 8%, transparent) 48%,
+      transparent 52%
+    );
+    opacity: 0.35;
+    transform: translateY(-100%);
+    animation: portrait-scan 5.5s ease-in-out infinite;
+  }
+
+  .portrait-edge {
+    position: absolute;
+    z-index: 5;
+    width: 42%;
+    height: 2px;
+    background: var(--color-accent);
+    box-shadow: 0 0 20px var(--color-accent);
+  }
+
+  .portrait-edge-top {
+    top: 0;
+    right: 0;
+  }
+
+  .portrait-edge-bottom {
+    bottom: 0;
+    left: 0;
+  }
+
+  @keyframes portrait-drift {
+    0%, 100% {
+      transform: translate(0, 0) rotate(-1.2deg);
     }
-    33% {
-      /* Moves up and slightly right */
-      transform: translate(3px, -8px) rotate(1deg);
+    50% {
+      transform: translate(4px, -10px) rotate(1deg);
     }
-    66% {
-      /* Drifts left and stays elevated */
-      transform: translate(-3px, -4px) rotate(-1deg);
+  }
+
+  @keyframes portrait-scan {
+    0%, 36% {
+      transform: translateY(-100%);
     }
-    100% {
-      /* Returns to start */
-      transform: translate(0, 0) rotate(0deg);
+    58%, 100% {
+      transform: translateY(100%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-portrait,
+    .portrait-scanline {
+      animation: none;
     }
   }
 </style>

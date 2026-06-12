@@ -4,7 +4,7 @@
   "intro": "I’m driven by a deep interest in how software can improve everyday workflows and systems, and I enjoy turning complex requirements into simple, usable products. My approach prioritizes impact over complexity—building things that work well, stay maintainable, and deliver measurable value.",
   "introHtml": "A brief, compelling introduction about who you are and what you do. Mention your core <span class='text-white font-bold'>philosophy</span>, your passion for building digital products, and your drive for creating <span class='text-white font-bold'>efficient</span>, <span class='text-white font-bold'>high-impact</span> solutions.",
   "webpageTitle": "Yonasgr",
-  "resumeUrl": "https://github.com/YonasGr/portfolio/blob/main/dist/yonasgr-resume.pdf",
+  "resumeUrl": "/yonasgr-resume.pdf",
 
   "_comment": "Add your social links below. Leave the 'url' empty to hide the icon. Set 'showInContact' to true or false to control if it appears in the Contact section.",
   "socials": [
