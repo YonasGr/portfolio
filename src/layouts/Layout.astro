@@ -2,6 +2,7 @@
 import '../styles/global.css'
 import { SITE_CONFIG } from '../config.ts';
 import favicon from '../../Y-Logo.png';
+import SpeedInsights from "@vercel/speed-insights/astro"
 
 interface Props {
   title: string;
@@ -228,5 +229,6 @@ const defaultTheme = `${baseTheme}-dark`;
     });
 
     </script>
+    <SpeedInsights />
   </body>
 </html>
