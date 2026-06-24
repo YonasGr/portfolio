@@ -1,8 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
 import localData from '../data/home.json';
-import { resolveAssetImage } from '../utils/images';
-import { Image } from 'astro:assets';
 
 //Data Definitions
 interface Social {
@@ -38,106 +36,86 @@ if (isApiLive && BASE_URL) {
   data = localData as ProfileData;
 }
 
-const { name, photoUrl, intro, introHtml, resumeUrl, socials } = data;
-const profileImage = await resolveAssetImage(photoUrl);
+const { name, intro, introHtml, resumeUrl, socials } = data;
 ---
 
-<section id="home" class="flex flex-col items-center justify-center section-container md:pt-30 gap-1 min-h-[80vh] text-center">
-  <div class="reveal-content" style="animation-delay: 100ms;">
-    <div class="hero-portrait">
-      <div class="portrait-orbit portrait-orbit-1"></div>
-      <div class="portrait-orbit portrait-orbit-2"></div>
-      <div class="portrait-panel">
-        <div class="portrait-scanline"></div>
-        <div class="portrait-edge portrait-edge-top"></div>
-        <div class="portrait-edge portrait-edge-bottom"></div>
-        <!-- Use Astro Image tag for optimization, fallback to img-->
-        {profileImage ? (
-          <Image
-            src={profileImage}
-            alt={name}
-            class="portrait-image"
-            loading="eager"
-          />
-        ) : (
-          <img
-            src={photoUrl || "/placeholder.jpeg"}
-            alt={name}
-            class="portrait-image"
-            onerror="this.onerror=null;this.src='/placeholder.jpeg';"
-            loading="eager"
-          />
-        )}
-      </div>
-    </div>
-  </div>
-
-    <div class="reveal-content" style="animation-delay: 200ms;">
-    <p class="font-body font-light text-gray leading-relaxed">
-      Hello, I'm
-    </p>
-  </div>
-
-  <div class="px-6 sm:px-14 md:px-18 lg:px-40 max-w-360 mx-auto relative z-0 reveal-content" style="animation-delay: 300ms;">
-    <h1 class="text-5xl md:text-7xl font-heading font-bold text-maintext tracking-tight">
-      {name}
-    </h1>
-    <br>
-    <p 
-      class="text-gray font-body text-lg leading-relaxed" 
-      set:html={intro} 
+<section id="home" class="flex flex-col md:flex-row min-h-[80vh] md:min-h-screen md:pt-20">
+  <div class="w-full md:w-[44%] md:h-screen relative overflow-hidden">
+    <img
+      src="/branding-poster.png"
+      alt="Branding poster"
+      class="w-full h-full object-cover object-[50%_15%]"
+      loading="lazy"
     />
+    <div class="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-black/35 to-transparent pointer-events-none"></div>
   </div>
 
-  <div class="mt-8 mb-4 reveal-content" style="animation-delay: 400ms;">
-    <a 
-      href={resumeUrl} 
-      target="_blank" 
-      rel="noopener noreferrer"
-      class="group relative inline-flex items-center justify-center px-10 py-2 bg-white/5 border border-white/10 rounded-full text-maintext font-body transition-all duration-300
+  <div class="w-full md:w-[56%] flex flex-col items-center md:items-start justify-center px-6 sm:px-10 md:px-16 lg:px-20 py-12 md:py-0 relative">
+    <div class="hidden md:block absolute left-8 top-12 bottom-12 w-px bg-accent/20"></div>
 
-             <!-- /* Mobile: Always active */ -->
-             border-accent/50 bg-accent/10 shadow-[0_0_20px_rgba(var(--accent-rgb),0.3)]
-             
-             <!-- /* Desktop: Reset and hover */ -->
-             md:border-accent/50 md:bg-accent/10 md:shadow-none md:hover:border-accent/50 md:hover:bg-accent/10 md:hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.3)] 
-             hover:scale-105"
-    >
-      <div class="flex flex-col items-center justify-center text-center">
-        <span class="tracking-wide text-sm md:text-base font-medium transition-transform duration-300 md:translate-y-2 md:group-hover:translate-y-0">
-          View Resume
-        </span>
-        
-        <span class="text-[10px] text-subtext font-light whitespace-nowrap transition-all duration-300 
-                     /* Mobile: Always visible */
-                     opacity-100 translate-y-0 
-                     /* Desktop: Hidden until hover */
-                     md:opacity-0 md:translate-y-1 md:group-hover:opacity-100 md:group-hover:translate-y-0">
-          Downloads PDF file
-        </span>
-      </div>
-      
-      <div class="absolute inset-0 rounded-full blur-md bg-accent/20 -z-10 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500"></div>
-    </a>
-</div>
+    <div class="reveal-content md:pl-6" style="animation-delay: 100ms;">
+      <p class="font-body font-light text-gray leading-relaxed text-center md:text-left">
+        Hello, I'm
+      </p>
+    </div>
 
-  <div class="flex gap-6 mt-4 reveal-content" style="animation-delay: 500ms;">
-    {socials.filter((social) => social.url && social.url !== "#" && social.url !== "").map((social) => (
-      <a 
-        href={social.url} 
-        target="_blank" 
-        class="group relative flex flex-col items-center justify-center transition-all duration-300 hover:scale-110"
-      >
-        <Icon 
-        name={social.icon} 
-        class="w-8 h-8 text-maintext group-hover:text-accent transition-colors duration-300" 
+    <div class="px-6 sm:px-14 md:px-0 max-w-360 mx-auto md:mx-0 relative z-0 reveal-content md:pl-6" style="animation-delay: 200ms;">
+      <h1 class="text-5xl md:text-7xl font-heading font-bold text-maintext tracking-tight text-center md:text-left">
+        {name}
+      </h1>
+      <br>
+      <p 
+        class="text-gray font-body text-lg leading-relaxed text-center md:text-left" 
+        set:html={intro} 
       />
+    </div>
 
-      <span class="absolute -bottom-6 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300 text-xs text-accent font-body">
-        {social.name}
-      </span>
+    <div class="mt-8 mb-4 reveal-content md:pl-6" style="animation-delay: 300ms;">
+      <a 
+        href={resumeUrl} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        class="group relative inline-flex items-center justify-center px-10 py-2 bg-white/5 border border-white/10 rounded-full text-maintext font-body transition-all duration-300
+
+               border-accent/50 bg-accent/10 shadow-[0_0_20px_rgba(var(--accent-rgb),0.3)]
+               
+               md:border-accent/50 md:bg-accent/10 md:shadow-none md:hover:border-accent/50 md:hover:bg-accent/10 md:hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.3)] 
+               hover:scale-105"
+      >
+        <div class="flex flex-col items-center justify-center text-center">
+          <span class="tracking-wide text-sm md:text-base font-medium transition-transform duration-300 md:translate-y-2 md:group-hover:translate-y-0">
+            View Resume
+          </span>
+          
+          <span class="text-[10px] text-subtext font-light whitespace-nowrap transition-all duration-300 
+                       opacity-100 translate-y-0 
+                       md:opacity-0 md:translate-y-1 md:group-hover:opacity-100 md:group-hover:translate-y-0">
+            Downloads PDF file
+          </span>
+        </div>
+        
+        <div class="absolute inset-0 rounded-full blur-md bg-accent/20 -z-10 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500"></div>
       </a>
-    ))}
+    </div>
+
+    <div class="flex gap-6 mt-4 reveal-content md:pl-6" style="animation-delay: 400ms;">
+      {socials.filter((social) => social.url && social.url !== "#" && social.url !== "").map((social) => (
+        <a 
+          href={social.url} 
+          target="_blank" 
+          class="group relative flex flex-col items-center justify-center transition-all duration-300 hover:scale-110"
+        >
+          <Icon 
+          name={social.icon} 
+          class="w-8 h-8 text-maintext group-hover:text-accent transition-colors duration-300" 
+        />
+
+        <span class="absolute -bottom-6 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300 text-xs text-accent font-body">
+          {social.name}
+        </span>
+        </a>
+      ))}
+    </div>
   </div>
 </section>
 
@@ -153,150 +131,6 @@ const profileImage = await resolveAssetImage(photoUrl);
     to {
       opacity: 1;
       transform: translateY(0);
-    }
-  }
-  
-  .hero-portrait {
-    position: relative;
-    width: clamp(8.75rem, 24vw, 14rem);
-    height: clamp(11rem, 30vw, 17.25rem);
-    margin-bottom: 1.25rem;
-    isolation: isolate;
-    animation: portrait-drift 8s ease-in-out infinite;
-  }
-
-  .portrait-panel {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    overflow: hidden;
-    background:
-      linear-gradient(150deg, color-mix(in srgb, var(--color-maintext) 12%, transparent), transparent 44%),
-      linear-gradient(180deg, color-mix(in srgb, var(--color-background) 28%, transparent), color-mix(in srgb, var(--color-background) 78%, transparent));
-    border: 1px solid color-mix(in srgb, var(--color-maintext) 18%, transparent);
-    box-shadow:
-      0 0 0 1px color-mix(in srgb, var(--color-accent) 22%, transparent),
-      0 24px 80px color-mix(in srgb, var(--color-accent) 22%, transparent),
-      inset 0 1px 0 color-mix(in srgb, var(--color-maintext) 28%, transparent);
-    backdrop-filter: blur(14px);
-    clip-path: polygon(13% 0, 100% 0, 100% 83%, 87% 100%, 0 100%, 0 17%);
-  }
-
-  .portrait-panel::before,
-  .portrait-panel::after {
-    content: "";
-    position: absolute;
-    pointer-events: none;
-  }
-
-  .portrait-panel::before {
-    inset: 10px;
-    z-index: 3;
-    border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
-    clip-path: polygon(12% 0, 100% 0, 100% 82%, 86% 100%, 0 100%, 0 18%);
-    opacity: 0.75;
-  }
-
-  .portrait-panel::after {
-    inset: auto 0 0;
-    z-index: 0;
-    height: 42%;
-    background: linear-gradient(0deg, color-mix(in srgb, var(--color-accent) 18%, transparent), transparent);
-    opacity: 0.8;
-  }
-
-  .portrait-image {
-    position: relative;
-    z-index: 2;
-    width: 108%;
-    height: 108%;
-    max-width: none;
-    object-fit: contain;
-    object-position: center bottom;
-    filter: saturate(1.04) contrast(1.03) drop-shadow(0 24px 30px rgb(0 0 0 / 0.35));
-    transform: translateY(4%) scale(1.02);
-  }
-
-  .portrait-orbit {
-    position: absolute;
-    pointer-events: none;
-    z-index: -1;
-  }
-
-  .portrait-orbit-1 {
-    inset: 10% -12% -8% 18%;
-    background: color-mix(in srgb, var(--color-accent) 42%, transparent);
-    filter: blur(48px);
-    opacity: 0.42;
-    transform: skew(-10deg);
-  }
-
-  .portrait-orbit-2 {
-    inset: 18% 18% 12% -14%;
-    border: 1px solid color-mix(in srgb, var(--color-accent) 45%, transparent);
-    clip-path: polygon(18% 0, 100% 0, 82% 100%, 0 100%);
-    opacity: 0.65;
-    transform: translate(12px, 10px);
-  }
-
-  .portrait-scanline {
-    position: absolute;
-    inset: 0;
-    z-index: 4;
-    background: linear-gradient(
-      180deg,
-      transparent 0%,
-      color-mix(in srgb, var(--color-maintext) 8%, transparent) 48%,
-      transparent 52%
-    );
-    opacity: 0.35;
-    transform: translateY(-100%);
-    animation: portrait-scan 5.5s ease-in-out infinite;
-  }
-
-  .portrait-edge {
-    position: absolute;
-    z-index: 5;
-    width: 42%;
-    height: 2px;
-    background: var(--color-accent);
-    box-shadow: 0 0 20px var(--color-accent);
-  }
-
-  .portrait-edge-top {
-    top: 0;
-    right: 0;
-  }
-
-  .portrait-edge-bottom {
-    bottom: 0;
-    left: 0;
-  }
-
-  @keyframes portrait-drift {
-    0%, 100% {
-      transform: translate(0, 0) rotate(-1.2deg);
-    }
-    50% {
-      transform: translate(4px, -10px) rotate(1deg);
-    }
-  }
-
-  @keyframes portrait-scan {
-    0%, 36% {
-      transform: translateY(-100%);
-    }
-    58%, 100% {
-      transform: translateY(100%);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero-portrait,
-    .portrait-scanline {
-      animation: none;
     }
   }
 </style>
