@@ -42,7 +42,7 @@ const defaultTheme = `${baseTheme}-dark`;
       style="mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);"
     ></div>
 
-    <main class="px-2 sm:px-12 md:px-14 lg:px-28 max-w-360 mx-auto relative z-0">
+    <main class="relative z-0">
         <slot />
     </main>
 
@@ -76,7 +76,7 @@ const defaultTheme = `${baseTheme}-dark`;
     <script>
       const container = document.getElementById('matrix-container');
       const characters = "{}[]()<>/\=+*01;";
-      // const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@&%";
+      // const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890@&%";
       const colors = ["#FF4500", "#32CD32", "#1E90FF", "#FFD700", "#8A2BE2", "#FF1493"];
 
       function createLetter() {

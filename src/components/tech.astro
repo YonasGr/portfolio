@@ -29,7 +29,7 @@ try {
 }
 ---
 
-<section id="tech" class="section-container overflow-hidden">
+<section id="tech" class="section-container max-w-360 mx-auto overflow-hidden px-6 sm:px-12 md:px-14 lg:px-28">
   <div class="container mx-auto">
     <div class="tech-header flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
       <div>
@@ -135,7 +135,7 @@ try {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const target = entry.target;
+          const target = entry.target as HTMLElement;
           
           // Check if the intersecting element is the header
           if (target.classList.contains('tech-header')) {
