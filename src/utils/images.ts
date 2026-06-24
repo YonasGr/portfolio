@@ -41,6 +41,5 @@ export async function resolveAssetImage(
     }
   }
 
-  console.warn(`[Image Utility] Asset not found for path: ${photoUrl}`);
   return null;
 }
