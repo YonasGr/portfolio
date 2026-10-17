@@ -23,7 +23,7 @@ const defaultTheme = `${baseTheme}-dark`;
     <!-- Prevent theme flash -->
     <script is:inline define:vars={{ defaultTheme }}>
       (function() {
-        const valid = ['default-dark','default-light','strategic-dark','strategic-light','innovator-dark','innovator-light','executive-dark','executive-light'];
+        const valid = ['default-dark','default-light'];
         try {
           const saved = localStorage.getItem('theme');
           document.documentElement.setAttribute('data-theme', (saved && valid.includes(saved)) ? saved : defaultTheme);
@@ -34,23 +34,11 @@ const defaultTheme = `${baseTheme}-dark`;
     </script>
   </head>
 
-  <body style="background-color: var(--bg); color: var(--text-1);" class="relative min-h-screen w-full overflow-x-hidden antialiased">
+  <body class="relative min-h-screen w-full overflow-x-hidden antialiased">
+    <a href="#home" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-[var(--accent)] focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:text-[var(--on-accent)]">
+      Skip to content
+    </a>
 
-    <!-- Noise texture overlay (very subtle) -->
-    <div
-      class="fixed inset-0 -z-20 pointer-events-none"
-      style="background-image: url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E\"); background-size: 200px; opacity: 0.4;"
-      aria-hidden="true"
-    ></div>
-
-    <!-- Accent glow — top center -->
-    <div
-      class="fixed -z-10 top-[-20vh] left-1/2 -translate-x-1/2 w-[70vw] max-w-[900px] h-[55vh] pointer-events-none"
-      style="background: radial-gradient(ellipse at 50% 0%, rgba(var(--accent-rgb), 0.12) 0%, transparent 70%); transition: background 0.5s ease;"
-      aria-hidden="true"
-    ></div>
-
-    <!-- Slot — NO container padding here, sections handle their own padding -->
     <slot />
 
     <!-- Floating Buy Me a Coffee button -->
@@ -59,7 +47,7 @@ const defaultTheme = `${baseTheme}-dark`;
     <!-- Back-to-top button -->
     <button
       id="to-top"
-      class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-40 w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center transition-all duration-300 translate-y-14 opacity-0 pointer-events-none cursor-pointer"
+      class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-40 w-10 h-10 sm:w-11 sm:h-11 rounded-lg flex items-center justify-center transition-all duration-300 translate-y-14 opacity-0 pointer-events-none cursor-pointer"
       style="background: var(--surface-2); border: 1px solid var(--border);"
       aria-label="Back to top"
     >

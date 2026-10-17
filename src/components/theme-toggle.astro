@@ -3,13 +3,14 @@
 <button 
   id="theme-toggle" 
   type="button"
-  class="relative p-2 rounded-full text-subtext hover:text-accent hover:bg-accent/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-200 flex items-center justify-center cursor-pointer"
+  class="relative flex h-10 w-10 items-center justify-center rounded-md transition-colors duration-200 cursor-pointer"
+  style="border: 1px solid var(--border); color: var(--text-2);"
   aria-label="Toggle light and dark color themes"
   title="Toggle Theme"
 >
   <!-- Sun icon (shown in dark theme -> click to switch to light) -->
   <svg 
-    class="sun-icon w-4 h-4 sm:w-4.5 sm:h-4.5 text-subtext hover:text-accent transition-colors duration-200" 
+    class="sun-icon w-4 h-4 transition-colors duration-200"
     xmlns="http://www.w3.org/2000/svg" 
     viewBox="0 0 24 24" 
     fill="none" 
@@ -31,7 +32,7 @@
   
   <!-- Moon icon (shown in light theme -> click to switch to dark) -->
   <svg 
-    class="moon-icon w-4 h-4 sm:w-4.5 sm:h-4.5 text-subtext hover:text-accent transition-colors duration-200" 
+    class="moon-icon w-4 h-4 transition-colors duration-200"
     xmlns="http://www.w3.org/2000/svg" 
     viewBox="0 0 24 24" 
     fill="none" 
@@ -57,6 +58,12 @@
   }
   :global([data-theme$="-light"]) .moon-icon {
     display: block;
+  }
+
+  button:hover {
+    border-color: var(--border-accent);
+    color: var(--text-1);
+    background: var(--surface-2);
   }
 </style>
 

@@ -15,12 +15,12 @@ const bmcUrl = `https://www.buymeacoffee.com/${username}`;
     target="_blank"
     rel="noopener noreferrer"
     aria-label="Buy me a coffee on BuyMeACoffee.com"
-    class="fixed bottom-6 left-6 sm:bottom-8 sm:left-8 z-40 group flex items-center gap-2.5 px-3.5 py-2.5 sm:px-4 sm:py-2.5 rounded-full backdrop-blur-xl shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFDD00]"
-    style="background: rgba(18, 18, 22, 0.85); border: 1px solid rgba(255, 221, 0, 0.35); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 221, 0, 0.15);"
+    class="fixed bottom-6 left-6 sm:bottom-8 sm:left-8 z-40 group flex items-center gap-2.5 px-3.5 py-2.5 sm:px-4 sm:py-2.5 rounded-md transition-colors duration-200 hover:border-[var(--border-accent)] cursor-pointer no-underline"
+    style="background: var(--surface); border: 1px solid var(--border);"
   >
     <!-- BMC Coffee Cup Icon with subtle hover rotation -->
     <div class="relative flex items-center justify-center">
-      <div class="bmc-icon-bg w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center bg-[#FFDD00] text-black shadow-sm transition-transform duration-300 group-hover:rotate-12">
+      <div class="bmc-icon-bg w-7 h-7 sm:w-8 sm:h-8 rounded-md flex items-center justify-center bg-[var(--accent)] text-[var(--on-accent)]">
         <svg
           viewBox="0 0 24 24"
           class="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-current"
@@ -31,17 +31,16 @@ const bmcUrl = `https://www.buymeacoffee.com/${username}`;
       </div>
       <!-- Subtle ping animation -->
       <span class="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
-        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FFDD00] opacity-75"></span>
-        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#FFDD00]"></span>
+        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--accent)]"></span>
       </span>
     </div>
 
     <!-- Label text -->
     <div class="flex flex-col items-start leading-none pr-1">
-      <span class="font-mono text-[9px] tracking-[0.14em] uppercase font-semibold text-[#FFDD00]/90">
+      <span class="font-mono text-[9px] tracking-[0.14em] uppercase font-semibold text-[var(--accent)]">
         Support
       </span>
-      <span class="font-heading font-bold text-xs sm:text-sm text-white tracking-tight group-hover:text-[#FFDD00] transition-colors duration-200">
+      <span class="font-heading font-semibold text-xs sm:text-sm text-[var(--text-1)] tracking-tight transition-colors duration-200">
         Buy me a coffee
       </span>
     </div>
@@ -53,19 +52,14 @@ const bmcUrl = `https://www.buymeacoffee.com/${username}`;
     animation: bmc-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
-  #bmc-floating-btn:hover {
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 221, 0, 0.4) !important;
-    border-color: rgba(255, 221, 0, 0.75) !important;
-  }
-
   @keyframes bmc-fade-in {
     from {
       opacity: 0;
-      transform: translateY(20px) scale(0.95);
+      transform: translateY(12px);
     }
     to {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: translateY(0);
     }
   }
 </style>

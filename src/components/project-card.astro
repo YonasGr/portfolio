@@ -42,35 +42,29 @@ if (!primaryImage && project.images && project.images.length > 0) {
       <Image
         src={primaryImage}
         alt={`${project.title} architectural overview`}
-        class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-[1.02]"
+        class="w-full h-full object-cover object-center"
         loading="lazy"
       />
     ) : (
-      <div class="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-[#0c1017] to-[#040608]">
+      <div class="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-[var(--bg-alt)]">
         <Icon name="mdi:image-outline" class="w-12 h-12 text-[var(--accent)] opacity-40 mb-2" />
         <span class="font-mono text-xs text-[var(--text-3)]">PREVIEW COMING SOON</span>
       </div>
     )}
 
-    <!-- Clean Vignette Gradient -->
-    <div
-      class="absolute inset-0 pointer-events-none"
-      style="background: linear-gradient(to top, var(--bg) 0%, transparent 60%); opacity: 0.8;"
-    ></div>
-
     <!-- Floating Top Badges -->
     <div class="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between z-10 pointer-events-none">
       <div class="flex items-center gap-1.5">
-        <span class="px-2.5 py-1 rounded-full font-mono text-[10px] tracking-wider uppercase backdrop-blur-md" style="background: rgba(8,8,9,0.8); color: var(--accent); border: 1px solid var(--border-accent);">
+        <span class="px-2.5 py-1 rounded-md font-mono text-[10px] tracking-wider uppercase" style="background: var(--surface); color: var(--accent); border: 1px solid var(--border-accent);">
           {project.category}
         </span>
         {project.platforms && project.platforms.length > 0 && (
-          <span class="hidden sm:inline-flex px-2.5 py-1 rounded-full font-mono text-[10px] backdrop-blur-md" style="background: rgba(8,8,9,0.8); color: var(--text-2); border: 1px solid var(--border);">
+          <span class="hidden sm:inline-flex px-2.5 py-1 rounded-md font-mono text-[10px]" style="background: var(--surface); color: var(--text-2); border: 1px solid var(--border);">
             {project.platforms.join(' · ')}
           </span>
         )}
       </div>
-      <span class="px-2.5 py-1 rounded-full font-mono text-[10px] backdrop-blur-md" style="background: rgba(8,8,9,0.8); color: var(--text-2); border: 1px solid var(--border);">
+      <span class="px-2.5 py-1 rounded-md font-mono text-[10px]" style="background: var(--surface); color: var(--text-2); border: 1px solid var(--border);">
         {project.year}
       </span>
     </div>
@@ -102,8 +96,8 @@ if (!primaryImage && project.images && project.images.length > 0) {
           const lbl = isObj ? m.label : 'VERIFIED METRIC';
           return (
             <div
-              class="flex flex-col justify-center p-3 rounded-xl transition-colors duration-200"
-              style="background: var(--surface-2); border: 1px solid var(--border);"
+              class="flex flex-col justify-center p-3 rounded-md transition-colors duration-200"
+              style="background: var(--surface-2);"
             >
               <span class="font-heading font-black text-sm sm:text-base text-[var(--accent)] truncate">
                 {val}

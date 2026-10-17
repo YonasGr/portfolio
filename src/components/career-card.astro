@@ -128,7 +128,7 @@ const nodeIcon = getNodeIcon(item.type, item.role);
     <!-- CENTER ORBIT HUD BEACON (Desktop & Mobile anchor) -->
     <div class="node-beacon-slot relative z-10 flex flex-col items-center justify-center pt-1.5 sm:pt-2 lg:pt-0">
       <div
-        class={`beacon-disc relative flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-full backdrop-blur-md transition-all duration-300 ${
+        class={`beacon-disc relative flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-full transition-colors duration-300 ${
           isFirst ? 'is-active-beacon' : ''
         }`}
       >
@@ -296,8 +296,7 @@ const nodeIcon = getNodeIcon(item.type, item.role);
   .cyber-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    backdrop-filter: blur(12px);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: border-color 180ms ease, background-color 180ms ease;
   }
 
   .cyber-card::before {
@@ -309,7 +308,7 @@ const nodeIcon = getNodeIcon(item.type, item.role);
     height: 2px;
     background: var(--accent);
     opacity: 0.6;
-    transition: width 0.3s ease, opacity 0.3s ease;
+    transition: opacity 180ms ease;
   }
 
   @media (min-width: 640px) {
@@ -321,13 +320,12 @@ const nodeIcon = getNodeIcon(item.type, item.role);
   .cyber-node-row:hover .cyber-card {
     border-color: var(--border-accent);
     background: var(--surface-2);
-    transform: translateY(-2px);
-    box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-dim);
+    transform: none;
   }
 
   @media (min-width: 1024px) {
     .cyber-node-row:hover .cyber-card {
-      transform: translateY(-3px);
+      transform: none;
     }
   }
 
@@ -353,5 +351,3 @@ const nodeIcon = getNodeIcon(item.type, item.role);
     box-shadow: 0 0 16px var(--accent-dim);
   }
 </style>
-
-

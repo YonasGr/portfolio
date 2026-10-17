@@ -13,7 +13,7 @@ import { Icon } from 'astro-icon/components';
     <div class="space-y-2">
       <div class="label flex items-center gap-2 text-[11px] sm:text-xs">
         <Icon name="mdi:radar" class="w-3.5 h-3.5 text-[var(--accent)] animate-pulse" />
-        01 — Journey & Roadmap
+        Career journey
       </div>
       <h2
         class="font-heading font-black tracking-[-0.04em] leading-[0.94]"
@@ -25,7 +25,7 @@ import { Icon } from 'astro-icon/components';
 
     <!-- Telemetry status indicator -->
     <div
-      class="inline-flex items-center gap-2.5 self-start sm:self-auto px-3.5 py-2 rounded-full font-mono text-[11px] sm:text-xs backdrop-blur-md shrink-0"
+      class="inline-flex items-center gap-2.5 self-start sm:self-auto px-3.5 py-2 rounded-md font-mono text-[11px] sm:text-xs shrink-0"
       style="border: 1px solid var(--border); color: var(--text-2); background: var(--surface);"
     >
       <span class="relative flex h-2 w-2 sm:h-2.5 sm:w-2.5">
@@ -72,14 +72,7 @@ import { Icon } from 'astro-icon/components';
     bottom: 1.5rem;
     left: 19px; /* Centered with 40px mobile beacon column (20px - 1px) */
     width: 2px;
-    background: linear-gradient(
-      180deg,
-      var(--accent) 0%,
-      rgba(var(--accent-rgb), 0.35) 50%,
-      rgba(var(--accent-rgb), 0.1) 90%,
-      transparent 100%
-    );
-    box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.3);
+    background: var(--border);
     pointer-events: none;
     z-index: 1;
   }
@@ -104,9 +97,9 @@ import { Icon } from 'astro-icon/components';
     left: -2px;
     width: 6px;
     height: 42px;
-    background: linear-gradient(180deg, transparent, var(--accent), #ffffff);
+    background: var(--accent);
     border-radius: 9999px;
-    box-shadow: 0 0 12px var(--accent), 0 0 20px rgba(var(--accent-rgb), 0.7);
+    box-shadow: none;
     animation: photonTravel 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
 

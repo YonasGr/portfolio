@@ -27,7 +27,7 @@ const resolvedProjects = await Promise.all(
     <div class="space-y-2">
       <div class="label flex items-center gap-2 text-[11px] sm:text-xs">
         <Icon name="mdi:layers-outline" class="w-3.5 h-3.5 text-[var(--accent)]" />
-        02 — Selected Work
+        Selected work
       </div>
       <h2
         class="font-heading font-black tracking-[-0.04em] leading-[0.94]"
@@ -87,7 +87,7 @@ const resolvedProjects = await Promise.all(
     <div class="hidden lg:flex flex-col gap-3 dossier-list-col">
       <div class="flex items-center justify-between px-1 pb-1">
         <span class="font-mono text-[11px] uppercase tracking-wider text-[var(--text-3)]">
-          Projects List ({resolvedProjects.length})
+        Projects ({resolvedProjects.length})
         </span>
         <span class="font-mono text-[10px] text-[var(--text-2)]">
           Select to View
@@ -142,7 +142,7 @@ const resolvedProjects = await Promise.all(
 
     <!-- RIGHT PANE: Sticky Live Blueprint Terminal Monitor -->
     <div class="blueprint-monitor-wrapper w-full">
-      <div class="blueprint-screen relative w-full rounded-2xl sm:rounded-3xl overflow-hidden backdrop-blur-xl">
+      <div class="blueprint-screen relative w-full rounded-xl overflow-hidden">
         {resolvedProjects.map((p, idx) => (
           <div
             id={`blueprint-${p.id}`}
@@ -169,13 +169,13 @@ const resolvedProjects = await Promise.all(
   .dossier-card:hover {
     border-color: var(--border-accent);
     background: var(--surface-2);
-    transform: translateY(-2px);
+    transform: none;
   }
 
   .dossier-card.active-dossier {
     border-color: var(--border-accent);
     background: var(--surface-2);
-    box-shadow: 0 10px 28px -8px rgba(0, 0, 0, 0.4), 0 0 16px var(--accent-dim-2);
+    box-shadow: none;
   }
 
   /* Blueprint Monitor sticky frame */
@@ -189,7 +189,7 @@ const resolvedProjects = await Promise.all(
   .blueprint-screen {
     background: var(--surface);
     border: 1px solid var(--border-accent);
-    box-shadow: 0 20px 60px -16px rgba(0, 0, 0, 0.6);
+    box-shadow: none;
   }
 
   /* Mobile scrollable tabs */
@@ -208,7 +208,7 @@ const resolvedProjects = await Promise.all(
     background: var(--accent);
     color: var(--on-accent);
     border-color: var(--accent);
-    box-shadow: 0 0 12px var(--glow);
+    box-shadow: none;
   }
 
   .no-scrollbar::-webkit-scrollbar {
@@ -291,5 +291,3 @@ const resolvedProjects = await Promise.all(
   setupBlueprintDeck();
   document.addEventListener('astro:after-swap', setupBlueprintDeck);
 </script>
-
-
