@@ -1,0 +1,53 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { controlBase, buttonVariants, type ButtonVariant } from "./styles";
+
+interface Props extends HTMLAttributes<"a"> {
+  /** Accessible name. Required because the control has no visible text. */
+  label: string;
+  variant?: Exclude<ButtonVariant, "primary" | "secondary">;
+  href?: string;
+  disabled?: boolean;
+}
+
+const {
+  label,
+  variant = "outline",
+  href,
+  disabled = false,
+  class: className,
+  type,
+  ...rest
+} = Astro.props;
+
+const isLink = typeof href === "string";
+const external = isLink && /^https?:\/\//.test(href);
+// Standalone icons are size-5 (20px) per the design rules.
+const classes = [controlBase, buttonVariants[variant], "size-10 [&_svg]:size-5 [&_svg]:shrink-0", className];
+---
+
+{
+  isLink ? (
+    <a
+      href={href}
+      aria-label={label}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
+      aria-disabled={disabled ? "true" : undefined}
+      class:list={classes}
+      {...rest}
+    >
+      <slot />
+    </a>
+  ) : (
+    <button
+      type={(type as "button" | "submit" | "reset" | undefined) ?? "button"}
+      aria-label={label}
+      disabled={disabled}
+      class:list={classes}
+      {...rest}
+    >
+      <slot />
+    </button>
+  )
+}

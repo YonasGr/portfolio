@@ -1,0 +1,55 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import {
+  controlBase,
+  buttonVariants,
+  buttonSizes,
+  type ButtonVariant,
+  type ButtonSize,
+} from "./styles";
+
+interface Props extends HTMLAttributes<"a"> {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  href?: string;
+  disabled?: boolean;
+}
+
+const {
+  variant = "secondary",
+  size = "md",
+  href,
+  disabled = false,
+  class: className,
+  type,
+  ...rest
+} = Astro.props;
+
+const isLink = typeof href === "string";
+const external = isLink && /^https?:\/\//.test(href);
+const classes = [controlBase, buttonVariants[variant], buttonSizes[size], className];
+---
+
+{
+  isLink ? (
+    <a
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
+      aria-disabled={disabled ? "true" : undefined}
+      class:list={classes}
+      {...rest}
+    >
+      <slot />
+    </a>
+  ) : (
+    <button
+      type={(type as "button" | "submit" | "reset" | undefined) ?? "button"}
+      disabled={disabled}
+      class:list={classes}
+      {...rest}
+    >
+      <slot />
+    </button>
+  )
+}

@@ -1,4 +1,7 @@
 ---
+import { Icon } from "astro-icon/components";
+import Button from "./ui/button.astro";
+
 interface Props {
   username?: string;
 }
@@ -7,59 +10,14 @@ const { username = "yonasgr" } = Astro.props;
 const bmcUrl = `https://www.buymeacoffee.com/${username}`;
 ---
 
-<!-- Floating Buy Me a Coffee Button -->
-<aside aria-label="Support creator">
-  <a
-    id="bmc-floating-btn"
+<aside aria-label="Support">
+  <Button
+    variant="floating"
     href={bmcUrl}
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Buy me a coffee on BuyMeACoffee.com"
-    class="fixed bottom-6 left-6 sm:bottom-8 sm:left-8 z-40 group flex items-center gap-2.5 px-3.5 py-2.5 sm:px-4 sm:py-2.5 rounded-md transition-colors duration-200 hover:border-[var(--border-accent)] cursor-pointer no-underline"
-    style="background: var(--surface); border: 1px solid var(--border);"
+    aria-label="Buy me a coffee"
+    class="fixed bottom-6 left-6 z-40 max-sm:w-10 max-sm:px-0"
   >
-    <!-- BMC Coffee Cup Icon with subtle hover rotation -->
-    <div class="relative flex items-center justify-center">
-      <div class="bmc-icon-bg w-7 h-7 sm:w-8 sm:h-8 rounded-md flex items-center justify-center bg-[var(--accent)] text-[var(--on-accent)]">
-        <svg
-          viewBox="0 0 24 24"
-          class="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-current"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M20.216 6.415l-.132-.666c-.119-.597-.388-1.156-.78-1.618-.393-.462-.897-.813-1.464-1.018l-.51-.184C16.143 2.502 14.862 2 12.001 2c-2.863 0-4.144.502-5.33.93l-.51.183c-.567.206-1.07.557-1.463 1.02-.393.461-.662 1.02-.781 1.617l-.134.665c-.888.423-1.458 1.306-1.458 2.296 0 1.258.91 2.316 2.144 2.518l.74 5.922C5.474 19.387 7.37 21 9.615 21h4.77c2.245 0 4.14-1.613 4.405-3.849l.74-5.922c1.233-.202 2.143-1.26 2.143-2.518 0-.99-.57-1.873-1.457-2.296zM12 3.8c2.456 0 3.518.42 4.492.772.368.133.693.36.947.659.255.299.43.66.508 1.047l.08.404C16.89 6.88 14.8 7.2 12 7.2s-4.89-.32-6.027-.518l.08-.404c.078-.387.253-.748.508-1.047.254-.298.579-.526.947-.659C8.482 4.22 9.544 3.8 12 3.8zm-5.11 4.982C8.36 9.043 10.33 9.2 12 9.2s3.64-.157 5.11-.418l-.66 5.28C16.275 15.54 15.01 16.6 13.515 16.6H10.48c-1.496 0-2.76-1.06-2.935-2.538l-.66-5.28h.005zm10.985 0l-.134 1.07c-.015.123-.047.243-.095.357-.27.643-.88.991-1.57.991h-.316l.16-1.28c.677-.07 1.34-.176 1.955-.315v-.823zm-11.75 0v.823c.615.139 1.278.245 1.955.315l.16 1.28h-.316c-.69 0-1.3-.348-1.57-.99-.048-.115-.08-.235-.095-.358l-.134-1.07z"/>
-        </svg>
-      </div>
-      <!-- Subtle ping animation -->
-      <span class="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
-        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--accent)]"></span>
-      </span>
-    </div>
-
-    <!-- Label text -->
-    <div class="flex flex-col items-start leading-none pr-1">
-      <span class="font-mono text-[9px] tracking-[0.14em] uppercase font-semibold text-[var(--accent)]">
-        Support
-      </span>
-      <span class="font-heading font-semibold text-xs sm:text-sm text-[var(--text-1)] tracking-tight transition-colors duration-200">
-        Buy me a coffee
-      </span>
-    </div>
-  </a>
+    <Icon name="mdi:coffee-outline" aria-hidden="true" />
+    <span class="hidden sm:inline">Buy me a coffee</span>
+  </Button>
 </aside>
-
-<style>
-  #bmc-floating-btn {
-    animation: bmc-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-
-  @keyframes bmc-fade-in {
-    from {
-      opacity: 0;
-      transform: translateY(12px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-</style>

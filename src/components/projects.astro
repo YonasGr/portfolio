@@ -1,293 +1,96 @@
 ---
-import { Icon } from 'astro-icon/components';
-import projectsData from '../data/projects.json';
-import ProjectCard from './project-card.astro';
-import { resolveAssetImage } from '../utils/images';
+import projectsData from "../data/projects.json";
+import ProjectCard from "./project-card.astro";
+import Section from "./ui/section.astro";
+import SectionHeader from "./ui/section-header.astro";
+import EmptyState from "./ui/empty-state.astro";
+import { focusRing } from "./ui/styles";
+import { resolveAssetImage } from "../utils/images";
+import { email } from "../utils/profile";
+import type { Project, ResolvedProject } from "../types";
 
-// Pre-resolve all primary images for the projects
-const resolvedProjects = await Promise.all(
-  projectsData.map(async (p, idx) => {
-    const images = await Promise.all(p.images.map(img => resolveAssetImage(img)));
-    const primaryImg = images.find(Boolean) || null;
-    return {
-      ...p,
-      primaryImage: primaryImg,
-      index: idx,
-    };
-  })
+const projects: ResolvedProject[] = await Promise.all(
+  (projectsData as Project[]).map(async (p) => {
+    const images = await Promise.all((p.images ?? []).map((img) => resolveAssetImage(img)));
+    return { ...p, primaryImage: images.find(Boolean) ?? null };
+  }),
 );
+
+const shortName = (title: string) => title.split("—")[0].trim();
 ---
 
-<section
-  id="projects"
-  class="reveal w-full py-16 sm:py-24 md:py-28 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 max-w-[1440px] mx-auto relative overflow-hidden"
->
-  <!-- Section Header -->
-  <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-5 sm:gap-6 mb-10 sm:mb-14 lg:mb-16">
-    <div class="space-y-2">
-      <div class="label flex items-center gap-2 text-[11px] sm:text-xs">
-        <Icon name="mdi:layers-outline" class="w-3.5 h-3.5 text-[var(--accent)]" />
-        Selected work
-      </div>
-      <h2
-        class="font-heading font-black tracking-[-0.04em] leading-[0.94]"
-        style="font-size: clamp(2.1rem, 5.5vw, 4.25rem); color: var(--text-1);"
+<Section id="projects">
+  <SectionHeader
+    id="projects"
+    title="Selected projects"
+    description={projects.length > 0
+      ? `${projects.length} case ${projects.length === 1 ? "study" : "studies"} with stack, impact and links.`
+      : undefined}
+  />
+
+  {projects.length > 0 ? (
+    <div class="grid gap-6 lg:grid-cols-[20rem_1fr] lg:items-start xl:grid-cols-[22rem_1fr]">
+      <ul
+        aria-label="Projects"
+        class="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0 lg:pb-0"
       >
-        Featured<br /><span style="color: var(--accent);">Projects.</span>
-      </h2>
-    </div>
-
-    <!-- Clean, static milestone count -->
-    <div
-      class="hidden sm:flex items-center gap-2.5 px-4 py-2 rounded-full font-mono text-xs"
-      style="border: 1px solid var(--border); color: var(--text-2); background: var(--surface);"
-    >
-      <span class="w-2 h-2 rounded-full" style="background: var(--accent);"></span>
-      {projectsData.length} Case Studies
-    </div>
-  </div>
-
-  <!-- Mobile Quick Scroller Tabs (< 1024px) -->
-  <div class="block lg:hidden mb-6">
-    <div class="flex items-center justify-between gap-2 mb-2.5 px-1">
-      <span class="font-mono text-[11px] text-[var(--accent)] uppercase tracking-wider">
-        Select Project (1 — {resolvedProjects.length})
-      </span>
-      <div class="flex items-center gap-1 text-[var(--text-2)] font-mono text-[11px]">
-        <button id="mobile-prev-btn" class="p-1.5 rounded-lg hover:text-[var(--accent)] hover:bg-[var(--surface-2)] transition-colors cursor-pointer" aria-label="Previous Project">
-          <Icon name="mdi:chevron-left" class="w-4 h-4" />
-        </button>
-        <button id="mobile-next-btn" class="p-1.5 rounded-lg hover:text-[var(--accent)] hover:bg-[var(--surface-2)] transition-colors cursor-pointer" aria-label="Next Project">
-          <Icon name="mdi:chevron-right" class="w-4 h-4" />
-        </button>
-      </div>
-    </div>
-
-    <!-- Horizontal scrollable project buttons on mobile -->
-    <div class="mobile-tabs-scroller flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
-      {resolvedProjects.map((p, idx) => (
-        <button
-          class={`mobile-proj-tab shrink-0 px-3.5 py-2 rounded-xl font-heading text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer ${
-            idx === 0 ? 'active-mobile-tab' : ''
-          }`}
-          data-target-id={p.id}
-          data-index={idx}
-        >
-          <span class="font-mono text-[10px] opacity-70">0{idx + 1}</span>
-          <span class="truncate max-w-[140px]">{p.title.split('—')[0].trim()}</span>
-        </button>
-      ))}
-    </div>
-  </div>
-
-  <!-- Dual-Pane Blueprint Deck Layout -->
-  <div class="grid grid-cols-1 lg:grid-cols-[380px_1fr] xl:grid-cols-[430px_1fr] gap-6 lg:gap-8 items-start">
-    
-    <!-- LEFT PANE: Project Navigation Dossier List (Desktop) -->
-    <div class="hidden lg:flex flex-col gap-3 dossier-list-col">
-      <div class="flex items-center justify-between px-1 pb-1">
-        <span class="font-mono text-[11px] uppercase tracking-wider text-[var(--text-3)]">
-        Projects ({resolvedProjects.length})
-        </span>
-        <span class="font-mono text-[10px] text-[var(--text-2)]">
-          Select to View
-        </span>
-      </div>
-
-      {resolvedProjects.map((p, idx) => {
-        const isFirst = idx === 0;
-        return (
-          <div
-            class={`dossier-card group p-5 rounded-2xl cursor-pointer transition-all duration-200 relative ${
-              isFirst ? 'active-dossier' : ''
-            }`}
-            data-target-id={p.id}
-            data-index={idx}
-          >
-            <!-- Card Header -->
-            <div class="flex items-center justify-between gap-2 mb-2">
-              <span class="font-mono text-xs font-bold text-[var(--accent)]">
-                0{idx + 1}
-              </span>
-              <span class="font-mono text-[10px] text-[var(--text-3)] px-2 py-0.5 rounded border border-[var(--border)]">
-                {p.year}
-              </span>
-            </div>
-
-            <!-- Title -->
-            <h3 class="font-heading font-black text-lg tracking-tight leading-snug mb-1 text-[var(--text-1)] group-hover:text-[var(--accent)] transition-colors duration-200">
-              {p.title.split('—')[0].trim()}
-            </h3>
-
-            <!-- Tagline -->
-            <p class="font-body text-xs text-[var(--text-2)] line-clamp-2 mb-3 leading-relaxed">
-              {p.tagline}
-            </p>
-
-            <!-- Quick Metrics / Category -->
-            <div class="flex flex-wrap items-center gap-1.5">
-              <span class="tag text-[10px] py-0.5 px-2">
-                {p.category}
-              </span>
-              {p.metrics && p.metrics.length > 0 && (
-                <span class="font-mono text-[10px] px-2 py-0.5 rounded text-[var(--text-2)] bg-[var(--surface-2)]">
-                  {typeof p.metrics[0] === 'string' ? p.metrics[0] : p.metrics[0].value}
+        {projects.map((p, idx) => (
+          <li class="w-64 shrink-0 lg:w-auto">
+            <button
+              type="button"
+              data-project-tab
+              aria-pressed={idx === 0 ? "true" : "false"}
+              aria-controls={`project-panel-${p.id}`}
+              class:list={[
+                "flex w-full min-w-0 cursor-pointer flex-col gap-1 rounded-xl border p-4 text-left transition-colors",
+                "border-zinc-200 bg-zinc-50/50 hover:border-zinc-300 active:bg-zinc-100",
+                "dark:border-zinc-800 dark:bg-zinc-900/40 dark:hover:border-zinc-700 dark:active:bg-zinc-900",
+                "aria-pressed:border-accent aria-pressed:bg-zinc-100 dark:aria-pressed:border-accent dark:aria-pressed:bg-zinc-900",
+                "disabled:pointer-events-none disabled:opacity-50",
+                focusRing,
+              ]}
+            >
+              <span class="flex min-w-0 items-center justify-between gap-2">
+                <span class="truncate text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+                  {shortName(p.title)}
                 </span>
-              )}
-            </div>
-          </div>
-        );
-      })}
-    </div>
+                <span class="shrink-0 text-xs tabular-nums text-zinc-400 dark:text-zinc-500">{p.year}</span>
+              </span>
+              <span class="hidden text-xs text-zinc-500 lg:line-clamp-2 dark:text-zinc-400">{p.tagline}</span>
+              <span class="truncate text-xs text-zinc-400 dark:text-zinc-500">{p.category}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
 
-    <!-- RIGHT PANE: Sticky Live Blueprint Terminal Monitor -->
-    <div class="blueprint-monitor-wrapper w-full">
-      <div class="blueprint-screen relative w-full rounded-xl overflow-hidden">
-        {resolvedProjects.map((p, idx) => (
-          <div
-            id={`blueprint-${p.id}`}
-            class={`blueprint-pane w-full transition-opacity duration-300 ${
-              idx === 0 ? 'block opacity-100' : 'hidden opacity-0'
-            }`}
-          >
-            <ProjectCard project={p} index={idx} totalProjects={resolvedProjects.length} />
-          </div>
+      <div class="min-w-0 lg:sticky lg:top-24">
+        {projects.map((p, idx) => (
+          <ProjectCard project={p} hidden={idx !== 0} />
         ))}
       </div>
     </div>
-
-  </div>
-</section>
-
-<style>
-  /* Dossier card styling */
-  .dossier-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-  }
-
-  .dossier-card:hover {
-    border-color: var(--border-accent);
-    background: var(--surface-2);
-    transform: none;
-  }
-
-  .dossier-card.active-dossier {
-    border-color: var(--border-accent);
-    background: var(--surface-2);
-    box-shadow: none;
-  }
-
-  /* Blueprint Monitor sticky frame */
-  @media (min-width: 1024px) {
-    .blueprint-monitor-wrapper {
-      position: sticky;
-      top: 5.5rem;
-    }
-  }
-
-  .blueprint-screen {
-    background: var(--surface);
-    border: 1px solid var(--border-accent);
-    box-shadow: none;
-  }
-
-  /* Mobile scrollable tabs */
-  .mobile-proj-tab {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text-2);
-  }
-
-  .mobile-proj-tab:hover {
-    background: var(--surface-2);
-    color: var(--text-1);
-  }
-
-  .mobile-proj-tab.active-mobile-tab {
-    background: var(--accent);
-    color: var(--on-accent);
-    border-color: var(--accent);
-    box-shadow: none;
-  }
-
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-</style>
+  ) : (
+    <EmptyState
+      title="No projects published yet"
+      description="Case studies are on their way. In the meantime, I'm happy to walk through relevant work."
+      actionLabel="Ask about my work"
+      actionHref={`mailto:${email}`}
+    />
+  )}
+</Section>
 
 <script>
-  function setupBlueprintDeck() {
-    const dossierCards = document.querySelectorAll('.dossier-card');
-    const mobileTabs = document.querySelectorAll('.mobile-proj-tab');
-    const blueprintPanes = document.querySelectorAll('.blueprint-pane');
-    let currentIndex = 0;
-    const total = dossierCards.length || mobileTabs.length;
+  const tabs = document.querySelectorAll<HTMLButtonElement>("[data-project-tab]");
+  const panels = document.querySelectorAll<HTMLElement>("[data-project-panel]");
 
-    function selectProject(index: number) {
-      if (index < 0 || index >= total) return;
-      currentIndex = index;
-
-      // Update Desktop Dossiers
-      dossierCards.forEach((card, idx) => {
-        if (idx === index) {
-          card.classList.add('active-dossier');
-        } else {
-          card.classList.remove('active-dossier');
-        }
-      });
-
-      // Update Mobile Tabs
-      mobileTabs.forEach((tab, idx) => {
-        if (idx === index) {
-          tab.classList.add('active-mobile-tab');
-          tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-        } else {
-          tab.classList.remove('active-mobile-tab');
-        }
-      });
-
-      // Update Blueprint Panes
-      blueprintPanes.forEach((pane, idx) => {
-        if (idx === index) {
-          pane.classList.remove('hidden');
-          setTimeout(() => pane.classList.add('opacity-100'), 20);
-        } else {
-          pane.classList.remove('opacity-100');
-          pane.classList.add('hidden');
-        }
-      });
-    }
-
-    // Attach Desktop click handlers
-    dossierCards.forEach((card, idx) => {
-      card.addEventListener('click', () => selectProject(idx));
+  const select = (index: number) => {
+    tabs.forEach((tab, i) => tab.setAttribute("aria-pressed", String(i === index)));
+    panels.forEach((panel, i) => {
+      panel.hidden = i !== index;
     });
+    // Keeps the active tab in view inside the horizontal scroller on small screens.
+    tabs[index]?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+  };
 
-    // Attach Mobile click handlers
-    mobileTabs.forEach((tab, idx) => {
-      tab.addEventListener('click', () => selectProject(idx));
-    });
-
-    // Attach Mobile Next / Prev buttons
-    const prevBtn = document.getElementById('mobile-prev-btn');
-    const nextBtn = document.getElementById('mobile-next-btn');
-
-    prevBtn?.addEventListener('click', () => {
-      const nextIdx = (currentIndex - 1 + total) % total;
-      selectProject(nextIdx);
-    });
-
-    nextBtn?.addEventListener('click', () => {
-      const nextIdx = (currentIndex + 1) % total;
-      selectProject(nextIdx);
-    });
-  }
-
-  setupBlueprintDeck();
-  document.addEventListener('astro:after-swap', setupBlueprintDeck);
+  tabs.forEach((tab, i) => tab.addEventListener("click", () => select(i)));
 </script>

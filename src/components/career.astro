@@ -1,129 +1,32 @@
 ---
-import careerData from '../data/career.json';
-import CareerCard from './career-card.astro';
-import { Icon } from 'astro-icon/components';
+import careerData from "../data/career.json";
+import CareerCard from "./career-card.astro";
+import Section from "./ui/section.astro";
+import SectionHeader from "./ui/section-header.astro";
+import EmptyState from "./ui/empty-state.astro";
+import { email } from "../utils/profile";
+import type { CareerItem } from "../types";
+
+const items = careerData as CareerItem[];
 ---
 
-<section
-  id="career"
-  class="reveal w-full py-16 sm:py-24 md:py-28 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 max-w-[1440px] mx-auto relative overflow-hidden"
->
-  <!-- Section header -->
-  <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-5 sm:gap-6 mb-12 sm:mb-16 lg:mb-20">
-    <div class="space-y-2">
-      <div class="label flex items-center gap-2 text-[11px] sm:text-xs">
-        <Icon name="mdi:radar" class="w-3.5 h-3.5 text-[var(--accent)] animate-pulse" />
-        Career journey
-      </div>
-      <h2
-        class="font-heading font-black tracking-[-0.04em] leading-[0.94]"
-        style="font-size: clamp(2.1rem, 5.5vw, 4.25rem); color: var(--text-1);"
-      >
-        Experience &<br /><span style="color: var(--accent);">Milestones.</span>
-      </h2>
-    </div>
+<Section id="career">
+  <SectionHeader
+    id="career"
+    title="Experience"
+    description="Roles, responsibilities and outcomes, most recent first."
+  />
 
-    <!-- Telemetry status indicator -->
-    <div
-      class="inline-flex items-center gap-2.5 self-start sm:self-auto px-3.5 py-2 rounded-md font-mono text-[11px] sm:text-xs shrink-0"
-      style="border: 1px solid var(--border); color: var(--text-2); background: var(--surface);"
-    >
-      <span class="relative flex h-2 w-2 sm:h-2.5 sm:w-2.5">
-        <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style="background: var(--accent);"></span>
-        <span class="relative inline-flex rounded-full h-2 w-2 sm:h-2.5 sm:w-2.5" style="background: var(--accent);"></span>
-      </span>
-      <span>2018 — Present</span>
-      <span style="color: var(--text-3);">·</span>
-      <span style="color: var(--accent);" class="font-semibold">{careerData.length} Flight Phases</span>
-    </div>
-  </div>
-
-  <!-- Cyber-Conduit Rail Container -->
-  <div class="cyber-conduit-wrapper relative w-full">
-    <!-- Vertical Laser Conduit Track -->
-    <div class="laser-track" aria-hidden="true">
-      <div class="laser-photon"></div>
-    </div>
-
-    <!-- Timeline Nodes -->
-    <div class="flex flex-col gap-8 sm:gap-12 lg:gap-16">
-      {careerData.map((item, index) => (
-        <CareerCard
-          item={item}
-          isFirst={index === 0}
-          index={index}
-          isEven={index % 2 === 0}
-        />
-      ))}
-    </div>
-  </div>
-</section>
-
-<style>
-  .cyber-conduit-wrapper {
-    position: relative;
-    width: 100%;
-  }
-
-  /* Vertical glowing conduit rail - precisely centered with beacon at all breakpoints */
-  .laser-track {
-    position: absolute;
-    top: 1.5rem;
-    bottom: 1.5rem;
-    left: 19px; /* Centered with 40px mobile beacon column (20px - 1px) */
-    width: 2px;
-    background: var(--border);
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  @media (min-width: 640px) {
-    .laser-track {
-      left: 23px; /* Centered with 48px sm beacon column */
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .laser-track {
-      left: 50%;
-      transform: translateX(-50%);
-    }
-  }
-
-  /* Animated photon particle travelling down the conduit */
-  .laser-photon {
-    position: absolute;
-    top: 0;
-    left: -2px;
-    width: 6px;
-    height: 42px;
-    background: var(--accent);
-    border-radius: 9999px;
-    box-shadow: none;
-    animation: photonTravel 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  }
-
-  @keyframes photonTravel {
-    0% {
-      top: 0%;
-      opacity: 0;
-    }
-    10% {
-      opacity: 1;
-    }
-    90% {
-      opacity: 1;
-    }
-    100% {
-      top: 100%;
-      opacity: 0;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .laser-photon {
-      animation: none;
-      display: none;
-    }
-  }
-</style>
+  {items.length > 0 ? (
+    <ol class="divide-y divide-zinc-200 dark:divide-zinc-800">
+      {items.map((item) => <CareerCard item={item} />)}
+    </ol>
+  ) : (
+    <EmptyState
+      title="No experience listed yet"
+      description="Work history hasn't been added to this portfolio. Reach out for a CV."
+      actionLabel="Request a CV"
+      actionHref={`mailto:${email}`}
+    />
+  )}
+</Section>

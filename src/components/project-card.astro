@@ -1,177 +1,103 @@
 ---
-import { Icon } from 'astro-icon/components';
-import { Image } from 'astro:assets';
-import { resolveAssetImage } from '../utils/images';
+import { Icon } from "astro-icon/components";
+import Badge from "./ui/badge.astro";
+import Button from "./ui/button.astro";
+import Media from "./ui/media.astro";
+import { parseMetric } from "../utils/metrics";
+import type { ResolvedProject } from "../types";
 
 interface Props {
-  project: {
-    id: string;
-    title: string;
-    tagline: string;
-    description: string;
-    category: string;
-    featured?: boolean;
-    year: string;
-    impact?: string;
-    metrics?: string[] | { label: string; value: string }[];
-    highlights?: string[];
-    tech: string[];
-    platforms?: string[];
-    link?: string;
-    github?: string;
-    images: string[];
-    primaryImage?: any;
-  };
-  index?: number;
-  totalProjects?: number;
+  project: ResolvedProject;
+  hidden?: boolean;
 }
 
-const { project } = Astro.props;
-
-// Ensure primary image is available
-let primaryImage = project.primaryImage;
-if (!primaryImage && project.images && project.images.length > 0) {
-  primaryImage = await resolveAssetImage(project.images[0]);
-}
+const { project, hidden = false } = Astro.props;
+const metrics = (project.metrics ?? []).map(parseMetric);
 ---
 
-<article class="blueprint-card-pane flex flex-col w-full">
-  <!-- Clean Image Viewport Screen -->
-  <div class="viewport-screen relative w-full aspect-[16/9] sm:aspect-[21/9] overflow-hidden bg-[var(--bg-alt)] border-b border-[var(--border)]">
-    {primaryImage ? (
-      <Image
-        src={primaryImage}
-        alt={`${project.title} architectural overview`}
-        class="w-full h-full object-cover object-center"
-        loading="lazy"
-      />
-    ) : (
-      <div class="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-[var(--bg-alt)]">
-        <Icon name="mdi:image-outline" class="w-12 h-12 text-[var(--accent)] opacity-40 mb-2" />
-        <span class="font-mono text-xs text-[var(--text-3)]">PREVIEW COMING SOON</span>
-      </div>
-    )}
+<article
+  id={`project-panel-${project.id}`}
+  data-project-panel
+  hidden={hidden}
+  aria-label={project.title}
+  class="overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50/50 dark:border-zinc-800 dark:bg-zinc-900/40"
+>
+  {project.primaryImage ? (
+    <Media
+      src={project.primaryImage}
+      alt={`${project.title} preview`}
+      class="aspect-video w-full border-b border-zinc-200 sm:aspect-[21/9] dark:border-zinc-800"
+    />
+  ) : (
+    <div class="flex aspect-video w-full flex-col items-center justify-center gap-2 border-b border-zinc-200 bg-zinc-100 sm:aspect-[21/9] dark:border-zinc-800 dark:bg-zinc-900">
+      <Icon name="mdi:image-outline" class="size-5 shrink-0 text-zinc-400 dark:text-zinc-500" aria-hidden="true" />
+      <p class="text-xs text-zinc-400 dark:text-zinc-500">Preview coming soon</p>
+    </div>
+  )}
 
-    <!-- Floating Top Badges -->
-    <div class="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between z-10 pointer-events-none">
-      <div class="flex items-center gap-1.5">
-        <span class="px-2.5 py-1 rounded-md font-mono text-[10px] tracking-wider uppercase" style="background: var(--surface); color: var(--accent); border: 1px solid var(--border-accent);">
-          {project.category}
-        </span>
+  <div class="flex flex-col gap-6 p-6">
+    <header class="flex flex-col gap-2">
+      <div class="flex flex-wrap items-center gap-2">
+        <Badge>{project.category}</Badge>
+        <span class="text-xs tabular-nums text-zinc-400 dark:text-zinc-500">{project.year}</span>
         {project.platforms && project.platforms.length > 0 && (
-          <span class="hidden sm:inline-flex px-2.5 py-1 rounded-md font-mono text-[10px]" style="background: var(--surface); color: var(--text-2); border: 1px solid var(--border);">
-            {project.platforms.join(' · ')}
+          <span class="min-w-0 truncate text-xs text-zinc-400 dark:text-zinc-500">
+            {project.platforms.join(" · ")}
           </span>
         )}
       </div>
-      <span class="px-2.5 py-1 rounded-md font-mono text-[10px]" style="background: var(--surface); color: var(--text-2); border: 1px solid var(--border);">
-        {project.year}
-      </span>
-    </div>
-  </div>
-
-  <!-- Body Content -->
-  <div class="p-5 sm:p-7 lg:p-8 flex flex-col gap-5 sm:gap-6">
-    <!-- Title & Tagline -->
-    <div>
-      <h3 class="font-heading font-black text-xl sm:text-2xl lg:text-3xl tracking-tight leading-tight mb-1.5 text-[var(--text-1)]">
+      <h3 class="font-heading text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
         {project.title}
       </h3>
-      <p class="font-body text-xs sm:text-sm font-medium text-[var(--accent)] leading-relaxed">
-        {project.tagline}
-      </p>
-    </div>
+      <p class="text-sm text-zinc-500 dark:text-zinc-400">{project.tagline}</p>
+    </header>
 
-    <!-- Description -->
-    <p class="font-body text-xs sm:text-sm leading-relaxed text-[var(--text-2)]">
+    <p class="max-w-prose text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">
       {project.description}
     </p>
 
-    <!-- Performance Metrics Matrix -->
-    {project.metrics && project.metrics.length > 0 && (
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
-        {(project.metrics as any[]).map((m: any) => {
-          const isObj = typeof m === 'object' && m !== null;
-          const val = isObj ? m.value : m;
-          const lbl = isObj ? m.label : 'VERIFIED METRIC';
-          return (
-            <div
-              class="flex flex-col justify-center p-3 rounded-md transition-colors duration-200"
-              style="background: var(--surface-2);"
-            >
-              <span class="font-heading font-black text-sm sm:text-base text-[var(--accent)] truncate">
-                {val}
-              </span>
-              <span class="font-mono text-[9px] sm:text-[10px] uppercase tracking-wider text-[var(--text-2)] mt-0.5 truncate">
-                {lbl}
-              </span>
-            </div>
-          );
-        })}
-      </div>
-    )}
-
-    <!-- Architectural Highlights -->
-    {project.highlights && project.highlights.length > 0 && (
-      <div class="space-y-2 pt-2 border-t border-[var(--border)]">
-        <span class="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-[var(--text-3)] font-semibold">
-          Key Highlights:
-        </span>
-        <div class="space-y-2">
-          {project.highlights.map((h: string) => (
-            <div class="flex items-start gap-2 text-xs sm:text-sm text-[var(--text-2)] leading-relaxed">
-              <Icon name="mdi:chevron-right" class="w-4 h-4 shrink-0 text-[var(--accent)] mt-0.5" />
-              <span>{h}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    )}
-
-    <!-- Tech Stack & Action Buttons -->
-    <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-[var(--border)]">
-      <!-- Tech tags -->
-      <div class="flex flex-wrap gap-1.5">
-        {project.tech.map((t: string) => (
-          <span class="tag text-[10px] sm:text-[11px] py-1 px-2.5">
-            {t}
-          </span>
+    {metrics.length > 0 && (
+      <dl class="grid grid-cols-2 gap-4 border-y border-zinc-200 py-4 sm:grid-cols-4 dark:border-zinc-800">
+        {metrics.map((m) => (
+          <div class="flex min-w-0 flex-col-reverse gap-1">
+            {m.label && <dt class="truncate text-xs text-zinc-500 dark:text-zinc-400" title={m.label}>{m.label}</dt>}
+            <dd class="truncate text-xl font-semibold tabular-nums text-zinc-900 dark:text-zinc-50" title={m.value}>
+              {m.value}
+            </dd>
+          </div>
         ))}
-      </div>
+      </dl>
+    )}
 
-      <!-- Action Buttons -->
-      <div class="flex items-center gap-2">
-        {project.github && (
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-ghost text-xs py-2 px-3.5 flex items-center gap-1.5 rounded-full"
-            style="border-radius: 9999px; font-size: 0.78rem;"
-          >
-            <Icon name="mdi:github" class="w-4 h-4" />
-            <span>Repository</span>
-          </a>
-        )}
-        {project.link && (
-          <a
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-primary text-xs py-2 px-4 flex items-center gap-1.5 rounded-full"
-            style="border-radius: 9999px; font-size: 0.78rem;"
-          >
-            <span>Live Demo</span>
-            <Icon name="mdi:arrow-top-right" class="w-4 h-4" />
-          </a>
-        )}
-      </div>
-    </div>
+    {project.highlights && project.highlights.length > 0 && (
+      <ul class="flex max-w-prose list-disc flex-col gap-2 pl-4 text-sm leading-relaxed text-zinc-700 marker:text-zinc-400 dark:text-zinc-300 dark:marker:text-zinc-600">
+        {project.highlights.map((h) => <li>{h}</li>)}
+      </ul>
+    )}
+
+    <footer class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <ul class="flex min-w-0 flex-wrap gap-2" aria-label="Technologies used">
+        {project.tech.map((t) => (
+          <li class="min-w-0 max-w-full"><Badge>{t}</Badge></li>
+        ))}
+      </ul>
+
+      {(project.github || project.link) && (
+        <div class="flex shrink-0 items-center gap-2">
+          {project.github && (
+            <Button variant="outline" size="sm" href={project.github}>
+              <Icon name="mdi:github" aria-hidden="true" />
+              Repository
+            </Button>
+          )}
+          {project.link && (
+            <Button variant="secondary" size="sm" href={project.link}>
+              Live demo
+              <Icon name="mdi:arrow-top-right" aria-hidden="true" />
+            </Button>
+          )}
+        </div>
+      )}
+    </footer>
   </div>
 </article>
-
-<style>
-  .blueprint-card-pane {
-    background: transparent;
-  }
-</style>

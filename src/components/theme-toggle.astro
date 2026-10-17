@@ -1,90 +1,26 @@
 ---
+import { Icon } from "astro-icon/components";
+import IconButton from "./ui/icon-button.astro";
 ---
-<button 
-  id="theme-toggle" 
-  type="button"
-  class="relative flex h-10 w-10 items-center justify-center rounded-md transition-colors duration-200 cursor-pointer"
-  style="border: 1px solid var(--border); color: var(--text-2);"
-  aria-label="Toggle light and dark color themes"
-  title="Toggle Theme"
->
-  <!-- Sun icon (shown in dark theme -> click to switch to light) -->
-  <svg 
-    class="sun-icon w-4 h-4 transition-colors duration-200"
-    xmlns="http://www.w3.org/2000/svg" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    stroke-width="2" 
-    stroke-linecap="round" 
-    stroke-linejoin="round"
-  >
-    <circle cx="12" cy="12" r="4"></circle>
-    <path d="M12 2v2"></path>
-    <path d="M12 20v2"></path>
-    <path d="m4.93 4.93 1.41 1.41"></path>
-    <path d="m17.66 17.66 1.41 1.41"></path>
-    <path d="M2 12h2"></path>
-    <path d="M20 12h2"></path>
-    <path d="m6.34 17.66-1.41 1.41"></path>
-    <path d="m19.07 4.93-1.41 1.41"></path>
-  </svg>
-  
-  <!-- Moon icon (shown in light theme -> click to switch to dark) -->
-  <svg 
-    class="moon-icon w-4 h-4 transition-colors duration-200"
-    xmlns="http://www.w3.org/2000/svg" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    stroke-width="2" 
-    stroke-linecap="round" 
-    stroke-linejoin="round"
-  >
-    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-  </svg>
-</button>
 
-<style>
-  :global([data-theme$="-dark"]) .sun-icon {
-    display: block;
-  }
-  :global([data-theme$="-dark"]) .moon-icon {
-    display: none;
-  }
-  
-  :global([data-theme$="-light"]) .sun-icon {
-    display: none;
-  }
-  :global([data-theme$="-light"]) .moon-icon {
-    display: block;
-  }
-
-  button:hover {
-    border-color: var(--border-accent);
-    color: var(--text-1);
-    background: var(--surface-2);
-  }
-</style>
+<IconButton id="theme-toggle" label="Toggle light and dark theme" variant="outline">
+  <!-- Sun is shown in dark mode (click for light); moon in light mode. -->
+  <Icon name="mdi:white-balance-sunny" class="hidden dark:block" aria-hidden="true" />
+  <Icon name="mdi:moon-waning-crescent" class="block dark:hidden" aria-hidden="true" />
+</IconButton>
 
 <script>
-  function setupThemeToggle() {
-    const themeToggle = document.getElementById('theme-toggle');
-    if (!themeToggle) return;
-
-    themeToggle.addEventListener('click', () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'default-dark';
-      const isDark = currentTheme.endsWith('-dark');
-      
-      const newTheme = isDark 
-        ? currentTheme.replace('-dark', '-light') 
-        : currentTheme.replace('-light', '-dark');
-
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-    });
-  }
-
-  setupThemeToggle();
-  document.addEventListener('astro:after-swap', setupThemeToggle);
+  document.getElementById("theme-toggle")?.addEventListener("click", () => {
+    const root = document.documentElement;
+    const current = root.getAttribute("data-theme") ?? "default-dark";
+    const next = current.endsWith("-dark")
+      ? current.replace("-dark", "-light")
+      : current.replace("-light", "-dark");
+    root.setAttribute("data-theme", next);
+    try {
+      localStorage.setItem("theme", next);
+    } catch {
+      // Storage can be unavailable (private mode); the toggle still works for this visit.
+    }
+  });
 </script>

@@ -52,16 +52,22 @@ export const SITE_CONFIG = {
 ```
 *(The template will automatically handle the dark/light mode toggles for whichever base theme you choose!)*
 
+### 🧩 Design System
+The UI follows a strict, neutral design system (zinc scale, one brand accent, 4-tier type hierarchy, one primary action per page). The full rules live in [`.cursor/rules/ui-design-system.mdc`](.cursor/rules/ui-design-system.mdc), and shared primitives are in `src/components/ui/`. Change the brand accent in `src/styles/global.css` (`--accent`, `--on-accent`).
+
 ### 📁 Directory Structure
 ```
 ├── public/              # Global static assets (placeholder.jpg, favicon)
 ├── src/
 │   ├── assets/          # Project & Profile images (Supports automatic Astro optimization)
-│   ├── components/      # Reusable Astro components
+│   ├── components/      # Section components (home, career, projects, tech, contact…)
+│   │   └── ui/          # Design-system primitives: button, badge, section, empty-state…
 │   ├── data/            # JSON files for project data
 │   ├── layouts/         # Layout templates with Meta tags
 │   ├── pages/           # Site routes (index.astro)
 │   └── styles/          # global css styles
+│   ├── types.ts         # Shared data types
+│   ├── utils/           # Image resolver, profile helpers, metric parser
 │   └── config.ts        # Global site configuration
 ├── astro.config.mjs     # Astro configuration
 └── tsconfig.json        # Typescript configuration

@@ -1,196 +1,95 @@
 ---
-import { Image } from 'astro:assets';
-import { Icon } from 'astro-icon/components';
-import localData from '../data/home.json';
-import yonasgrAvatar from '../assets/profile-pic.jpg';
-
-const {
-  name = "Yonas Girma",
-  title = "Full-Stack Engineer & Creative Developer",
-  bio = "",
-  intro = "",
-  stats = [
-    { label: "Yrs Exp",    value: "3+" },
-    { label: "Apps",       value: "8+" },
-    { label: "Users",      value: "25k+" },
-    { label: "Tech",       value: "15+" },
-  ],
-  resumeUrl = "/yonasgr-resume.pdf",
-  socials = [],
-} = localData as any;
-
-const heroBio = bio || intro;
-const heroSocials = (socials as any[]).filter((s: any) => s.showInHero !== false && s.url && s.url !== "#");
-
-const heroBrandIcons: Record<string, { icon: string; color: string }> = {
-  "GitHub": { icon: "mdi:github", color: "#FFFFFF" },
-  "LinkedIn": { icon: "mdi:linkedin", color: "#0A66C2" },
-  "Telegram": { icon: "mdi:telegram", color: "#24A1DE" },
-  "WhatsApp": { icon: "mdi:whatsapp", color: "#25D366" },
-  "Twitter / X": { icon: "mdi:twitter", color: "#1DA1F2" },
-  "Instagram": { icon: "mdi:instagram", color: "#E1306C" },
-  "Facebook": { icon: "mdi:facebook", color: "#1877F2" },
-  "Email": { icon: "mdi:email-outline", color: "#EA4335" },
-  "Buy Me a Coffee": { icon: "mdi:coffee", color: "#FFDD00" },
-};
+import { Icon } from "astro-icon/components";
+import Button from "./ui/button.astro";
+import Media from "./ui/media.astro";
+import avatar from "../assets/profile-pic.jpg";
+import {
+  profileName,
+  profileTitle,
+  profileLocation,
+  profileBio,
+  resumeUrl,
+  stats,
+  heroSocials,
+} from "../utils/profile";
 ---
 
 <section
   id="home"
-  class="relative w-full min-h-[92vh] flex flex-col justify-between overflow-hidden"
-  style="padding-top: 4.5rem;"
+  aria-labelledby="home-title"
+  class="mx-auto w-full max-w-6xl px-4 pb-16 pt-32 sm:px-6 sm:pb-24 sm:pt-40 lg:px-8"
 >
-  <!-- Main Hero Grid -->
-  <div class="flex-1 flex items-center w-full max-w-[1440px] mx-auto px-5 sm:px-8 md:px-14 lg:px-20 py-10 sm:py-16">
-    <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-      
-      <!-- LEFT COLUMN — Intro & Actions (7 cols on lg) -->
-      <div class="lg:col-span-7 flex flex-col justify-center order-2 lg:order-1">
-        
-        <!-- Giant Name -->
-        <h1 class="hero-name font-heading font-semibold leading-[0.92] tracking-[-0.045em] mb-5 sm:mb-6">
-          <span style="color: var(--text-1);">{name.split(" ")[0]}</span>
-          <span style="color: var(--accent);">{name.split(" ").slice(1).join(" ")}<span style="color: var(--text-1);">.</span></span>
+  <div class="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center lg:gap-16">
+    <div class="order-2 flex min-w-0 flex-col gap-6 lg:order-1">
+      <header class="flex flex-col gap-2">
+        <h1
+          id="home-title"
+          class="font-heading text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50"
+        >
+          {profileName}
         </h1>
-
-        <!-- Role line -->
-        <p class="hero-role font-heading font-semibold tracking-tight mb-4 sm:mb-5" style="color: var(--text-1);">
-          {title}
-        </p>
-
-        <!-- Bio / Intro -->
-        {heroBio && (
-          <p class="font-body text-sm sm:text-base md:text-lg leading-relaxed mb-8 sm:mb-10 max-w-xl" style="color: var(--text-2);">
-            {heroBio}
+        <p class="text-sm text-zinc-700 dark:text-zinc-300">{profileTitle}</p>
+        {profileLocation && (
+          <p class="flex items-center gap-1 text-xs text-zinc-400 dark:text-zinc-500">
+            <Icon name="mdi:map-marker-outline" class="size-4 shrink-0" aria-hidden="true" />
+            <span class="truncate">{profileLocation}</span>
           </p>
         )}
+      </header>
 
-        <!-- CTAs -->
-        <div class="flex flex-wrap items-center gap-3.5 mb-10 sm:mb-12">
-          <a href="#projects" class="btn-primary group">
-            View Work
-            <Icon name="mdi:arrow-right" class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-          </a>
-          <a href={resumeUrl} target="_blank" rel="noopener noreferrer" class="btn-ghost">
-            <Icon name="mdi:file-document-outline" class="w-4 h-4" />
-            Resume
-          </a>
-        </div>
+      {profileBio && (
+        <p class="max-w-prose text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">
+          {profileBio}
+        </p>
+      )}
 
-        <!-- Stats row -->
-        <div class="flex flex-wrap gap-x-8 sm:gap-x-12 gap-y-4 pt-6 sm:pt-8" style="border-top: 1px solid var(--border);">
-          {stats.map((s: any) => (
-            <div class="flex flex-col">
-              <span class="font-heading font-semibold text-2xl sm:text-3xl leading-none tracking-tight tabular-nums" style="color: var(--text-1);">
-                {s.value}
-              </span>
-              <span class="font-mono text-[10px] sm:text-[11px] tracking-[0.14em] uppercase mt-1.5" style="color: var(--text-2);">
-                {s.label}
-              </span>
-            </div>
-          ))}
-        </div>
-
+      <!-- The only solid primary action on the page. -->
+      <div class="flex flex-wrap items-center gap-3">
+        <Button variant="primary" href="#projects">
+          View work
+          <Icon name="mdi:arrow-right" aria-hidden="true" />
+        </Button>
+        <Button variant="outline" href={resumeUrl} target="_blank" rel="noopener noreferrer">
+          <Icon name="mdi:file-document-outline" aria-hidden="true" />
+          Resume
+        </Button>
       </div>
+    </div>
 
-      <!-- RIGHT COLUMN — Big Profile Image (5 cols on lg) -->
-      <div class="lg:col-span-5 flex justify-center lg:justify-end items-center order-1 lg:order-2">
-        <div class="profile-avatar relative group">
-          <div
-            class="relative rounded-full overflow-hidden w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 transition-colors duration-300"
-            style="border: 1px solid var(--border-accent);"
-          >
-            <Image
-              src={yonasgrAvatar}
-              alt={name}
-              width={480}
-              height={480}
-              quality={95}
-              class="profile-image w-full h-full object-cover object-center"
-              loading="eager"
-            />
-          </div>
-        </div>
-      </div>
-
+    <div class="order-1 lg:order-2">
+      <Media
+        src={avatar}
+        alt={profileName}
+        width={480}
+        height={480}
+        quality={90}
+        loading="eager"
+        class="size-32 rounded-full border border-zinc-200 sm:size-40 lg:size-48 dark:border-zinc-800"
+      />
     </div>
   </div>
 
-  <!-- Social links — bottom strip with real icons -->
+  {stats.length > 0 && (
+    <dl class="mt-12 grid grid-cols-2 gap-6 border-t border-zinc-200 pt-6 sm:grid-cols-4 dark:border-zinc-800">
+      {stats.map((s) => (
+        <div class="flex min-w-0 flex-col-reverse gap-1">
+          <dt class="line-clamp-2 text-xs font-medium text-zinc-500 dark:text-zinc-400">{s.label}</dt>
+          <dd class="font-heading text-xl font-semibold tracking-tight tabular-nums text-zinc-900 dark:text-zinc-50">
+            {s.value}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  )}
+
   {heroSocials.length > 0 && (
-    <div
-      class="social-strip-scroll w-full px-5 sm:px-8 md:px-14 lg:px-20 py-3 sm:py-4 flex items-center gap-3 sm:gap-4 overflow-x-auto"
-      style="border-top: 1px solid var(--border); scrollbar-width: none; -ms-overflow-style: none;"
-    >
-      <span class="font-mono text-[10px] tracking-[0.18em] uppercase shrink-0 whitespace-nowrap" style="color: var(--text-2);">Find me on</span>
-      <div class="h-px flex-1 shrink-0 min-w-[1rem]" style="background: var(--border);"></div>
-      <div class="flex items-center gap-1 sm:gap-1.5 shrink-0">
-        {heroSocials.map((s: any) => {
-          const brand = heroBrandIcons[s.name] || { icon: s.icon || "mdi:open-in-new", color: "var(--accent)" };
-          return (
-            <a
-              href={s.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              title={s.name}
-              aria-label={s.name}
-              class="social-icon-btn flex items-center gap-1.5 px-2 py-1.5 sm:px-3 rounded-lg font-mono text-[11px] transition-all duration-200 focus:outline-none shrink-0"
-              style="color: var(--text-2); border: 1px solid transparent;"
-            >
-              <Icon name={brand.icon} class="w-4 h-4 transition-transform duration-200 shrink-0" style={`color: ${brand.color};`} />
-              <span class="social-label whitespace-nowrap">{s.name}</span>
-            </a>
-          );
-        })}
-      </div>
-    </div>
+    <nav aria-label="Social links" class="mt-8 flex flex-wrap gap-2">
+      {heroSocials.map((s) => (
+        <Button variant="ghost" size="sm" href={s.url} aria-label={s.name} title={s.name}>
+          <Icon name={s.icon ?? "mdi:open-in-new"} aria-hidden="true" />
+          <span class="hidden sm:inline">{s.name}</span>
+        </Button>
+      ))}
+    </nav>
   )}
 </section>
-
-<style>
-  .hero-name {
-    font-size: clamp(3.2rem, 8.5vw, 6.5rem);
-  }
-
-  .hero-role {
-    font-size: clamp(1rem, 2.2vw, 1.35rem);
-  }
-
-  .profile-avatar:hover .relative {
-    border-color: rgba(var(--accent-rgb), 0.5) !important;
-  }
-
-  .social-icon-btn:hover {
-    color: var(--text-1) !important;
-    background: var(--surface);
-    border-color: var(--border) !important;
-  }
-
-  .social-icon-btn:hover svg {
-    transform: scale(1.15);
-  }
-
-  /* Hide scrollbar on the social strip while keeping scroll functionality */
-  .social-strip-scroll::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Show social labels only on sm+ screens (≥640px) */
-  .social-label {
-    display: none;
-  }
-  @media (min-width: 480px) {
-    .social-label {
-      display: inline;
-    }
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .hero-name span { animation: hero-enter 0.7s cubic-bezier(0.16,1,0.3,1) both; }
-    .hero-name span:nth-child(2) { animation-delay: 0.08s; }
-    @keyframes hero-enter {
-      from { opacity:0; transform: translateY(24px); }
-      to   { opacity:1; transform: translateY(0); }
-    }
-  }
-</style>

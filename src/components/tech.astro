@@ -1,138 +1,57 @@
 ---
-import { Icon } from 'astro-icon/components';
-import localTechData from '../data/tech.json';
+import { Icon } from "astro-icon/components";
+import localTechData from "../data/tech.json";
+import Section from "./ui/section.astro";
+import SectionHeader from "./ui/section-header.astro";
+import EmptyState from "./ui/empty-state.astro";
+import { email } from "../utils/profile";
+import type { TechCategory } from "../types";
 
-interface Skill { name: string; icon: string; tier: string; level?: number; description?: string; }
-interface Category { id: string; title: string; description: string; skills: Skill[]; }
-
-const categories: Category[] = localTechData.categories;
-const totalSkills = categories.reduce((a, c) => a + c.skills.length, 0);
-
-function tierColor(tier: string): string {
-  const t = tier.toLowerCase();
-  if (t.includes('daily') || t.includes('core'))       return 'var(--accent)';
-  if (t.includes('creative') || t.includes('3d'))      return 'var(--text-1)';
-  if (t.includes('advanced'))                          return 'var(--text-2)';
-  return 'var(--text-2)';
-}
+const categories = (localTechData.categories as TechCategory[]).filter((c) => c.skills.length > 0);
+const totalSkills = categories.reduce((sum, c) => sum + c.skills.length, 0);
 ---
 
-<section
-  id="tech"
-  class="reveal w-full py-20 sm:py-28 md:py-32 px-5 sm:px-8 md:px-14 lg:px-20 max-w-[1440px] mx-auto"
->
-  <!-- Section header -->
-  <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14 sm:mb-16">
-    <div>
-      <div class="label mb-3">Toolbox</div>
-      <h2
-        class="font-heading font-black tracking-[-0.04em] leading-[0.92]"
-        style="font-size: clamp(2.4rem, 6vw, 4.5rem); color: var(--text-1);"
-      >
-        Technical<br /><span style="color: var(--accent);">Ecosystem.</span>
-      </h2>
-    </div>
+<Section id="tech">
+  <SectionHeader
+    id="tech"
+    title="Tech stack"
+    description={totalSkills > 0
+      ? `${totalSkills} technologies across ${categories.length} areas.`
+      : undefined}
+  />
 
-    <div class="flex items-center gap-2 shrink-0">
-      <div
-        class="flex items-center gap-2 px-4 py-2 rounded-full font-mono text-xs"
-        style="border: 1px solid var(--border); color: var(--text-2); background: var(--surface);"
-      >
-        <span class="w-2 h-2 rounded-full" style="background: var(--accent);"></span>
-        {totalSkills} Technologies
-      </div>
-    </div>
-  </div>
-
-  <!-- Categories -->
-  <div class="space-y-12 sm:space-y-16">
-    {categories.map(cat => (
-      <div>
-        <!-- Category header -->
-        <div
-          class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 pb-4 mb-5"
-          style="border-bottom: 1px solid var(--border);"
+  {categories.length > 0 ? (
+    <div class="divide-y divide-zinc-200 dark:divide-zinc-800">
+      {categories.map((cat) => (
+        <section
+          aria-labelledby={`tech-${cat.id}`}
+          class="grid gap-4 py-8 first:pt-0 last:pb-0 lg:grid-cols-[16rem_1fr] lg:gap-8"
         >
-          <h3
-            class="font-heading font-bold tracking-tight flex items-center gap-2"
-            style="font-size: 1.1rem; color: var(--text-1);"
-          >
-            <span class="w-1.5 h-1.5 rounded-full shrink-0" style="background: var(--accent);"></span>
-            {cat.title}
-          </h3>
-          <p class="font-body text-sm" style="color: var(--text-2);">{cat.description}</p>
-        </div>
+          <header class="flex min-w-0 flex-col gap-1">
+            <h3 id={`tech-${cat.id}`} class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+              {cat.title}
+            </h3>
+            <p class="text-xs text-zinc-500 dark:text-zinc-400">{cat.description}</p>
+          </header>
 
-        <!-- Skills grid — same structure, new visual -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
-          {cat.skills.map(skill => {
-            const color = tierColor(skill.tier);
-            return (
-              <div
-                class="group relative flex flex-col justify-between p-3 sm:p-4 rounded-xl cursor-default"
-                style="background: var(--surface); border: 1px solid var(--border); transition: border-color 0.2s, transform 0.2s, background 0.2s;"
-                title={skill.description || skill.name}
-              >
-                <!-- Icon + tier dot -->
-                <div class="flex items-start justify-between mb-3">
-                  <div
-                    class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center"
-                    style="background: var(--surface-2); border: 1px solid var(--border);"
-                  >
-                    <Icon name={skill.icon} class="w-4 h-4 sm:w-5 sm:h-5" />
-                  </div>
-                  <span
-                    class="w-1.5 h-1.5 rounded-full mt-1 shrink-0"
-                    style={`background: ${color};`}
-                    title={skill.tier}
-                  ></span>
-                </div>
-
-                <!-- Name -->
-                <div>
-                  <h4
-                    class="font-heading font-semibold text-xs sm:text-sm tracking-tight line-clamp-1"
-                    style="color: var(--text-1); transition: color 0.2s;"
-                  >
-                    {skill.name}
-                  </h4>
-                  <p class="font-mono text-[9px] sm:text-[10px] uppercase tracking-wide mt-0.5 truncate" style={`color: ${color};`}>
-                    {skill.tier}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    ))}
-  </div>
-
-  <!-- Legend -->
-  <div class="flex flex-wrap items-center gap-4 mt-12 pt-6" style="border-top: 1px solid var(--border);">
-    <span class="font-mono text-[10px] tracking-wider uppercase" style="color: var(--text-2);">Tier legend:</span>
-    {[
-      { label: 'Daily Driver', color: 'var(--accent)' },
-      { label: 'Creative / 3D', color: 'var(--text-1)' },
-      { label: 'Advanced', color: 'var(--text-2)' },
-      { label: 'Proficient', color: 'var(--text-2)' },
-    ].map(t => (
-      <div class="flex items-center gap-1.5 font-mono text-[10px]" style="color: var(--text-2);">
-        <span class="w-1.5 h-1.5 rounded-full" style={`background: ${t.color};`}></span>
-        {t.label}
-      </div>
-    ))}
-  </div>
-</section>
-
-<style>
-  section div[class*="rounded-xl"]:hover {
-    border-color: var(--border-accent) !important;
-    background: var(--surface-2) !important;
-    transform: none;
-  }
-
-  section div[class*="rounded-xl"]:hover h4 {
-    color: var(--accent) !important;
-  }
-</style>
+          <ul class="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+            {cat.skills.map((skill) => (
+              <li class="flex min-w-0 items-center gap-3" title={skill.description || skill.name}>
+                <Icon name={skill.icon} class="size-5 shrink-0" aria-hidden="true" />
+                <span class="min-w-0 flex-1 truncate text-sm text-zinc-900 dark:text-zinc-50">{skill.name}</span>
+                <span class="shrink-0 text-xs text-zinc-400 dark:text-zinc-500">{skill.tier}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  ) : (
+    <EmptyState
+      title="No technologies listed yet"
+      description="The stack hasn't been filled in. Ask me what I'd use for your project."
+      actionLabel="Get in touch"
+      actionHref={`mailto:${email}`}
+    />
+  )}
+</Section>

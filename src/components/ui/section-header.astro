@@ -1,0 +1,20 @@
+---
+interface Props {
+  /** Must match the parent <Section id>, as `${id}-title`. */
+  id: string;
+  title: string;
+  description?: string;
+}
+
+const { id, title, description } = Astro.props;
+---
+
+<header class="mb-8 flex max-w-prose flex-col gap-2 sm:mb-12">
+  <h2
+    id={`${id}-title`}
+    class="font-heading text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50"
+  >
+    {title}
+  </h2>
+  {description && <p class="text-sm text-zinc-700 dark:text-zinc-300">{description}</p>}
+</header>

@@ -6,38 +6,40 @@ import Career from "../components/career.astro";
 import Projects from "../components/projects.astro";
 import Tech from "../components/tech.astro";
 import Contact from "../components/contact.astro";
-import localData from '../data/home.json';
+import Footer from "../components/footer.astro";
+import localData from "../data/home.json";
 
 interface ProfileData {
   webpageTitle: string;
+  headline?: string;
 }
 
 const isApiLive = import.meta.env.PROD;
 const BASE_URL = import.meta.env.PUBLIC_API_BASE_URL;
 
-let data: ProfileData;
+let data: ProfileData = localData;
 
 if (isApiLive && BASE_URL) {
   try {
     const response = await fetch(`${BASE_URL}/home`);
-    if (!response.ok) throw new Error('Network response was not ok');
+    if (!response.ok) throw new Error("Network response was not ok");
     data = await response.json();
   } catch (error) {
-    console.error("API Fetch failed, falling back to mock data", error);
-    data = localData as ProfileData;
+    console.error("API fetch failed, falling back to local data", error);
   }
-} else {
-  data = localData as ProfileData;
 }
 
-const { webpageTitle } = data;
+const { webpageTitle, headline } = data;
 ---
 
-<Layout title={webpageTitle}>
+<Layout title={webpageTitle} description={headline}>
   <Nav />
-  <Home />
-  <Career />
-  <Projects />
-  <Tech />
-  <Contact />
+  <main id="main" tabindex="-1" class="focus:outline-none">
+    <Home />
+    <Career />
+    <Projects />
+    <Tech />
+    <Contact />
+  </main>
+  <Footer />
 </Layout>

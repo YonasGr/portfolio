@@ -1,0 +1,31 @@
+---
+import { Icon } from "astro-icon/components";
+import Button from "./ui/button.astro";
+import { profileName, resumeUrl } from "../utils/profile";
+
+const links = [
+  { label: "Work", href: "#projects" },
+  { label: "Career", href: "#career" },
+  { label: "Tech", href: "#tech" },
+  { label: "Contact", href: "#contact" },
+];
+---
+
+<footer class="border-t border-zinc-200 dark:border-zinc-800">
+  <div
+    class="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8"
+  >
+    <p class="text-xs text-zinc-400 dark:text-zinc-500">
+      © {new Date().getFullYear()} {profileName}. Built with Astro, Tailwind CSS and TypeScript.
+    </p>
+    <nav aria-label="Footer" class="flex flex-wrap items-center gap-2">
+      {links.map((l) => (
+        <Button variant="ghost" size="sm" href={l.href}>{l.label}</Button>
+      ))}
+      <Button variant="ghost" size="sm" href={resumeUrl} target="_blank" rel="noopener noreferrer">
+        Resume
+        <Icon name="mdi:arrow-top-right" aria-hidden="true" />
+      </Button>
+    </nav>
+  </div>
+</footer>

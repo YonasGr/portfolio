@@ -1,89 +1,102 @@
 ---
-import '../styles/global.css';
-import { SITE_CONFIG } from '../config.ts';
-import favicon from '../assets/Y-Logo.png';
+import "../styles/global.css";
+import { SITE_CONFIG } from "../config.ts";
+import favicon from "../assets/Y-Logo.png";
 import SpeedInsights from "@vercel/speed-insights/astro";
-import BuyMeCoffee from '../components/buy-me-coffee.astro';
+import BuyMeCoffee from "../components/buy-me-coffee.astro";
+import IconButton from "../components/ui/icon-button.astro";
+import { Icon } from "astro-icon/components";
+import { buttonVariants, focusRing } from "../components/ui/styles";
 
-interface Props { title: string; }
-const { title } = Astro.props;
-const baseTheme = SITE_CONFIG.baseTheme;
-const defaultTheme = `${baseTheme}-dark`;
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const defaultTheme = `${SITE_CONFIG.baseTheme}-dark`;
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth overflow-x-hidden w-full">
+<html lang="en" class="w-full overflow-x-hidden bg-white dark:bg-zinc-950">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <meta name="generator" content={Astro.generator} />
+    {description && <meta name="description" content={description} />}
     <link rel="icon" type="image/png" href={favicon.src} />
     <title>{title}</title>
 
-    <!-- Prevent theme flash -->
+    <!-- Apply the saved theme before first paint to avoid a flash -->
     <script is:inline define:vars={{ defaultTheme }}>
-      (function() {
-        const valid = ['default-dark','default-light'];
+      (function () {
+        var valid = ["default-dark", "default-light"];
+        var theme = defaultTheme;
         try {
-          const saved = localStorage.getItem('theme');
-          document.documentElement.setAttribute('data-theme', (saved && valid.includes(saved)) ? saved : defaultTheme);
-        } catch(e) {
-          document.documentElement.setAttribute('data-theme', defaultTheme);
-        }
+          var saved = localStorage.getItem("theme");
+          if (saved && valid.indexOf(saved) !== -1) theme = saved;
+        } catch (e) {}
+        document.documentElement.setAttribute("data-theme", theme);
       })();
     </script>
   </head>
 
-  <body class="relative min-h-screen w-full overflow-x-hidden antialiased">
-    <a href="#home" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-[var(--accent)] focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:text-[var(--on-accent)]">
+  <body
+    class="relative min-h-screen w-full overflow-x-hidden bg-white font-body text-sm text-zinc-700 antialiased dark:bg-zinc-950 dark:text-zinc-300"
+  >
+    <a
+      href="#main"
+      class:list={[
+        "sr-only rounded-lg px-4 py-2 text-sm font-semibold focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50",
+        buttonVariants.floating,
+        focusRing,
+      ]}
+    >
       Skip to content
     </a>
 
     <slot />
 
-    <!-- Floating Buy Me a Coffee button -->
     <BuyMeCoffee username="yonasgr" />
 
-    <!-- Back-to-top button -->
-    <button
+    <IconButton
       id="to-top"
-      class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-40 w-10 h-10 sm:w-11 sm:h-11 rounded-lg flex items-center justify-center transition-all duration-300 translate-y-14 opacity-0 pointer-events-none cursor-pointer"
-      style="background: var(--surface-2); border: 1px solid var(--border);"
-      aria-label="Back to top"
+      label="Back to top"
+      variant="floating"
+      class="fixed bottom-6 right-6 z-40"
+      hidden
     >
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4" style="color: var(--accent);">
-        <path d="M13 7.828V20h-2V7.828l-5.364 5.364-1.414-1.414L12 4l7.778 7.778-1.414 1.414L13 7.828z"/>
-      </svg>
-    </button>
+      <Icon name="mdi:arrow-up" aria-hidden="true" />
+    </IconButton>
 
     <script>
-      const btn = document.getElementById('to-top');
-      window.addEventListener('scroll', () => {
-        if (!btn) return;
-        const show = window.scrollY > 400;
-        btn.classList.toggle('translate-y-14', !show);
-        btn.classList.toggle('opacity-0', !show);
-        btn.classList.toggle('pointer-events-none', !show);
-        btn.classList.toggle('translate-y-0', show);
-        btn.classList.toggle('opacity-100', show);
-      }, { passive: true });
-      btn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+      const toTop = document.getElementById("to-top");
+      const onScroll = () => {
+        if (toTop) toTop.hidden = window.scrollY < 400;
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+      toTop?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
     </script>
 
-    <!-- Scroll reveal -->
     <script>
-      function setupReveal() {
-        document.querySelectorAll('.reveal').forEach(el => {
-          new IntersectionObserver(([entry], obs) => {
-            if (entry.isIntersecting) {
-              el.classList.add('visible');
-              obs.disconnect();
-            }
-          }, { rootMargin: '0px 0px -6% 0px', threshold: 0.04 }).observe(el);
-        });
+      // One observer reveals each section the first time it enters the viewport.
+      const targets = document.querySelectorAll<HTMLElement>(".reveal");
+      if (!("IntersectionObserver" in window)) {
+        targets.forEach((el) => el.classList.add("visible"));
+      } else {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            });
+          },
+          { rootMargin: "0px 0px -6% 0px", threshold: 0.04 },
+        );
+        targets.forEach((el) => observer.observe(el));
       }
-      setupReveal();
-      document.addEventListener('astro:after-swap', setupReveal);
     </script>
 
     <SpeedInsights />

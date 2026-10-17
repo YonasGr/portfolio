@@ -1,0 +1,27 @@
+---
+interface Props {
+  variant?: "neutral" | "success";
+  class?: string;
+  title?: string;
+}
+
+const { variant = "neutral", class: className, title } = Astro.props;
+
+const variants = {
+  neutral:
+    "border border-zinc-200 bg-zinc-100/60 text-zinc-600 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-zinc-400",
+  success:
+    "border border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+};
+---
+
+<span
+  title={title}
+  class:list={[
+    "inline-flex min-w-0 max-w-full items-center truncate rounded-md px-2 py-1 text-xs leading-none",
+    variants[variant],
+    className,
+  ]}
+>
+  <slot />
+</span>

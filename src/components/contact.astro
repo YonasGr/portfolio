@@ -1,385 +1,172 @@
 ---
-import { Icon } from 'astro-icon/components';
-import localData from '../data/home.json';
+import { Icon } from "astro-icon/components";
+import Section from "./ui/section.astro";
+import SectionHeader from "./ui/section-header.astro";
+import Button from "./ui/button.astro";
+import Badge from "./ui/badge.astro";
+import EmptyState from "./ui/empty-state.astro";
+import { focusRing } from "./ui/styles";
+import { email, contactSocials, availability } from "../utils/profile";
 
-const emailAddress = "yonasgirma222@gmail.com";
-
-// Social profiles configuration with authentic brand colors and icon identifiers
-const socialBrandConfig: Record<string, { bg: string; border: string; text: string; icon: string; hoverGlow: string }> = {
-  "GitHub": {
-    bg: "rgba(255, 255, 255, 0.08)",
-    border: "rgba(255, 255, 255, 0.16)",
-    text: "#FFFFFF",
-    icon: "mdi:github",
-    hoverGlow: "rgba(255, 255, 255, 0.15)"
-  },
-  "LinkedIn": {
-    bg: "rgba(10, 102, 194, 0.18)",
-    border: "rgba(10, 102, 194, 0.4)",
-    text: "#0A66C2",
-    icon: "mdi:linkedin",
-    hoverGlow: "rgba(10, 102, 194, 0.3)"
-  },
-  "Telegram": {
-    bg: "rgba(36, 161, 222, 0.18)",
-    border: "rgba(36, 161, 222, 0.4)",
-    text: "#24A1DE",
-    icon: "mdi:telegram",
-    hoverGlow: "rgba(36, 161, 222, 0.3)"
-  },
-  "WhatsApp": {
-    bg: "rgba(37, 211, 102, 0.15)",
-    border: "rgba(37, 211, 102, 0.4)",
-    text: "#25D366",
-    icon: "mdi:whatsapp",
-    hoverGlow: "rgba(37, 211, 102, 0.3)"
-  },
-  "Twitter / X": {
-    bg: "rgba(255, 255, 255, 0.06)",
-    border: "rgba(255, 255, 255, 0.18)",
-    text: "#F0F0F2",
-    icon: "mdi:twitter",
-    hoverGlow: "rgba(29, 161, 242, 0.2)"
-  },
-  "Instagram": {
-    bg: "rgba(225, 48, 108, 0.18)",
-    border: "rgba(225, 48, 108, 0.4)",
-    text: "#E1306C",
-    icon: "mdi:instagram",
-    hoverGlow: "rgba(225, 48, 108, 0.3)"
-  },
-  "Facebook": {
-    bg: "rgba(24, 119, 242, 0.18)",
-    border: "rgba(24, 119, 242, 0.4)",
-    text: "#1877F2",
-    icon: "mdi:facebook",
-    hoverGlow: "rgba(24, 119, 242, 0.3)"
-  },
-  "Email": {
-    bg: "rgba(234, 67, 53, 0.15)",
-    border: "rgba(234, 67, 53, 0.4)",
-    text: "#EA4335",
-    icon: "mdi:email-outline",
-    hoverGlow: "rgba(234, 67, 53, 0.25)"
-  },
-  "Buy Me a Coffee": {
-    bg: "rgba(255, 221, 0, 0.15)",
-    border: "rgba(255, 221, 0, 0.4)",
-    text: "#FFDD00",
-    icon: "mdi:coffee",
-    hoverGlow: "rgba(255, 221, 0, 0.3)"
-  },
-  "LeetCode": {
-    bg: "rgba(255, 161, 22, 0.15)",
-    border: "rgba(255, 161, 22, 0.4)",
-    text: "#FFA116",
-    icon: "devicon-plain:leetcode",
-    hoverGlow: "rgba(255, 161, 22, 0.25)"
-  }
-};
-
-const allSocials = (localData.socials as any[]).filter(
-  s => s.showInContact && s.url && s.url !== "#" && s.url !== ""
-);
-
-const navLinks = [
-  { name: 'Home', href: '#home' },
-  { name: 'Career', href: '#career' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Tech Stack', href: '#tech' },
-];
+const isAvailable = availability?.status === "available";
 ---
 
-<section
-  id="contact"
-  class="reveal w-full py-20 sm:py-28 md:py-32 px-5 sm:px-8 md:px-14 lg:px-20 max-w-[1440px] mx-auto"
->
-  <!-- Section header -->
-  <div class="mb-14 sm:mb-16">
-    <div class="label mb-3">Get in touch</div>
-    <h2
-      class="font-heading font-black tracking-[-0.04em] leading-[0.92] mb-4"
-      style="font-size: clamp(2.4rem, 6vw, 4.5rem); color: var(--text-1);"
-    >
-      Let's Build<br /><span style="color: var(--accent);">Something.</span>
-    </h2>
-    <p class="font-body text-sm sm:text-base leading-relaxed max-w-lg" style="color: var(--text-2);">
-      Whether you have an engineering project in mind, need technical leadership, or want to build high-performance software — my inbox is open.
-    </p>
-  </div>
+<Section id="contact">
+  <SectionHeader
+    id="contact"
+    title="Get in touch"
+    description="Whether you have an engineering project in mind, need technical leadership, or want to build high-performance software, my inbox is open."
+  />
 
-  <!-- Main bento grid -->
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 mb-8 sm:mb-10">
-
-    <!-- Direct Email — large tile (8 col) -->
-    <div
-      class="lg:col-span-8 group p-6 sm:p-8 md:p-10 rounded-2xl flex flex-col justify-between gap-8"
-      style="background: var(--surface); border: 1px solid var(--border); min-height: 250px; transition: border-color 0.22s, transform 0.22s;"
-    >
-      <div>
-        <!-- Decorated Header with Custom Icon Badge -->
-        <div class="flex items-center gap-3 mb-4">
-          <div
-            class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-            style="background: var(--accent-dim); border: 1px solid rgba(var(--accent-rgb), 0.3); color: var(--accent);"
-          >
-            <Icon name="mdi:email-fast-outline" class="w-5 h-5" />
-          </div>
-          <div>
-            <span class="font-mono text-[11px] tracking-[0.2em] uppercase font-semibold block" style="color: var(--accent);">
-              Direct Channel
-            </span>
-            <span class="font-mono text-[10px]" style="color: var(--text-2);">
-              Typical response &lt; 24h
-            </span>
-          </div>
-        </div>
-
-        <h3
-          class="font-heading font-black tracking-tight leading-tight break-all mt-3"
-          style="font-size: clamp(1.2rem, 3.2vw, 2.2rem); color: var(--text-1);"
+  <div class="grid gap-6 lg:grid-cols-3">
+    <article class="flex min-w-0 flex-col gap-6 rounded-xl border border-zinc-200 bg-zinc-50/50 p-6 lg:col-span-2 dark:border-zinc-800 dark:bg-zinc-900/40">
+      <div class="flex min-w-0 flex-col gap-2">
+        <p class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Email</p>
+        <p
+          class="truncate font-heading text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50"
+          title={email}
         >
-          {emailAddress}
-        </h3>
-        <p class="font-body text-sm mt-2 max-w-md" style="color: var(--text-2);">
+          {email}
+        </p>
+        <p class="max-w-prose text-sm text-zinc-700 dark:text-zinc-300">
           Open for software engineering roles, full-stack architecture, and contract consulting.
+          Typical response within 24 hours.
         </p>
       </div>
 
-      <div class="flex flex-wrap gap-3">
-        <button
-          id="copy-email-btn"
-          data-email={emailAddress}
-          type="button"
-          class="btn-primary text-sm cursor-pointer inline-flex items-center gap-2"
-          style="padding: 0.65rem 1.35rem; font-size: 0.8125rem;"
-        >
-          <span id="copy-icon">
-            <Icon name="mdi:content-copy" class="w-4 h-4" />
-          </span>
-          <span id="copy-text">Copy Address</span>
-        </button>
-
-        <a
-          href={`mailto:${emailAddress}`}
-          class="btn-ghost text-sm inline-flex items-center gap-1.5"
-          style="padding: 0.65rem 1.35rem; font-size: 0.8125rem;"
-        >
-          Open Mail Client
-          <Icon name="mdi:arrow-top-right" class="w-4 h-4 opacity-70" />
-        </a>
-      </div>
-    </div>
-
-    <!-- Location & Focus — (4 col) -->
-    <div
-      class="lg:col-span-4 p-6 sm:p-7 rounded-2xl flex flex-col justify-between gap-5"
-      style="background: var(--surface-2); border: 1px solid var(--border); min-height: 250px;"
-    >
-      <div>
-        <!-- Decorated Header with Custom Location Icon Badge -->
-        <div class="flex items-center gap-3 mb-4">
-          <div
-            class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-            style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text-1);"
-          >
-            <Icon name="mdi:map-marker-radius-outline" class="w-5 h-5" />
-          </div>
-          <div>
-            <span class="font-mono text-[11px] tracking-[0.2em] uppercase font-semibold block" style="color: #38bdf8;">
-              Location & Focus
-            </span>
-            <span class="font-mono text-[10px]" style="color: var(--text-2);">
-              Remote & Worldwide
-            </span>
-          </div>
+      <div class="flex flex-col gap-2">
+        <div class="flex flex-wrap items-center gap-3">
+          <Button id="copy-email-btn" variant="secondary" data-email={email}>
+            <Icon name="mdi:content-copy" aria-hidden="true" />
+            <span id="copy-email-label">Copy address</span>
+          </Button>
+          <Button variant="outline" href={`mailto:${email}`}>
+            Open mail client
+            <Icon name="mdi:arrow-top-right" aria-hidden="true" />
+          </Button>
         </div>
-
-        <p class="font-heading font-bold text-base sm:text-lg leading-snug mb-2" style="color: var(--text-1);">
-          Addis Ababa, Ethiopia
-        </p>
-        <p class="font-body text-xs sm:text-sm leading-relaxed" style="color: var(--text-2);">
-          Building scalable full-stack web platforms, mobile architectures, and creative 3D systems.
+        <p
+          id="copy-status"
+          role="status"
+          aria-live="polite"
+          class="min-h-4 text-xs text-zinc-500 data-[state=error]:text-red-500 data-[state=success]:text-emerald-600 dark:text-zinc-400 dark:data-[state=success]:text-emerald-400"
+        >
         </p>
       </div>
+    </article>
 
-      <div style="border-top: 1px solid var(--border); padding-top: 1.25rem;">
-        <div class="flex items-center justify-between flex-wrap gap-2">
-          <span class="font-mono text-[11px]" style="color: var(--text-2);">
-            Timezone
-          </span>
-          <span
-            class="font-mono text-[11px] px-2.5 py-0.5 rounded-full"
-            style="background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(var(--accent-rgb),0.2);"
-          >
-            East Africa Time (UTC+3)
-          </span>
+    <aside aria-label="Location and availability" class="min-w-0 rounded-xl border border-zinc-200 bg-zinc-50/50 p-6 dark:border-zinc-800 dark:bg-zinc-900/40">
+      <dl class="flex flex-col divide-y divide-zinc-200 dark:divide-zinc-800">
+        <div class="flex flex-col gap-1 pb-4">
+          <dt class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Location</dt>
+          <dd class="text-sm text-zinc-700 dark:text-zinc-300">Addis Ababa, Ethiopia · Remote worldwide</dd>
         </div>
-      </div>
-    </div>
+        <div class="flex flex-col gap-1 py-4">
+          <dt class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Timezone</dt>
+          <dd class="text-sm tabular-nums text-zinc-700 dark:text-zinc-300">East Africa Time (UTC+3)</dd>
+        </div>
+        {availability && (
+          <div class="flex flex-col gap-2 pt-4">
+            <dt class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Availability</dt>
+            <dd class="flex min-w-0 flex-col items-start gap-2">
+              <Badge variant={isAvailable ? "success" : "neutral"} title={availability.badgeText}>
+                {isAvailable ? "Available" : "Limited availability"}
+              </Badge>
+              {availability.openTo && availability.openTo.length > 0 && (
+                <span class="text-sm text-zinc-700 dark:text-zinc-300">{availability.openTo.join(", ")}</span>
+              )}
+            </dd>
+          </div>
+        )}
+      </dl>
+    </aside>
   </div>
 
-  <!-- Social links row with Colorful Icons -->
-  <div>
-    <div class="flex items-center justify-between mb-4 sm:mb-5">
-      <span class="font-mono text-[11px] tracking-[0.2em] uppercase" style="color: var(--text-2);">
-        Developer & Social Profiles
-      </span>
-      <span class="font-mono text-[10px]" style="color: var(--text-3);">
-        {allSocials.length} Channels
-      </span>
-    </div>
+  <div class="mt-12 flex flex-col gap-4">
+    <h3 class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">Elsewhere</h3>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-      {allSocials.map((s: any) => {
-        const brand = socialBrandConfig[s.name] || {
-          bg: "var(--accent-dim)",
-          border: "rgba(var(--accent-rgb),0.25)",
-          text: "var(--accent)",
-          icon: s.icon || "mdi:open-in-new",
-          hoverGlow: "rgba(var(--accent-rgb),0.2)"
-        };
-
-        return (
-          <a
-            href={s.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-card group flex items-center justify-between p-4 rounded-xl transition-all duration-200"
-            style="background: var(--surface); border: 1px solid var(--border); text-decoration: none;"
-          >
-            <div class="flex items-center gap-3.5 min-w-0">
-              <!-- Colorful Brand Icon Badge -->
-              <div
-                class="brand-badge w-11 h-11 rounded-xl flex items-center justify-center shrink-0 shadow-md transition-all duration-300 group-hover:scale-110"
-                style="background: var(--accent-dim-2); border: 1px solid var(--border); color: var(--accent);"
-              >
-                <Icon name={brand.icon} class="w-5 h-5" />
-              </div>
-
-              <!-- Label and Handle -->
-              <div class="min-w-0">
-                <div
-                  class="font-heading font-bold text-sm truncate transition-colors duration-200 group-hover:text-accent"
-                  style="color: var(--text-1);"
-                >
-                  {s.name}
-                </div>
-                <div class="font-mono text-[11px] truncate mt-0.5" style="color: var(--text-2);">
-                  {s.handle || s.name}
-                </div>
-              </div>
-            </div>
-
-            <!-- Arrow Icon -->
-            <div class="shrink-0 pl-2">
-              <Icon
-                name="mdi:arrow-top-right"
-                class="w-4 h-4 opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200"
-                style="color: var(--text-2);"
-              />
-            </div>
-          </a>
-        );
-      })}
-    </div>
+    {contactSocials.length > 0 ? (
+      <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {contactSocials.map((s) => (
+          <li class="min-w-0">
+            <a
+              href={s.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class:list={[
+                "flex min-w-0 items-center gap-3 rounded-xl border border-zinc-200 bg-zinc-50/50 p-4 transition-colors",
+                "hover:border-zinc-300 active:bg-zinc-100",
+                "dark:border-zinc-800 dark:bg-zinc-900/40 dark:hover:border-zinc-700 dark:active:bg-zinc-900",
+                focusRing,
+              ]}
+            >
+              <Icon name={s.icon ?? "mdi:open-in-new"} class="size-5 shrink-0 text-zinc-500 dark:text-zinc-400" aria-hidden="true" />
+              <span class="flex min-w-0 flex-1 flex-col gap-1">
+                <span class="truncate text-sm font-semibold text-zinc-900 dark:text-zinc-50">{s.name}</span>
+                <span class="truncate text-xs text-zinc-500 dark:text-zinc-400">{s.handle ?? s.url}</span>
+              </span>
+              <Icon name="mdi:arrow-top-right" class="size-4 shrink-0 text-zinc-400 dark:text-zinc-500" aria-hidden="true" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <EmptyState
+        title="No public profiles listed"
+        description="Social profiles haven't been added yet. Email is the best way to reach me."
+        actionLabel="Send an email"
+        actionHref={`mailto:${email}`}
+      />
+    )}
   </div>
-</section>
-
-<!-- Footer -->
-<footer
-  class="w-full px-5 sm:px-8 md:px-14 lg:px-20 py-8 sm:py-10"
-  style="border-top: 1px solid var(--border);"
->
-  <div class="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-5">
-    <div>
-      <div class="flex items-center gap-2 mb-1">
-        <span class="font-heading font-black text-sm sm:text-base tracking-tight" style="color: var(--text-1);">Yonas Girma</span>
-        <span style="color: var(--border);">·</span>
-        <span class="font-mono text-[11px]" style="color: var(--accent);">Full-Stack & Creative Engineer</span>
-      </div>
-      <p class="font-body text-[11px]" style="color: var(--text-2);">
-        Built with Astro, Tailwind CSS v4, TypeScript. Deployed on global Edge.
-      </p>
-    </div>
-
-    <nav class="flex flex-wrap items-center justify-center gap-4 sm:gap-5 font-body text-xs font-medium" style="color: var(--text-2);">
-      {navLinks.map(l => (
-        <a href={l.href} class="hover:text-accent transition-colors duration-150" style="color: var(--text-2);">{l.name}</a>
-      ))}
-      <a href="/yonasgr-resume.pdf" target="_blank" class="inline-flex items-center gap-1 hover:underline" style="color: var(--accent);">
-        Resume
-        <Icon name="mdi:arrow-top-right" class="w-3.5 h-3.5" />
-      </a>
-    </nav>
-  </div>
-
-  <div class="max-w-[1440px] mx-auto flex items-center justify-between gap-3 mt-6 pt-5 font-mono text-[10px] sm:text-[11px]" style="border-top: 1px solid var(--border); color: var(--text-2);">
-    <p>© 2026 Yonas Girma. All rights reserved.</p>
-    <a href="#home" class="inline-flex items-center gap-1 hover:text-accent transition-colors duration-150" style="color: var(--text-2);">
-      Back to top ↑
-    </a>
-  </div>
-</footer>
-
-<!-- Copy toast -->
-<div
-  id="copy-toast"
-  role="status"
-  aria-live="polite"
-  class="fixed bottom-20 sm:bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-2 transition-all duration-200 flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-heading font-semibold"
-  style="background: var(--surface-2); border: 1px solid var(--border-accent); backdrop-filter: blur(16px);"
->
-  <span style="color: var(--accent);">✓</span>
-  <span style="color: var(--text-1);">Email copied!</span>
-</div>
-
-<style>
-  .social-card:hover {
-    border-color: var(--border-accent) !important;
-    background: var(--surface-2) !important;
-    transform: none;
-  }
-</style>
+</Section>
 
 <script>
-  function setupContact() {
-    const btn = document.getElementById('copy-email-btn');
-    const txt = document.getElementById('copy-text');
-    const toast = document.getElementById('copy-toast');
-    let t: number | null = null;
+  const btn = document.getElementById("copy-email-btn") as HTMLButtonElement | null;
+  const label = document.getElementById("copy-email-label");
+  const status = document.getElementById("copy-status");
+  let timer: number | undefined;
 
-    btn?.addEventListener('click', async () => {
-      const email = btn.getAttribute('data-email') || '';
-      try {
-        if (navigator.clipboard) await navigator.clipboard.writeText(email);
-        else {
-          const ta = document.createElement('textarea');
-          ta.value = email; ta.style.position = 'fixed'; ta.style.opacity = '0';
-          document.body.appendChild(ta); ta.focus(); ta.select();
-          try { (document as any).execCommand('copy'); } catch {}
-          document.body.removeChild(ta);
-        }
-        if (txt) txt.textContent = 'Copied!';
-        btn.style.background = '#22c55e';
-        if (toast) {
-          toast.classList.remove('opacity-0','translate-y-2');
-          toast.classList.add('opacity-100','translate-y-0');
-          if (t) clearTimeout(t);
-          t = window.setTimeout(() => {
-            toast.classList.remove('opacity-100','translate-y-0');
-            toast.classList.add('opacity-0','translate-y-2');
-          }, 2000);
-        }
-        setTimeout(() => {
-          if (txt) txt.textContent = 'Copy Address';
-          btn.style.background = '';
-        }, 2000);
-      } catch(e) { console.error(e); }
-    });
+  async function copyText(text: string) {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+    // Fallback for non-secure contexts / older browsers.
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    if (!ok) throw new Error("Copy command was rejected");
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setupContact);
-  else setupContact();
-  document.addEventListener('astro:after-swap', setupContact);
+  function report(state: "success" | "error", message: string, buttonText: string) {
+    if (status) {
+      status.textContent = message;
+      status.dataset.state = state;
+    }
+    if (label) label.textContent = buttonText;
+    window.clearTimeout(timer);
+    timer = window.setTimeout(() => {
+      if (label) label.textContent = "Copy address";
+      if (status) {
+        status.textContent = "";
+        delete status.dataset.state;
+      }
+    }, 3000);
+  }
+
+  btn?.addEventListener("click", async () => {
+    try {
+      await copyText(btn.dataset.email ?? "");
+      report("success", "Email address copied to clipboard.", "Copied");
+    } catch {
+      report("error", "Couldn’t copy automatically. Select the address above and copy it manually.", "Copy address");
+    }
+  });
 </script>

@@ -1,0 +1,25 @@
+---
+import Button from "./button.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  actionLabel?: string;
+  actionHref?: string;
+}
+
+const { title, description, actionLabel, actionHref } = Astro.props;
+---
+
+<div
+  role="status"
+  class="flex flex-col items-center gap-4 rounded-xl border border-zinc-200 bg-zinc-50/50 p-8 text-center dark:border-zinc-800 dark:bg-zinc-900/40"
+>
+  <div class="flex max-w-prose flex-col gap-1">
+    <p class="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{title}</p>
+    <p class="text-sm text-zinc-500 dark:text-zinc-400">{description}</p>
+  </div>
+  {actionLabel && actionHref && (
+    <Button variant="outline" size="sm" href={actionHref}>{actionLabel}</Button>
+  )}
+</div>

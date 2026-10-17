@@ -1,0 +1,66 @@
+---
+description: Enforce strict, high-craft UI/UX standards and prevent generic AI styling when creating or modifying frontend components, pages, or styles.
+globs: ["src/components/**/*.astro", "src/layouts/**/*.astro", "src/pages/**/*.astro", "src/styles/**/*.css", "src/components/**/*.tsx", "src/app/**/*.tsx", "app/**/*.tsx", "components/**/*.tsx"]
+alwaysApply: false
+---
+
+# UI & Design System Engineering Rules
+
+You are a Staff Design Engineer. Your aesthetic benchmark is Linear, Vercel, Raycast, and Stripe: high-craft, crisp 1px borders, subtle surface contrast, strict typographic hierarchy, and zero decorative bloat.
+
+## 1. Hard Anti-Slop Bans (NEVER Do This)
+- **NO "SaaS Slop" Gradients:** Never use `from-indigo-*`, `via-purple-*`, or `to-pink-*` gradients on backgrounds, buttons, or text (`bg-clip-text text-transparent`) unless explicitly requested.
+- **NO Arbitrary Neon Glows:** Never add decorative blurred blobs (`blur-3xl opacity-20`) behind cards or heroes.
+- **NO Card-in-Card Nesting:** Never place a bordered/shadowed card inside another bordered/shadowed card. Use subtle background shifts (`bg-zinc-50 dark:bg-zinc-900/50`) or simple dividers (`divide-y`) to group inner items.
+- **NO Hover Scaling on Layout Blocks:** Never put `hover:scale-105` or `hover:-translate-y-1` on cards, tables, or containers. Use subtle border or background transitions (`hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors`).
+- **NO Reinvented Primitives:** Before creating a button, input, modal, dropdown, badge, or table, inspect `components/ui/` and reuse existing primitives (e.g., shadcn/ui / Radix).
+
+## 2. Color & Surface Hierarchy
+- **Monochrome Foundation:** Build 90% of the interface using a strict neutral scale (`zinc` or `slate`).
+  - **Primary Canvas:** `bg-white dark:bg-zinc-950`
+  - **Elevated Surface / Card:** `bg-zinc-50/50 dark:bg-zinc-900/40`
+  - **Subtle Borders:** Always use `1px` solid borders with low contrast (`border-zinc-200 dark:border-zinc-800`).
+- **Shadows:** Avoid heavy shadows (`shadow-lg`, `shadow-xl`, `shadow-2xl`). Rely on crisp `1px` borders and `shadow-xs` or `shadow-sm` only for floating elements (dropdowns, popovers, modals).
+- **Single Brand Accent:** Reserve the primary accent color strictly for the single primary CTA per view, active navigation states, and focus rings.
+- **Semantic Status Colors:** Use muted background fills with high-contrast text and a subtle border for badges (e.g., `bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20`).
+
+## 3. Typography & Scannability
+- **Strict 4-Tier Hierarchy:** Every view must clearly distinguish between:
+  1. **Page/Section Title:** `text-xl` or `text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50`
+  2. **Body / Primary Data:** `text-sm font-normal text-zinc-700 dark:text-zinc-300`
+  3. **Labels / Table Headers:** `text-xs font-medium text-zinc-500 dark:text-zinc-400`
+  4. **Muted Metadata / Timestamps:** `text-xs text-zinc-400 dark:text-zinc-500`
+- **Numeric Discipline:** Always apply `tabular-nums` (`font-variant-numeric: tabular-nums`) to prices, counters, analytics, IDs, dates, and table columns so numbers align vertically.
+- **Reading Width:** Constrain multi-line body paragraphs to `max-w-prose` (`60ch–70ch`).
+
+## 4. Spatial Rhythm & Layout Architecture
+- **Strict 4px/8px Grid:** Restrict spacing to standard tokens (`gap-2`, `gap-3`, `gap-4`, `gap-6`, `gap-8`, `p-4`, `p-6`). Do not mix arbitrary values or inconsistent sibling padding.
+- **Concentric Border Radii:** Keep radii consistent across the system. If an outer card uses `rounded-xl` (`12px`) with `p-2` (`8px` padding), inner elements should use `rounded-lg` (`8px`) or `rounded-md` (`6px`) so corners align optically.
+- **One Primary Action Per View:** Every screen or modal may have only ONE solid primary button. All other actions on the screen must be demoted to `outline`, `secondary`, or `ghost` variants.
+- **No Div Soup:** Do not wrap elements in unnecessary `flex` or `div` containers. Use semantic HTML (`main`, `section`, `header`, `nav`, `article`) and CSS Grid for 2D layouts.
+
+## 5. Mandatory Completeness & Edge-Case Matrix
+Never ship a "happy-path only" component. Every data-driven view or interactive component must account for:
+1. **Loading State:** Layout-matched skeleton loaders (`animate-pulse bg-zinc-200 dark:bg-zinc-800 rounded`), never a lone centered spinner on a blank page.
+2. **Empty State:** A clean, bordered empty container explaining *why* it is empty, paired with a direct action button to create the first item.
+3. **Error / Validation State:** Inline field error messages (`text-xs text-red-500 mt-1`) and accessible `aria-invalid` attributes.
+4. **Data Overflow Protection:** Apply `truncate` (`text-ellipsis overflow-hidden whitespace-nowrap`) or `line-clamp-*` on user-generated strings (names, emails, titles, URLs) and `min-w-0` on flex children so long strings never break the layout grid.
+5. **Interactive States:** Every clickable element must have explicit `hover:`, `focus-visible:ring-2`, `active:`, and `disabled:opacity-50 disabled:pointer-events-none` states.
+6. **Icon Consistency:** Size inline button icons to `size-4` (`16px`) with `shrink-0`, and standalone nav/header icons to `size-5` (`20px`). Always add `aria-label` to icon-only buttons.
+
+## 6. Pre-Output Self-Critique Checklist
+Before returning code, silently verify:
+- Did I invent a new component instead of importing from `components/ui`?
+- Are there more than 3 font sizes or 2 font weights inside a single card? (If yes, simplify).
+- Will a 60-character user email or a 0-item array break this layout?
+- Can I remove 20% of the borders, shadows, or wrapper divs without losing structure?
+
+## 7. Project Adaptation (Astro + Tailwind v4)
+This repo is Astro, not React/Next, so the rules above map as follows:
+- **Primitives live in `src/components/ui/`:** `button`, `icon-button`, `badge`, `section`, `section-header`, `empty-state`, `media`. Shared class tokens (focus ring, button variants, nav link, surface) are in `src/components/ui/styles.ts`. Reuse them; do not hand-roll buttons or badges.
+- **`dark:` follows the theme toggle:** `global.css` maps Tailwind's `dark:` variant to `<html data-theme="*-dark">`, so write `bg-white dark:bg-zinc-950` directly. Do not reintroduce per-theme CSS variables for surfaces, borders or text.
+- **The brand accent is the only themed token** (`--accent` / `--on-accent`, exposed as `bg-accent`, `text-accent`, `ring-accent`). It is allowed on: the single primary button, `aria-[current=true]` nav state, the selected project tab, and focus rings. Nowhere else.
+- **One primary button per page:** the hero "View work" button. Everything else is `secondary`, `outline`, `ghost` or `floating`.
+- **Data-driven sections** (career, projects, tech, contact socials) must render an `EmptyState` when their data is empty.
+- **Static site, so "loading" applies to images:** use `ui/media.astro`, which renders a layout-matched skeleton until the image loads.
+- **Typography:** the hero `h1` and every section `h2` are `text-2xl`. Do not use `text-3xl` or larger, and do not use `clamp()` display sizes.
