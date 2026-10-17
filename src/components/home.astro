@@ -47,13 +47,8 @@ const heroBrandIcons: Record<string, { icon: string; color: string }> = {
       <!-- LEFT COLUMN — Intro & Actions (7 cols on lg) -->
       <div class="lg:col-span-7 flex flex-col justify-center order-2 lg:order-1">
         
-        <!-- Kicker -->
-        <p class="font-mono text-xs sm:text-sm tracking-[0.2em] uppercase mb-3 sm:mb-4" style="color: var(--accent);">
-          Hi, I'm
-        </p>
-
         <!-- Giant Name -->
-        <h1 class="hero-name font-heading font-black leading-[0.88] tracking-[-0.045em] mb-5 sm:mb-6">
+        <h1 class="hero-name font-heading font-semibold leading-[0.92] tracking-[-0.045em] mb-5 sm:mb-6">
           <span style="color: var(--text-1);">{name.split(" ")[0]}</span>
           <span style="color: var(--accent);">{name.split(" ").slice(1).join(" ")}<span style="color: var(--text-1);">.</span></span>
         </h1>
@@ -86,7 +81,7 @@ const heroBrandIcons: Record<string, { icon: string; color: string }> = {
         <div class="flex flex-wrap gap-x-8 sm:gap-x-12 gap-y-4 pt-6 sm:pt-8" style="border-top: 1px solid var(--border);">
           {stats.map((s: any) => (
             <div class="flex flex-col">
-              <span class="font-heading font-black text-2xl sm:text-3xl leading-none tracking-tight" style="color: var(--text-1);">
+              <span class="font-heading font-semibold text-2xl sm:text-3xl leading-none tracking-tight tabular-nums" style="color: var(--text-1);">
                 {s.value}
               </span>
               <span class="font-mono text-[10px] sm:text-[11px] tracking-[0.14em] uppercase mt-1.5" style="color: var(--text-2);">
@@ -102,8 +97,8 @@ const heroBrandIcons: Record<string, { icon: string; color: string }> = {
       <div class="lg:col-span-5 flex justify-center lg:justify-end items-center order-1 lg:order-2">
         <div class="profile-avatar relative group">
           <div
-            class="relative rounded-full overflow-hidden w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 shadow-2xl transition-all duration-300"
-            style="border: 4px solid rgba(255, 255, 255, 0.12);"
+            class="relative rounded-full overflow-hidden w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 transition-colors duration-300"
+            style="border: 1px solid var(--border-accent);"
           >
             <Image
               src={yonasgrAvatar}
@@ -111,7 +106,7 @@ const heroBrandIcons: Record<string, { icon: string; color: string }> = {
               width={480}
               height={480}
               quality={95}
-              class="profile-image w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+              class="profile-image w-full h-full object-cover object-center"
               loading="eager"
             />
           </div>

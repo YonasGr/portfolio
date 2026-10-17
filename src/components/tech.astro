@@ -11,8 +11,8 @@ const totalSkills = categories.reduce((a, c) => a + c.skills.length, 0);
 function tierColor(tier: string): string {
   const t = tier.toLowerCase();
   if (t.includes('daily') || t.includes('core'))       return 'var(--accent)';
-  if (t.includes('creative') || t.includes('3d'))      return '#34d399';
-  if (t.includes('advanced'))                          return '#38bdf8';
+  if (t.includes('creative') || t.includes('3d'))      return 'var(--text-1)';
+  if (t.includes('advanced'))                          return 'var(--text-2)';
   return 'var(--text-2)';
 }
 ---
@@ -24,7 +24,7 @@ function tierColor(tier: string): string {
   <!-- Section header -->
   <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14 sm:mb-16">
     <div>
-      <div class="label mb-3">03 — Toolbox</div>
+      <div class="label mb-3">Toolbox</div>
       <h2
         class="font-heading font-black tracking-[-0.04em] leading-[0.92]"
         style="font-size: clamp(2.4rem, 6vw, 4.5rem); color: var(--text-1);"
@@ -113,8 +113,8 @@ function tierColor(tier: string): string {
     <span class="font-mono text-[10px] tracking-wider uppercase" style="color: var(--text-2);">Tier legend:</span>
     {[
       { label: 'Daily Driver', color: 'var(--accent)' },
-      { label: 'Creative / 3D', color: '#34d399' },
-      { label: 'Advanced', color: '#38bdf8' },
+      { label: 'Creative / 3D', color: 'var(--text-1)' },
+      { label: 'Advanced', color: 'var(--text-2)' },
       { label: 'Proficient', color: 'var(--text-2)' },
     ].map(t => (
       <div class="flex items-center gap-1.5 font-mono text-[10px]" style="color: var(--text-2);">
@@ -129,7 +129,7 @@ function tierColor(tier: string): string {
   section div[class*="rounded-xl"]:hover {
     border-color: var(--border-accent) !important;
     background: var(--surface-2) !important;
-    transform: translateY(-3px);
+    transform: none;
   }
 
   section div[class*="rounded-xl"]:hover h4 {

@@ -96,7 +96,7 @@ const navLinks = [
 >
   <!-- Section header -->
   <div class="mb-14 sm:mb-16">
-    <div class="label mb-3">04 — Get In Touch</div>
+    <div class="label mb-3">Get in touch</div>
     <h2
       class="font-heading font-black tracking-[-0.04em] leading-[0.92] mb-4"
       style="font-size: clamp(2.4rem, 6vw, 4.5rem); color: var(--text-1);"
@@ -120,7 +120,7 @@ const navLinks = [
         <!-- Decorated Header with Custom Icon Badge -->
         <div class="flex items-center gap-3 mb-4">
           <div
-            class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-lg"
+            class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
             style="background: var(--accent-dim); border: 1px solid rgba(var(--accent-rgb), 0.3); color: var(--accent);"
           >
             <Icon name="mdi:email-fast-outline" class="w-5 h-5" />
@@ -180,8 +180,8 @@ const navLinks = [
         <!-- Decorated Header with Custom Location Icon Badge -->
         <div class="flex items-center gap-3 mb-4">
           <div
-            class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-lg"
-            style="background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); color: #38bdf8;"
+            class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+            style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text-1);"
           >
             <Icon name="mdi:map-marker-radius-outline" class="w-5 h-5" />
           </div>
@@ -252,7 +252,7 @@ const navLinks = [
               <!-- Colorful Brand Icon Badge -->
               <div
                 class="brand-badge w-11 h-11 rounded-xl flex items-center justify-center shrink-0 shadow-md transition-all duration-300 group-hover:scale-110"
-                style={`background: ${brand.bg}; border: 1px solid ${brand.border}; color: ${brand.text}; box-shadow: 0 0 15px ${brand.hoverGlow};`}
+                style="background: var(--accent-dim-2); border: 1px solid var(--border); color: var(--accent);"
               >
                 <Icon name={brand.icon} class="w-5 h-5" />
               </div>
@@ -338,11 +338,7 @@ const navLinks = [
   .social-card:hover {
     border-color: var(--border-accent) !important;
     background: var(--surface-2) !important;
-    transform: translateY(-3px);
-  }
-
-  .social-card:hover .brand-badge {
-    box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.3) !important;
+    transform: none;
   }
 </style>
 
