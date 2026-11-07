@@ -1,0 +1,53 @@
+---
+import Section from "./ui/section.astro";
+import SectionHeader from "./ui/section-header.astro";
+
+const principles = [
+  {
+    number: "01",
+    title: "Clarity before cleverness",
+    description:
+      "Good software makes the important path obvious. I reduce noise in the interface and in the architecture so teams can move with confidence.",
+  },
+  {
+    number: "02",
+    title: "Resilience is a feature",
+    description:
+      "Connectivity, scale, and imperfect data are design constraints—not edge cases. I build systems that remain useful when conditions are not ideal.",
+  },
+  {
+    number: "03",
+    title: "Ship the smallest proof",
+    description:
+      "I turn ambiguous ideas into a testable slice early, then use real feedback to decide what deserves more complexity.",
+  },
+  {
+    number: "04",
+    title: "Leave things better",
+    description:
+      "Every engagement should compound: clearer decisions, stronger foundations, and a codebase the next person can understand.",
+  },
+];
+---
+
+<Section id="principles" class="border-t border-zinc-200 dark:border-zinc-800">
+  <SectionHeader
+    id="principles"
+    title="How I work"
+    description="The standards behind the systems, interfaces, and collaborations I help shape."
+  />
+
+  <ol class="grid gap-px overflow-hidden rounded-xl border border-zinc-200 bg-zinc-200 sm:grid-cols-2 dark:border-zinc-800 dark:bg-zinc-800">
+    {principles.map((principle) => (
+      <li class="flex min-h-48 flex-col justify-between bg-white p-6 dark:bg-zinc-950">
+        <span class="font-mono text-xs tabular-nums text-zinc-400 dark:text-zinc-500">{principle.number}</span>
+        <div class="mt-10 flex flex-col gap-2">
+          <h3 class="font-heading text-base font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
+            {principle.title}
+          </h3>
+          <p class="max-w-prose text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{principle.description}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+</Section>

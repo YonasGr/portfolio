@@ -56,6 +56,12 @@ const metrics = (project.metrics ?? []).map(parseMetric);
       {project.description}
     </p>
 
+    {project.impact && (
+      <p class="border-l-2 border-zinc-300 pl-4 text-sm font-medium leading-relaxed text-zinc-900 dark:border-zinc-700 dark:text-zinc-100">
+        {project.impact}
+      </p>
+    )}
+
     {metrics.length > 0 && (
       <dl class="grid grid-cols-2 gap-4 border-y border-zinc-200 py-4 sm:grid-cols-4 dark:border-zinc-800">
         {metrics.map((m) => (

@@ -5,6 +5,7 @@ import Home from "../components/home.astro";
 import Career from "../components/career.astro";
 import Projects from "../components/projects.astro";
 import Tech from "../components/tech.astro";
+import Principles from "../components/principles.astro";
 import Contact from "../components/contact.astro";
 import Footer from "../components/footer.astro";
 import localData from "../data/home.json";
@@ -36,6 +37,7 @@ const { webpageTitle, headline } = data;
   <Nav />
   <main id="main" tabindex="-1" class="focus:outline-none">
     <Home />
+    <Principles />
     <Career />
     <Projects />
     <Tech />

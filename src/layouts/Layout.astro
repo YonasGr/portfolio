@@ -25,7 +25,28 @@ const defaultTheme = `${SITE_CONFIG.baseTheme}-dark`;
     <meta name="generator" content={Astro.generator} />
     {description && <meta name="description" content={description} />}
     <link rel="icon" type="image/png" href={favicon.src} />
+    <link rel="canonical" href={Astro.url.href} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:image" content={new URL(favicon.src, Astro.url).href} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    {description && <meta name="twitter:description" content={description} />}
     <title>{title}</title>
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: "Yonas Girma",
+      jobTitle: "Full-Stack Software Engineer & Creative Developer",
+      url: Astro.url.href,
+      sameAs: [
+        "https://github.com/yonasgr",
+        "https://linkedin.com/in/yonasgr",
+      ],
+    })} />
 
     <!-- Apply the saved theme before first paint to avoid a flash -->
     <script is:inline define:vars={{ defaultTheme }}>
