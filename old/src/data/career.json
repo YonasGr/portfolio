@@ -1,0 +1,90 @@
+[
+  {
+    "company": "Logos Path / Independent Product Studio",
+    "role": "Lead Full-Stack & Mobile Engineer",
+    "period": "2023 — Present",
+    "type": "Product Leadership",
+    "location": "Addis Ababa, Ethiopia · Global Remote",
+    "description": "Spearheading architectural design and cross-platform product engineering for mobile and web applications serving thousands of daily active users.",
+    "achievements": [
+      "Architected offline-first React Native mobile client scaling to 15,000+ monthly active users with 99.9% crash-free rate",
+      "Built distributed event processing backends in Node.js and PostgreSQL reducing data synchronization latency to under 100ms",
+      "Implemented automated CI/CD deployment pipelines on GitHub Actions and Vercel, reducing release turnaround by 50%"
+    ],
+    "skills": [
+      "React Native",
+      "TypeScript",
+      "Node.js",
+      "PostgreSQL",
+      "Supabase",
+      "Tailwind CSS",
+      "Redis"
+    ]
+  },
+  {
+    "company": "FinTech & Cloud Solutions",
+    "role": "Full-Stack Software Engineer",
+    "period": "2022 — 2023",
+    "type": "Full-Time Engineering",
+    "location": "Addis Ababa, Ethiopia",
+    "description": "Engineered secure financial transaction interfaces, payment gateway integrations, and high-throughput dashboard analytics for enterprise banking clients.",
+    "achievements": [
+      "Integrated core payment APIs and webhook listener services processing high-volume daily transactions with zero idempotency faults",
+      "Optimized database query indexing and caching strategies in PostgreSQL/Redis, dropping p95 response times from 340ms to 45ms",
+      "Mentored junior engineers on strict type safety, automated unit testing, and clean architecture standards"
+    ],
+    "skills": [
+      "TypeScript",
+      "Next.js",
+      "Python",
+      "FastAPI",
+      "PostgreSQL",
+      "Redis",
+      "Docker"
+    ]
+  },
+  {
+    "company": "Creative Digital Agency",
+    "role": "Frontend & Interactive Web Developer",
+    "period": "2021 — 2022",
+    "type": "Full-Time",
+    "location": "Addis Ababa, Ethiopia",
+    "description": "Crafted immersive web experiences, 3D interactive visualizations, and responsive client portals for international brands and startups.",
+    "achievements": [
+      "Delivered 12+ production client web applications achieving perfect 98+ Lighthouse scores across performance and accessibility",
+      "Built interactive 3D WebGL product experiences using Three.js and custom GLSL fragment shaders",
+      "Established a centralized reusable UI component library cutting design-to-code turnaround by 35%"
+    ],
+    "skills": [
+      "React",
+      "JavaScript (ES6+)",
+      "Three.js",
+      "WebGL",
+      "HTML5",
+      "CSS3",
+      "Figma",
+      "Tailwind CSS"
+    ]
+  },
+  {
+    "company": "Haramaya University",
+    "role": "B.Sc. in Information Technology",
+    "period": "2018 — 2022",
+    "type": "Higher Education",
+    "location": "Dire Dawa / Haramaya, Ethiopia",
+    "description": "Graduated with top academic standing. Specialized in software engineering, distributed systems, relational databases, data structures, and algorithms.",
+    "achievements": [
+      "Awarded high academic distinction with focused research in distributed systems and cross-platform application architectures",
+      "Built an automated campus scheduling and resource allocation platform as final capstone project",
+      "Served as technical lead in the University Computing Society, organizing hands-on coding bootcamps for 200+ students"
+    ],
+    "skills": [
+      "Computer Science Fundamentals",
+      "Data Structures & Algorithms",
+      "Networking",
+      "Database Systems",
+      "C++",
+      "Python"
+    ]
+  }
+]

@@ -1,0 +1,241 @@
+@import "tailwindcss";
+
+/* The previous Astro site lives in /old and must not be scanned for classes. */
+@source not "../../old";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ---------- Tokens ---------- */
+:root {
+  --paper: #f4f5f1;
+  --paper-2: #e8eae3;
+  --ink: #141b4d;
+  --ink-2: #484f80;
+  --line: rgb(20 27 77 / 0.16);
+  --accent: #2b3ff2;
+  --accent-ink: #ffffff;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --paper: #0b0f2c;
+  --paper-2: #141a45;
+  --ink: #edefff;
+  --ink-2: #a3aad8;
+  --line: rgb(237 239 255 / 0.16);
+  --accent: #8d9bff;
+  --accent-ink: #0b0f2c;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-cobalt: #2b3ff2;
+  --color-saffron: #f2b124;
+  --color-vermilion: #dd4b2f;
+  --color-leaf: #1e8559;
+  --font-sans: var(--font-bricolage), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-amharic: var(--font-ethiopic), "Noto Serif Ethiopic", "Abyssinica SIL", "Nyala", serif;
+}
+
+/* ---------- Base ---------- */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: clip; /* safety net: nothing should ever cause sideways scroll */
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+kbd { font-family: inherit; }
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* ---------- Layout & type ---------- */
+.wrap {
+  width: min(100% - 2.5rem, 78rem);
+  margin-inline: auto;
+}
+
+.display {
+  font-weight: 800;
+  font-stretch: 75%;
+  letter-spacing: -0.035em;
+  line-height: 0.88;
+}
+
+.h-section {
+  font-weight: 700;
+  font-stretch: 82%;
+  letter-spacing: -0.03em;
+  line-height: 0.98;
+  font-size: clamp(2.5rem, 5.4vw, 4.5rem);
+  text-wrap: balance;
+}
+
+.h-sub {
+  font-weight: 650;
+  font-stretch: 90%;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+
+.amharic {
+  font-family: var(--font-amharic);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.measure { max-width: 62ch; }
+.balance { text-wrap: balance; }
+.pretty { text-wrap: pretty; }
+
+.link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.28em;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+  transition: text-decoration-color 0.15s, color 0.15s;
+}
+.link:hover { text-decoration-color: currentColor; color: var(--accent); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 3rem;
+  padding: 0 1.4rem;
+  font-weight: 600;
+  font-stretch: 92%;
+  border: 1.5px solid var(--ink);
+  border-radius: 0.2rem;
+  transition: background 0.15s, color 0.15s, border-color 0.15s, translate 0.15s;
+}
+.btn:hover { translate: 0 -2px; }
+.btn:active { translate: 0 0; }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.btn-ghost:hover { background: var(--ink); color: var(--paper); }
+
+/* ---------- Load sequence (the one orchestrated moment) ---------- */
+@keyframes rise {
+  from { transform: translateY(105%); }
+  to { transform: translateY(0); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes curtain-y {
+  from { transform: scaleY(1); }
+  to { transform: scaleY(0); }
+}
+@keyframes curtain-x {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+
+.line-mask { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+.line-mask > span { display: block; animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.1, 1) both; animation-delay: var(--d, 0s); }
+.fade-up { animation: fade-up 0.8s cubic-bezier(0.2, 0.8, 0.1, 1) both; animation-delay: var(--d, 0s); }
+/* Reveals use a transform-only curtain: it runs on the compositor, never repainting the image. */
+.curtain {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: var(--paper);
+  pointer-events: none;
+  animation-duration: 1.2s;
+  animation-timing-function: cubic-bezier(0.6, 0, 0.1, 1);
+  animation-fill-mode: both;
+  animation-delay: var(--d, 0s);
+}
+.curtain-up { transform-origin: bottom; animation-name: curtain-y; }
+.curtain-right { transform-origin: right; animation-name: curtain-x; }
+
+@media (prefers-reduced-motion: reduce) {
+  .line-mask > span, .fade-up { animation: none; }
+  .curtain { display: none; }
+}
+
+/* ---------- Scroll progress: a woven thread under the header ---------- */
+.progress {
+  height: 3px;
+  transform-origin: left;
+  background:
+    linear-gradient(#f2b124, #f2b124) 0 0 / 100% 1px no-repeat,
+    linear-gradient(#dd4b2f, #dd4b2f) 0 1px / 100% 1px no-repeat,
+    linear-gradient(#1e8559, #1e8559) 0 2px / 100% 1px no-repeat;
+  transform: scaleX(0);
+}
+@supports (animation-timeline: scroll()) {
+  .progress {
+    animation: grow linear both;
+    animation-timeline: scroll(root block);
+  }
+  @keyframes grow { to { transform: scaleX(1); } }
+}
+
+/* ---------- Skill chips with tooltip ---------- */
+.skill { position: relative; }
+.skill-tip {
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  bottom: calc(100% + 0.5rem);
+  z-index: 20;
+  width: max-content;
+  max-width: 16rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 0.2rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition: opacity 0.15s, transform 0.15s;
+}
+.skill:hover .skill-tip, .skill:focus-visible .skill-tip { opacity: 1; transform: none; }
+@media (max-width: 639px) { .skill-tip { display: none; } }
+
+/* ---------- Dialogs ---------- */
+dialog { color: var(--ink); }
+dialog::backdrop { background: rgb(8 11 36 / 0.62); backdrop-filter: blur(3px); }
+dialog[open] { animation: fade-up 0.22s cubic-bezier(0.2, 0.8, 0.1, 1) both; }
+
+/* details marker removal */
+summary { list-style: none; }
+summary::-webkit-details-marker { display: none; }

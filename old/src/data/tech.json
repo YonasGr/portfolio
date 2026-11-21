@@ -1,0 +1,228 @@
+{
+  "categories": [
+    {
+      "id": "languages",
+      "title": "Core Languages",
+      "description": "Primary programming languages for full-stack systems, type safety, and low-level performance.",
+      "skills": [
+        {
+          "name": "TypeScript",
+          "icon": "skill-icons:typescript",
+          "tier": "Daily Driver",
+          "level": 3,
+          "description": "Type systems, generics, strict mode architecture across full-stack applications"
+        },
+        {
+          "name": "JavaScript",
+          "icon": "skill-icons:javascript",
+          "tier": "Daily Driver",
+          "level": 3,
+          "description": "Modern ESNext, asynchronous patterns, event loop optimization, and Web APIs"
+        },
+        {
+          "name": "Python",
+          "icon": "skill-icons:python-dark",
+          "tier": "Advanced",
+          "level": 3,
+          "description": "FastAPI backends, data processing pipelines, and AI/ML model integration"
+        },
+        {
+          "name": "Go (Golang)",
+          "icon": "skill-icons:golang",
+          "tier": "Proficient",
+          "level": 2,
+          "description": "High-throughput microservices, concurrency with goroutines, and network services"
+        },
+        {
+          "name": "C++",
+          "icon": "skill-icons:cpp",
+          "tier": "Proficient",
+          "level": 2,
+          "description": "Memory management, algorithms, computational logic, and performance benchmarking"
+        },
+        {
+          "name": "Rust",
+          "icon": "skill-icons:rust",
+          "tier": "Proficient",
+          "level": 2,
+          "description": "Memory safety without garbage collection, systems utilities, and high-speed tooling"
+        },
+        {
+          "name": "C#",
+          "icon": "skill-icons:cs",
+          "tier": "Proficient",
+          "level": 2,
+          "description": "Object-oriented architectures, .NET tooling, and game mechanics development"
+        }
+      ]
+    },
+    {
+      "id": "frontend-creative",
+      "title": "Frontend & Creative Tech",
+      "description": "Interactive user interfaces, 3D rendering pipelines, and modern web application frameworks.",
+      "skills": [
+        {
+          "name": "React",
+          "icon": "skill-icons:react-dark",
+          "tier": "Daily Driver",
+          "level": 3,
+          "description": "Component composition, custom hooks, context architecture, and performance tuning"
+        },
+        {
+          "name": "Next.js",
+          "icon": "skill-icons:nextjs-dark",
+          "tier": "Daily Driver",
+          "level": 3,
+          "description": "Server Components, App Router, SSR/SSG/ISR pipelines, and Edge runtimes"
+        },
+        {
+          "name": "Astro",
+          "icon": "skill-icons:astro",
+          "tier": "Daily Driver",
+          "level": 3,
+          "description": "Content-driven sites, Islands architecture, and zero-JS hydration optimization"
+        },
+        {
+          "name": "Three.js / WebGL",
+          "icon": "skill-icons:threejs-dark",
+          "tier": "Creative / 3D",
+          "level": 3,
+          "description": "Custom GLSL shaders, camera controls, mesh instancing, and real-time lighting"
+        },
+        {
+          "name": "Tailwind CSS",
+          "icon": "skill-icons:tailwindcss-dark",
+          "tier": "Daily Driver",
+          "level": 3,
+          "description": "Design token architecture, responsive layouts, and modern CSS animation utilities"
+        },
+        {
+          "name": "HTML5 & Web APIs",
+          "icon": "skill-icons:html",
+          "tier": "Daily Driver",
+          "level": 3,
+          "description": "Semantic markup, Web Audio, Web Workers, Canvas API, and accessibility (a11y)"
+        }
+      ]
+    },
+    {
+      "id": "backend-cloud",
+      "title": "Backend & Cloud Architecture",
+      "description": "Scalable server architectures, relational/NoSQL databases, real-time messaging, and cloud infrastructure.",
+      "skills": [
+        {
+          "name": "Node.js",
+          "icon": "skill-icons:nodejs-dark",
+          "tier": "Daily Driver",
+          "level": 3,
+          "description": "REST/GraphQL APIs, streaming I/O, middleware pipelines, and event-driven backends"
+        },
+        {
+          "name": "FastAPI",
+          "icon": "skill-icons:fastapi",
+          "tier": "Advanced",
+          "level": 2,
+          "description": "High-performance async Python APIs, Pydantic data validation, and OpenAPI specs"
+        },
+        {
+          "name": "PostgreSQL",
+          "icon": "skill-icons:postgresql-dark",
+          "tier": "Daily Driver",
+          "level": 3,
+          "description": "Relational schema design, complex joins, indexing strategies, and RLS policies"
+        },
+        {
+          "name": "Supabase",
+          "icon": "skill-icons:supabase-dark",
+          "tier": "Daily Driver",
+          "level": 3,
+          "description": "Auth, realtime subscriptions, PostgreSQL triggers, and edge functions"
+        },
+        {
+          "name": "Redis",
+          "icon": "skill-icons:redis-dark",
+          "tier": "Advanced",
+          "level": 2,
+          "description": "Caching layers, distributed pub/sub messaging, session management, and rate limiting"
+        },
+        {
+          "name": "Firebase",
+          "icon": "vscode-icons:file-type-firebase",
+          "tier": "Advanced",
+          "level": 2,
+          "description": "Firestore, Cloud Functions, real-time sync, and client authentication flows"
+        }
+      ]
+    },
+    {
+      "id": "mobile-platform",
+      "title": "Mobile & Cross-Platform",
+      "description": "Cross-platform mobile applications for iOS and Android with native performance and offline synchronization.",
+      "skills": [
+        {
+          "name": "React Native",
+          "icon": "skill-icons:react-dark",
+          "tier": "Daily Driver",
+          "level": 3,
+          "description": "Universal mobile architecture, gesture handling, navigation, and native bridges"
+        },
+        {
+          "name": "Flutter",
+          "icon": "skill-icons:flutter-dark",
+          "tier": "Proficient",
+          "level": 2,
+          "description": "Widget-based UIs, Dart state management, and multi-platform compilation"
+        },
+        {
+          "name": "Cross-Platform Storage & Sync",
+          "icon": "skill-icons:supabase-dark",
+          "tier": "Daily Driver",
+          "level": 3,
+          "description": "Offline-first SQLite/WatermelonDB caching and resilient background sync"
+        }
+      ]
+    },
+    {
+      "id": "devops-tooling",
+      "title": "DevOps, Tooling & Design",
+      "description": "Containerization, automated CI/CD pipelines, test automation, and collaborative design workflows.",
+      "skills": [
+        {
+          "name": "Docker",
+          "icon": "skill-icons:docker",
+          "tier": "Advanced",
+          "level": 2,
+          "description": "Multi-stage image builds, container composition, and environment isolation"
+        },
+        {
+          "name": "Git & GitHub",
+          "icon": "skill-icons:github-dark",
+          "tier": "Daily Driver",
+          "level": 3,
+          "description": "Branching workflows, code review standards, GitHub Actions CI/CD pipelines"
+        },
+        {
+          "name": "Vercel",
+          "icon": "skill-icons:vercel-dark",
+          "tier": "Daily Driver",
+          "level": 3,
+          "description": "Edge deployments, preview environments, serverless functions, and analytics"
+        },
+        {
+          "name": "Jest & Testing",
+          "icon": "skill-icons:jest",
+          "tier": "Advanced",
+          "level": 2,
+          "description": "Unit testing, integration testing, snapshot verification, and coverage analysis"
+        },
+        {
+          "name": "Figma",
+          "icon": "skill-icons:figma-dark",
+          "tier": "Advanced",
+          "level": 3,
+          "description": "Design systems, interactive prototypes, component variants, and UI specifications"
+        }
+      ]
+    }
+  ]
+}

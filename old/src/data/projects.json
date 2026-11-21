@@ -1,0 +1,217 @@
+[
+  {
+    "id": "logos-path",
+    "title": "Logos Path — Intelligent Platform & Mobile Ecosystem",
+    "tagline": "Cross-platform faith and education ecosystem connecting communities through structured learning and offline-first synchronization.",
+    "category": "Full-Stack & Mobile",
+    "featured": true,
+    "year": "2024",
+    "description": "An end-to-end multi-platform application delivering curated educational content, interactive study modules, and low-bandwidth audio streaming. Built with React Native, TypeScript, Node.js, and PostgreSQL with robust offline-first synchronization for emerging markets.",
+    "impact": "Grew from pilot to over 15,000 monthly active users across 12 countries with 99.9% crash-free sessions.",
+    "metrics": [
+      "15k+ MAU",
+      "99.9% Crash-Free",
+      "4.8★ App Store Rating",
+      "<100ms Sync Latency"
+    ],
+    "highlights": [
+      "Designed conflict-free delta synchronization engine for low-connectivity environments",
+      "Built automated media transcode pipelines reducing streaming bandwidth by 45%",
+      "Implemented end-to-end type-safe API schema with automated client SDK generation"
+    ],
+    "tech": [
+      "React Native",
+      "TypeScript",
+      "Node.js",
+      "PostgreSQL",
+      "Redis",
+      "Docker"
+    ],
+    "platforms": ["iOS", "Android", "Web"],
+    "link": "https://logospath.org",
+    "github": "https://github.com/yonasgr",
+    "images": [
+      "Project-LogosPath.png",
+      "astro-01.webp"
+    ]
+  },
+  {
+    "id": "lumina-3d-studio",
+    "title": "Lumina 3D Studio — Interactive WebGL Product Configurator",
+    "tagline": "Real-time physically-based 3D rendering pipeline for immersive browser-based product customization.",
+    "category": "Creative Tech & WebGL",
+    "featured": true,
+    "year": "2024",
+    "description": "High-performance WebGL web application allowing enterprise customers to inspect, customize materials, and render photorealistic product models in real-time. Leverages Three.js, GLSL shaders, Web Workers, and WebAssembly for zero-frame-drop rendering on mobile and desktop.",
+    "impact": "Reduced customer return rates by 28% and increased average session customization engagement by 3.4x.",
+    "metrics": [
+      "60 FPS Locked",
+      "3.4x Engagement",
+      "28% Return Reduction",
+      "<1.8s Initial Load"
+    ],
+    "highlights": [
+      "Authored custom PBR shader passes with dynamic environment mapping and screen-space ambient occlusion",
+      "Engineered geometry LOD generator streaming compressed Draco meshes over HTTP/3",
+      "Built declarative React-Three-Fiber component abstraction for seamless UI state integration"
+    ],
+    "tech": [
+      "Three.js",
+      "TypeScript",
+      "React",
+      "WebGL",
+      "Tailwind CSS",
+      "Vite"
+    ],
+    "platforms": ["Web", "Desktop"],
+    "link": "https://github.com/yonasgr",
+    "github": "https://github.com/yonasgr",
+    "images": [
+      "astro-02.jpeg",
+      "astro-01.webp"
+    ]
+  },
+  {
+    "id": "omniflow-cloud",
+    "title": "OmniFlow Cloud — Real-Time Distributed Workflow Engine",
+    "tagline": "Low-latency event orchestration platform handling microservices workflow dispatch and observability.",
+    "category": "Backend & Distributed Systems",
+    "featured": true,
+    "year": "2023",
+    "description": "Distributed event-driven task processing system capable of scheduling and executing stateful async workflows across heterogeneous cloud services. Built with Go, Node.js, Redis Streams, PostgreSQL, and Docker.",
+    "impact": "Processed over 40 million event dispatches with zero data loss and sub-15ms p99 execution latency.",
+    "metrics": [
+      "40M+ Events Processed",
+      "<15ms p99 Latency",
+      "99.99% Uptime",
+      "Zero Data Loss"
+    ],
+    "highlights": [
+      "Architected idempotent job queueing mechanism with distributed Redis locking and exponential backoff retries",
+      "Designed telemetry collection pipeline streaming Prometheus metrics into Grafana dashboards",
+      "Containerized microservices cluster with automated health checking and rolling deployment strategies"
+    ],
+    "tech": [
+      "Go",
+      "Node.js",
+      "PostgreSQL",
+      "Redis",
+      "Docker",
+      "FastAPI"
+    ],
+    "platforms": ["Cloud", "API", "CLI"],
+    "link": "https://github.com/yonasgr",
+    "github": "https://github.com/yonasgr",
+    "images": [
+      "astro-01.webp",
+      "Project-LogosPath.png"
+    ]
+  },
+  {
+    "id": "pulsesync-health",
+    "title": "PulseSync Health — Telemedicine & Clinical Records System",
+    "tagline": "Secure, HIPAA-compliant patient management platform with real-time video consultations and automated triage.",
+    "category": "Full-Stack Web & API",
+    "featured": false,
+    "year": "2023",
+    "description": "Comprehensive clinical web application connecting healthcare providers with patients in remote regions. Features encrypted health record management, WebRTC peer-to-peer video calls, appointment scheduling, and automated clinical summaries.",
+    "impact": "Connected 10,000+ patients with certified practitioners, cutting consultation wait times from days to under 20 minutes.",
+    "metrics": [
+      "10k+ Consultations",
+      "<20m Wait Time",
+      "100% HIPAA Aligned",
+      "4.9★ Provider Satisfaction"
+    ],
+    "highlights": [
+      "Implemented row-level security (RLS) and client-side payload encryption for sensitive patient health records",
+      "Integrated WebRTC mesh calling with automatic fallback to SFU servers during bandwidth degradation",
+      "Designed accessible, WCAG 2.1 AA compliant design system tailored for elderly and assistive device users"
+    ],
+    "tech": [
+      "Next.js",
+      "TypeScript",
+      "Supabase",
+      "PostgreSQL",
+      "WebRTC",
+      "Tailwind CSS"
+    ],
+    "platforms": ["Web", "Mobile Web"],
+    "link": "https://github.com/yonasgr",
+    "github": "https://github.com/yonasgr",
+    "images": [
+      "astro-02.jpeg",
+      "Project-LogosPath.png"
+    ]
+  },
+  {
+    "id": "devpulse-cli",
+    "title": "DevPulse CLI — Developer Workspace Analytics & Automation",
+    "tagline": "Cross-platform developer CLI tool for inspecting repository health, git metrics, and CI deployment statuses.",
+    "category": "Developer Tooling & Systems",
+    "featured": false,
+    "year": "2024",
+    "description": "Blazing fast command-line interface designed to streamline local developer workflows. Analyzes git history for code velocity, inspects bundle sizes, audits security vulnerabilities, and coordinates multi-repo releases.",
+    "impact": "Adopted by 500+ developers, cutting routine release deployment overhead by 60%.",
+    "metrics": [
+      "500+ Active Installs",
+      "60% Time Saved on Releases",
+      "<50ms Startup Time",
+      "100% Native Core"
+    ],
+    "highlights": [
+      "Engineered multi-threaded git log parser with incremental local disk caching",
+      "Created interactive terminal UI using bubbletea / crossterm with real-time progress indicators",
+      "Packaged automated homebrew, cargo, and npm distribution channels with semantic release tagging"
+    ],
+    "tech": [
+      "Rust",
+      "Go",
+      "TypeScript",
+      "Docker",
+      "Git"
+    ],
+    "platforms": ["Linux", "macOS", "Windows"],
+    "link": "https://github.com/yonasgr",
+    "github": "https://github.com/yonasgr",
+    "images": [
+      "astro-01.webp",
+      "astro-02.jpeg"
+    ]
+  },
+  {
+    "id": "aether-design-system",
+    "title": "Aether Design System — Modern Tokenized Component Library",
+    "tagline": "Accessible, themeable, high-performance UI component kit for web applications and design tokens.",
+    "category": "Frontend & UI/UX",
+    "featured": false,
+    "year": "2024",
+    "description": "Design system and component framework engineered for enterprise React and Next.js applications. Includes 40+ accessible headless components, CSS variables token pipeline, dark/light mode engine, and Storybook documentation.",
+    "impact": "Standardized UI architecture across 5 client products, decreasing frontend development cycle times by 40%.",
+    "metrics": [
+      "40+ Core Components",
+      "100% WCAG AA Passing",
+      "Zero External Runtime CSS",
+      "40% Faster Dev Cycles"
+    ],
+    "highlights": [
+      "Architected zero-runtime CSS token engine leveraging Tailwind CSS and Radix UI primitives",
+      "Built automated visual regression testing suite with Playwright and GitHub Actions CI",
+      "Published comprehensive interactive Storybook documentation with live sandbox playgrounds"
+    ],
+    "tech": [
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Storybook",
+      "Figma",
+      "Jest"
+    ],
+    "platforms": ["Web", "NPM Package"],
+    "link": "https://github.com/yonasgr",
+    "github": "https://github.com/yonasgr",
+    "images": [
+      "Project-LogosPath.png",
+      "astro-02.jpeg"
+    ]
+  }
+]

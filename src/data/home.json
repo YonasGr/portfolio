@@ -5,7 +5,7 @@
   "location": "Addis Ababa, Ethiopia (UTC+3) · Available Worldwide",
   "availability": {
     "status": "available",
-    "badgeText": "Available for Q3/Q4 Projects & Full-Time Roles",
+    "badgeText": "Available for new projects and full-time roles",
     "openTo": [
       "Full-Time Engineering",
       "Contract / Architecture",
@@ -13,10 +13,22 @@
     ]
   },
   "stats": [
-    { "label": "Years Experience", "value": "3+" },
-    { "label": "Production Apps Shipped", "value": "8+" },
-    { "label": "Active Users Reached", "value": "25k+" },
-    { "label": "Core Technologies", "value": "15+" }
+    {
+      "label": "Years Experience",
+      "value": "3+"
+    },
+    {
+      "label": "Production Apps Shipped",
+      "value": "8+"
+    },
+    {
+      "label": "Active Users Reached",
+      "value": "25k+"
+    },
+    {
+      "label": "Core Technologies",
+      "value": "15+"
+    }
   ],
   "bio": "I bridge the gap between robust backend architecture and tactile, high-performance user interfaces. With a focus on React/Next.js, TypeScript, React Native, Node.js, and modern cloud infrastructure, I build products that prioritize speed, maintainability, and measurable user impact.",
   "intro": "I bridge the gap between robust backend architecture and tactile, high-performance user interfaces. With a focus on React/Next.js, TypeScript, React Native, Node.js, and modern cloud infrastructure, I build products that prioritize speed, maintainability, and measurable user impact.",
