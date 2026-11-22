@@ -63,7 +63,7 @@ export function Hero() {
         </div>
 
         <figure className="lg:col-span-5 lg:pb-12">
-          <div className="relative aspect-[4/5] overflow-hidden bg-cobalt lg:aspect-auto lg:h-[min(56vh,33rem)]" style={delay(0.25)}>
+          <div className="relative aspect-[4/5] overflow-hidden bg-black lg:aspect-auto lg:h-[min(56vh,33rem)]" style={delay(0.25)}>
             <Image
               src={portrait}
               alt={`Portrait of ${site.name}`}
@@ -71,7 +71,7 @@ export function Hero() {
               priority
               placeholder="blur"
               sizes="(min-width: 1024px) 40vw, 92vw"
-              className="object-cover object-[50%_35%] mix-blend-screen brightness-110 contrast-125"
+              className="object-cover object-[50%_35%]"
             />
             <span className="curtain curtain-up" aria-hidden="true" />
           </div>

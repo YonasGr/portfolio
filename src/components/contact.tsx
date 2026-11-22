@@ -3,6 +3,19 @@ import { SocialIcon } from "@/lib/icons";
 import { site } from "@/lib/site";
 import { ContactForm } from "./contact-form";
 
+/** Brand colour per social: tile background and glyph colour. GitHub and X follow the theme's ink. */
+const brand: Record<string, { bg: string; fg: string }> = {
+  GitHub: { bg: "var(--ink)", fg: "var(--paper)" },
+  LinkedIn: { bg: "#0A66C2", fg: "#fff" },
+  Telegram: { bg: "#26A5E4", fg: "#fff" },
+  WhatsApp: { bg: "#25D366", fg: "#fff" },
+  "Twitter / X": { bg: "var(--ink)", fg: "var(--paper)" },
+  Instagram: { bg: "linear-gradient(45deg, #F58529, #DD2A7B 55%, #8134AF)", fg: "#fff" },
+  Facebook: { bg: "#1877F2", fg: "#fff" },
+  "Buy Me a Coffee": { bg: "#FFDD00", fg: "#141B4D" },
+  LeetCode: { bg: "#FFA116", fg: "#141B4D" },
+};
+
 export function Contact() {
   // Evaluated at build time: add the env vars in Vercel and redeploy to switch the form on.
   const formEnabled = Boolean(process.env.RESEND_API_KEY && process.env.CONTACT_TO_EMAIL);
@@ -34,9 +47,14 @@ export function Contact() {
                     href={s.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center gap-3 py-4 transition-colors hover:text-accent"
+                    className="group flex items-center gap-4 py-4"
                   >
-                    <SocialIcon name={s.name} className="size-5 shrink-0" />
+                    <span
+                      className="grid size-10 shrink-0 place-items-center rounded-sm transition-transform group-hover:-rotate-6 group-hover:scale-105"
+                      style={{ background: brand[s.name]?.bg ?? "var(--ink)", color: brand[s.name]?.fg ?? "var(--paper)" }}
+                    >
+                      <SocialIcon name={s.name} className="size-5" />
+                    </span>
                     <span>
                       <span className="block font-semibold">{s.name}</span>
                       <span className="block text-sm text-ink-2">{s.handle}</span>
