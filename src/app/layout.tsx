@@ -6,7 +6,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { CommandPalette } from "@/components/command-palette";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { contactSocials, projects } from "@/lib/content";
+import { contactSocials, projects, sponsor } from "@/lib/content";
 import { site } from "@/lib/site";
 import { themeScript } from "@/lib/theme";
 import "./globals.css";
@@ -71,7 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
-        <Header />
+        <Header sponsorUrl={sponsor?.url} />
         <main id="main">{children}</main>
         <Footer />
         <CommandPalette

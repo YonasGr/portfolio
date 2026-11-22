@@ -14,7 +14,7 @@ const sections = [
   { id: "contact", label: "Contact" },
 ] as const;
 
-export function Header() {
+export function Header({ sponsorUrl }: { sponsorUrl?: string }) {
   const pathname = usePathname();
   const onHome = pathname === "/";
   const [active, setActive] = useState<string>("");
@@ -85,6 +85,17 @@ export function Header() {
           >
             <Glyph name="search" className="size-5" />
           </button>
+          {sponsorUrl && (
+            <a
+              href={sponsorUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden h-10 items-center gap-2 rounded-sm bg-[#BF3989] px-3.5 text-sm font-semibold text-white transition-[filter,translate] hover:-translate-y-0.5 hover:brightness-110 md:flex"
+            >
+              <Glyph name="heart" className="size-4" />
+              Sponsor
+            </a>
+          )}
           <ThemeToggle />
           <button
             type="button"
@@ -114,6 +125,14 @@ export function Header() {
               </li>
             ))}
           </ul>
+          {sponsorUrl && (
+            <div className="wrap pb-5">
+              <a href={sponsorUrl} target="_blank" rel="noopener noreferrer" className="btn w-full justify-center border-[#BF3989] bg-[#BF3989] text-white">
+                <Glyph name="heart" className="size-4" />
+                Sponsor on GitHub
+              </a>
+            </div>
+          )}
         </nav>
       )}
       <div className="progress" aria-hidden="true" />

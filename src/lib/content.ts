@@ -27,6 +27,9 @@ export const profile = {
 
 export const contactSocials = profile.socials.filter((s) => s.showInContact);
 
+/** GitHub Sponsors entry; undefined when hidden via showInContact, which also hides the header button and call-out. */
+export const sponsor = contactSocials.find((s) => s.name === "GitHub Sponsors");
+
 /* ---------- Helpers ---------- */
 
 /** "A — B" → ["A", "B"]. Splits the template's long project titles. */

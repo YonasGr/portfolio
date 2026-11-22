@@ -5,6 +5,7 @@ import { Experience } from "@/components/experience";
 import { GithubActivity } from "@/components/github-activity";
 import { Hero } from "@/components/hero";
 import { Stack } from "@/components/stack";
+import { Support } from "@/components/support";
 import { Work } from "@/components/work";
 import { contactSocials, profile } from "@/lib/content";
 import { site } from "@/lib/site";
@@ -41,6 +42,7 @@ export default function HomePage() {
       </Suspense>
       <About />
       <Contact />
+      <Support />
     </>
   );
 }
