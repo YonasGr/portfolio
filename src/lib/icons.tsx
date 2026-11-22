@@ -59,6 +59,7 @@ const socialSlugs: Record<string, string> = {
   Instagram: "instagram",
   Facebook: "facebook",
   Email: "@mail",
+  "GitHub Sponsors": "githubsponsors",
   "Buy Me a Coffee": "buymeacoffee",
   LeetCode: "leetcode",
 };

@@ -12,6 +12,7 @@ const brand: Record<string, { bg: string; fg: string }> = {
   "Twitter / X": { bg: "var(--ink)", fg: "var(--paper)" },
   Instagram: { bg: "linear-gradient(45deg, #F58529, #DD2A7B 55%, #8134AF)", fg: "#fff" },
   Facebook: { bg: "#1877F2", fg: "#fff" },
+  "GitHub Sponsors": { bg: "#EA4AAA", fg: "#fff" },
   "Buy Me a Coffee": { bg: "#FFDD00", fg: "#141B4D" },
   LeetCode: { bg: "#FFA116", fg: "#141B4D" },
 };

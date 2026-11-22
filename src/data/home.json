@@ -101,12 +101,20 @@
       "showInHero": true
     },
     {
+      "name": "GitHub Sponsors",
+      "url": "https://github.com/sponsors/YonasGr",
+      "handle": "Sponsor me",
+      "icon": "mdi:heart",
+      "showInContact": true,
+      "showInHero": true
+    },
+    {
       "name": "Buy Me a Coffee",
       "url": "https://www.buymeacoffee.com/yonasgr",
       "handle": "yonasgr",
       "icon": "mdi:coffee",
-      "showInContact": true,
-      "showInHero": true
+      "showInContact": false,
+      "showInHero": false
     },
     {
       "name": "LeetCode",
