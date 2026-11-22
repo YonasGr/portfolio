@@ -15,12 +15,43 @@ const subscribe = (cb: () => void) => {
 };
 
 /** Live Addis Ababa time on both the international and the traditional Ethiopian clock. */
-export function AddisClock({ className = "" }: { className?: string }) {
+export function AddisClock({
+  className = "",
+  inline = false,
+  style,
+}: {
+  className?: string;
+  inline?: boolean;
+  style?: React.CSSProperties;
+}) {
   const snap = useSyncExternalStore(subscribe, read, () => "");
   const [standard, ethiopian, dateEn, dateAm] = snap ? snap.split("|") : ["", "", "", ""];
 
+  if (inline) {
+    return (
+      <p className={`flex flex-wrap gap-x-5 gap-y-1 tabular-nums ${className}`} style={style} aria-label="Current time in Addis Ababa">
+        <span>
+          <span className="text-ink-2">Addis Ababa </span>
+          <strong>{standard || "\u00a0"}</strong>
+        </span>
+        <span>
+          <span className="text-ink-2">Ethiopian clock </span>
+          <strong>{ethiopian || "\u00a0"}</strong>
+        </span>
+        <span>
+          <strong>{dateEn || "\u00a0"}</strong>
+          {dateAm && (
+            <span lang="am" className="amharic ml-2 text-ink-2">
+              {dateAm}
+            </span>
+          )}
+        </span>
+      </p>
+    );
+  }
+
   return (
-    <dl className={`grid grid-cols-[auto_1fr] gap-x-5 gap-y-1 tabular-nums ${className}`}>
+    <dl className={`grid grid-cols-[auto_1fr] gap-x-5 gap-y-1 tabular-nums ${className}`} style={style}>
       <dt className="text-ink-2">Addis Ababa</dt>
       <dd className="min-w-[5.5ch] font-semibold">{standard || "\u00a0"}</dd>
       <dt className="text-ink-2">Ethiopian clock</dt>

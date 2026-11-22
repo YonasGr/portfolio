@@ -173,7 +173,7 @@ kbd { font-family: inherit; }
 .curtain {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 30;
   background: var(--paper);
   pointer-events: none;
   animation-duration: 1.2s;

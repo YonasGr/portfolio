@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import portrait from "@/assets/portrait-mono.jpg";
+import portrait from "@/assets/portrait-cutout.webp";
 import { profile } from "@/lib/content";
 import { site } from "@/lib/site";
 import { Glyph } from "@/lib/glyph";
@@ -13,7 +13,7 @@ export function Hero() {
   return (
     <section aria-labelledby="hero-title" className="relative pt-8 md:pt-10">
       <div className="wrap grid items-end gap-x-10 gap-y-10 lg:grid-cols-12">
-        <div className="pb-2 lg:col-span-7 lg:pb-12">
+        <div className="pb-2 lg:col-span-7 lg:pb-10">
           <p className="fade-up text-xl font-medium" style={delay(0.05)}>
             <span lang="am" className="amharic text-cobalt dark:text-accent">
               ሰላም
@@ -60,33 +60,34 @@ export function Hero() {
               {profile.availability.badgeText}
             </p>
           )}
+
+          <AddisClock inline className="fade-up mt-3 text-[0.95rem]" style={delay(1.05)} />
         </div>
 
-        <figure className="lg:col-span-5 lg:pb-12">
-          <div className="relative aspect-[4/5] overflow-hidden bg-black lg:aspect-auto lg:h-[min(56vh,33rem)]" style={delay(0.25)}>
-            <Image
-              src={portrait}
-              alt={`Portrait of ${site.name}`}
-              fill
-              priority
-              placeholder="blur"
-              sizes="(min-width: 1024px) 40vw, 92vw"
-              className="object-cover object-[50%_35%]"
-            />
-            <span className="curtain curtain-up" aria-hidden="true" />
-          </div>
-          <figcaption className="fade-up mt-5 flex flex-wrap items-end justify-between gap-x-8 gap-y-4" style={delay(1.1)}>
-            <p lang="am" className="amharic text-4xl leading-none sm:text-5xl">
-              {site.nameAmharic}
-            </p>
-            <AddisClock className="text-sm" />
-          </figcaption>
+        <figure className="relative mx-auto aspect-[4/5] w-full max-w-md self-end lg:col-span-5 lg:mx-0 lg:aspect-auto lg:h-[min(64vh,36rem)] lg:max-w-none">
+          <p
+            lang="am"
+            aria-label={site.nameAmharic}
+            className="amharic fade-up absolute right-0 top-2 z-0 text-right text-[clamp(2.1rem,4.4vw,3.1rem)] leading-[1.02] text-cobalt dark:text-accent"
+            style={delay(1.1)}
+          >
+            <span className="block">ዮናስ</span>
+            <span className="block">ግርማ</span>
+          </p>
+          {/* Transparent cut-out: no frame or background, so he stands on the woven band below. */}
+          <Image
+            src={portrait}
+            alt={`Portrait of ${site.name}`}
+            fill
+            priority
+            sizes="(min-width: 1024px) 45vw, 92vw"
+            className="z-10 object-cover object-[50%_100%] [mask-image:linear-gradient(to_right,transparent,#000_14%,#000_86%,transparent)]"
+          />
+          <span className="curtain curtain-up" aria-hidden="true" style={delay(0.25)} />
         </figure>
       </div>
 
-      <div className="mt-6 lg:mt-0">
-        <Weave animate />
-      </div>
+      <Weave animate />
     </section>
   );
 }
