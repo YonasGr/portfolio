@@ -1,5 +1,5 @@
 import Image from "next/image";
-import casual from "@/assets/portrait-casual.jpg";
+import desk from "@/assets/portrait-desk.webp";
 import sketchbook from "@/assets/sketchbook.webp";
 import { profile } from "@/lib/content";
 import { ImageLightbox } from "./image-lightbox";
@@ -45,15 +45,15 @@ export function About() {
             <figure className="mt-16">
               <div className="relative aspect-[3/4] overflow-hidden rotate-1">
                 <Image
-                  src={casual}
-                  alt="Yonas relaxing at an outdoor café"
+                  src={desk}
+                  alt="Yonas at his desk in a red Manchester United jersey, with posters, programming books and a lit shelf behind him"
                   fill
                   placeholder="blur"
                   sizes="(min-width: 1024px) 300px, 40vw"
                   className="object-cover"
                 />
               </div>
-              <figcaption className="mt-3 text-sm text-ink-2">Away from the keyboard.</figcaption>
+              <figcaption className="mt-3 text-sm text-ink-2">At my desk.</figcaption>
             </figure>
           </div>
         </div>

@@ -64,24 +64,15 @@ export function Hero() {
           <AddisClock inline className="fade-up mt-3 text-[0.95rem]" style={delay(1.05)} />
         </div>
 
-        <figure className="relative mx-auto aspect-[4/5] w-full max-w-md self-end lg:col-span-5 lg:mx-0 lg:aspect-auto lg:h-[min(64vh,36rem)] lg:max-w-none">
-          <p
-            lang="am"
-            aria-label={site.nameAmharic}
-            className="amharic fade-up absolute right-0 top-2 z-0 text-right text-[clamp(2.1rem,4.4vw,3.1rem)] leading-[1.02] text-cobalt dark:text-accent"
-            style={delay(1.1)}
-          >
-            <span className="block">ዮናስ</span>
-            <span className="block">ግርማ</span>
-          </p>
-          {/* Transparent cut-out: no frame or background, so he stands on the woven band below. */}
+        <figure className="relative mx-auto aspect-[1100/993] w-full max-w-lg self-center lg:col-span-5 lg:mx-0 lg:aspect-auto lg:h-[min(62vh,35rem)] lg:max-w-none">
+          {/* Transparent cut-out: no frame or background. The sides and bottom fade out, so he floats on the page. */}
           <Image
             src={portrait}
             alt={`Portrait of ${site.name}`}
             fill
             priority
             sizes="(min-width: 1024px) 45vw, 92vw"
-            className="z-10 object-cover object-[50%_100%] [mask-image:linear-gradient(to_right,transparent,#000_14%,#000_86%,transparent)]"
+            className="portrait-fade z-10 object-contain object-[50%_50%]"
           />
           <span className="curtain curtain-up" aria-hidden="true" style={delay(0.25)} />
         </figure>

@@ -169,6 +169,14 @@ kbd { font-family: inherit; }
 .line-mask { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
 .line-mask > span { display: block; animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.1, 1) both; animation-delay: var(--d, 0s); }
 .fade-up { animation: fade-up 0.8s cubic-bezier(0.2, 0.8, 0.1, 1) both; animation-delay: var(--d, 0s); }
+/* Soft fade on the sides and bottom so the cut-out floats instead of ending in hard cropped edges. */
+.portrait-fade {
+  -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 97%), linear-gradient(to right, transparent, #000 13%, #000 87%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to bottom, #000 62%, transparent 97%), linear-gradient(to right, transparent, #000 13%, #000 87%, transparent);
+  mask-composite: intersect;
+}
+
 /* Reveals use a transform-only curtain: it runs on the compositor, never repainting the image. */
 .curtain {
   position: absolute;

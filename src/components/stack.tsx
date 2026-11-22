@@ -46,9 +46,9 @@ export function Stack() {
                     key={s.name}
                     tabIndex={0}
                     aria-label={`${s.name}, ${tierLabel[s.tier]}${s.description ? `. ${s.description}` : ""}`}
-                    className={`skill inline-flex items-center gap-2 rounded-sm border-[1.5px] px-3.5 py-2 font-medium ${tierStyle[s.tier]}`}
+                    className={`skill inline-flex items-center gap-2.5 rounded-sm border-[1.5px] py-1.5 pl-2 pr-3.5 font-medium ${tierStyle[s.tier]}`}
                   >
-                    <TechIcon name={s.name} className="size-4 shrink-0" />
+                    <TechIcon name={s.name} />
                     {s.name}
                     {s.description && (
                       <span className="skill-tip" aria-hidden="true">
