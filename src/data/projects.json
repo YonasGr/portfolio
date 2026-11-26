@@ -28,7 +28,7 @@
       "Docker"
     ],
     "platforms": ["iOS", "Android", "Web"],
-    "link": "https://logospath.org",
+    "link": "https://logospath-web.onrender.com/",
     "github": "https://github.com/yonasgr",
     "images": [
       "Project-LogosPath.png",

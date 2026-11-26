@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yonas Girma — Resume & Curriculum Vitae</title>
+  <meta name="description" content="Resume of Yonas Girma, Full-Stack Software Engineer & Creative Developer.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --primary-light: #e0f2fe;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      --bg: #ffffff;
+      --bg-alt: #f8fafc;
+      --border: #e2e8f0;
+      --border-dark: #cbd5e1;
+      --badge-bg: #f1f5f9;
+      --badge-border: #e2e8f0;
+      --metric-bg: #f0fdf4;
+      --metric-border: #bbf7d0;
+      --metric-text: #15803d;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--text-main);
+      background-color: #f1f5f9;
+      line-height: 1.5;
+      font-size: 13.5px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Print Controls Bar */
+    .controls-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(12px);
+      color: #fff;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .controls-title {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .controls-title span {
+      background: #0284c7;
+      color: #fff;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .controls-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease-in-out;
+      border: none;
+    }
+
+    .btn-primary {
+      background: #0284c7;
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: #0369a1;
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.12);
+      color: #f8fafc;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Resume Document Canvas */
+    .resume-canvas {
+      max-width: 900px;
+      margin: 32px auto;
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.05);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      padding: 44px 48px;
+    }
+
+    /* Header */
+    .resume-header {
+      border-bottom: 2px solid var(--text-main);
+      padding-bottom: 24px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    .header-main {
+      flex: 1;
+    }
+
+    .name {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #090d16;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .role-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--primary);
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+    }
+
+    .contact-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    .contact-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      color: var(--text-muted);
+    }
+
+    .contact-item:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .contact-item svg {
+      width: 14px;
+      height: 14px;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .header-badges {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+    }
+
+    /* Key Stats Banner */
+    .stats-ribbon {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 24px;
+      text-align: center;
+      gap: 12px;
+    }
+
+    .stat-box {
+      border-right: 1px solid var(--border);
+    }
+
+    .stat-box:last-child {
+      border-right: none;
+    }
+
+    .stat-value {
+      font-size: 19px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-subtle);
+      margin-top: 3px;
+    }
+
+    /* Main Sections */
+    .section {
+      margin-bottom: 26px;
+    }
+
+    .section-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #0f172a;
+      border-bottom: 1.5px solid var(--border-dark);
+      padding-bottom: 6px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title::before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 14px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    /* Summary */
+    .summary-text {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .summary-text strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    /* Skills Grid */
+    .skills-category-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .skill-category-card {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+    }
+
+    .category-header {
+      font-size: 12px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .skill-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      background: #ffffff;
+      border: 1px solid var(--border-dark);
+      color: #1e293b;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .pill.accent {
+      background: var(--primary-light);
+      border-color: #bae6fd;
+      color: #0369a1;
+      font-weight: 600;
+    }
+
+    /* Experience Items */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .timeline-item {
+      position: relative;
+      page-break-inside: avoid;
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 3px;
+    }
+
+    .item-title-group {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .item-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+    }
+
+    .item-company {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .item-meta {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-subtle);
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+    }
+
+    .item-submeta {
+      font-size: 12px;
+      color: var(--text-subtle);
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+
+    .item-description {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+
+    .bullet-list {
+      list-style: none;
+      padding-left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 8px;
+    }
+
+    .bullet-list li {
+      position: relative;
+      padding-left: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .bullet-list li::before {
+      content: "•";
+      position: absolute;
+      left: 3px;
+      top: 0;
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .bullet-list li strong {
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    .tech-used {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+    }
+
+    .tech-label {
+      font-weight: 700;
+      color: var(--text-subtle);
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-right: 2px;
+    }
+
+    /* Projects Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .project-card {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      page-break-inside: avoid;
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 4px;
+    }
+
+    .project-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .project-metrics-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--metric-text);
+      background: var(--metric-bg);
+      border: 1px solid var(--metric-border);
+      padding: 2px 7px;
+      border-radius: 9999px;
+      white-space: nowrap;
+    }
+
+    .project-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      line-height: 1.45;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: auto;
+    }
+
+    /* Education & Languages Two Column */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 20px;
+    }
+
+    .lang-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: 12.5px;
+    }
+
+    .lang-item:last-child {
+      border-bottom: none;
+    }
+
+    .lang-name {
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .lang-level {
+      color: var(--text-subtle);
+      font-size: 11.5px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Print Specific Media Rules */
+    @media print {
+      body {
+        background: #ffffff !important;
+        font-size: 11.5pt;
+        color: #000;
+      }
+
+      .controls-bar {
+        display: none !important;
+      }
+
+      .resume-canvas {
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        max-width: 100% !important;
+      }
+
+      @page {
+        margin: 12mm 14mm 12mm 14mm;
+        size: A4 portrait;
+      }
+
+      .stats-ribbon {
+        background: #f8fafc !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .pill, .skill-category-card, .project-card, .status-badge, .project-metrics-badge {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .timeline-item, .project-card {
+        page-break-inside: avoid;
+      }
+
+      a {
+        text-decoration: none !important;
+        color: inherit !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .resume-canvas {
+        margin: 12px;
+        padding: 24px 20px;
+      }
+      .resume-header {
+        flex-direction: column;
+      }
+      .header-badges {
+        align-items: flex-start;
+      }
+      .stats-ribbon {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .stat-box {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 8px;
+      }
+      .skills-category-grid, .projects-grid, .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Screen Top Bar with Print / Download Actions -->
+  <aside class="controls-bar" aria-label="Resume Actions">
+    <div class="controls-title">
+      <strong>YONAS GIRMA — CURRICULUM VITAE</strong>
+      <span>ATS-Optimized &bull; 2026 Edition</span>
+    </div>
+    <div class="controls-actions">
+      <button class="btn btn-primary" onclick="window.print()">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Print / Save as PDF
+      </button>
+      <a href="/" class="btn btn-ghost">Back to Portfolio</a>
+    </div>
+  </aside>
+
+  <!-- Resume Sheet -->
+  <main class="resume-canvas">
+
+    <!-- Header Section -->
+    <header class="resume-header">
+      <div class="header-main">
+        <h1 class="name">Yonas Girma</h1>
+        <div class="role-title">Full-Stack Software Engineer &bull; Creative Developer &bull; Systems Architect</div>
+        <div class="contact-grid">
+          <div class="contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Addis Ababa, Ethiopia (UTC+3) &bull; Remote Worldwide
+          </div>
+          <a href="mailto:yonasgirma222@gmail.com" class="contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            yonasgirma222@gmail.com
+          </a>
+          <a href="tel:+251909823587" class="contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +251 909 823 587
+          </a>
+          <a href="https://github.com/yonasgr" target="_blank" rel="noreferrer" class="contact-item">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            github.com/yonasgr
+          </a>
+          <a href="https://linkedin.com/in/yonasgr" target="_blank" rel="noreferrer" class="contact-item">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            linkedin.com/in/yonasgr
+          </a>
+          <a href="https://t.me/yonasgr" target="_blank" rel="noreferrer" class="contact-item">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.535-.194 1.006.128.832.922z"/></svg>
+            t.me/yonasgr
+          </a>
+        </div>
+      </div>
+
+      <div class="header-badges">
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          Open to New Roles
+        </div>
+      </div>
+    </header>
+
+    <!-- Key Metrics Ribbon -->
+    <div class="stats-ribbon">
+      <div class="stat-box">
+        <div class="stat-value">3+ Years</div>
+        <div class="stat-label">Full-Stack Experience</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value">15k+ MAU</div>
+        <div class="stat-label">App Scale Handled</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value">99.9%</div>
+        <div class="stat-label">Crash-Free Stability</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value">8+ Shipped</div>
+        <div class="stat-label">Production Products</div>
+      </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <section class="section">
+      <h2 class="section-title">Professional Summary</h2>
+      <p class="summary-text">
+        <strong>Versatile Full-Stack Software Engineer & Creative Developer</strong> with over 3 years of hands-on experience designing, shipping, and maintaining distributed web applications, offline-first mobile apps, and real-time interactive interfaces. Deeply versed in the modern <strong>TypeScript/JavaScript ecosystem (React, Next.js 16, React Native, Node.js)</strong>, paired with robust backend engineering in <strong>Python (FastAPI), Go, PostgreSQL, Redis, and Docker</strong>. Demonstrated track record building fault-tolerant architectures from scratch, optimizing system latency from 340ms to 45ms, and delivering high-fidelity interactive user experiences. Passionate about AI/LLM integration, developer tooling, and Linux-first environments.
+      </p>
+    </section>
+
+    <!-- Core Technical Skills -->
+    <section class="section">
+      <h2 class="section-title">Core Technical Competencies</h2>
+      <div class="skills-category-grid">
+        <div class="skill-category-card">
+          <div class="category-header">Languages & Runtimes</div>
+          <div class="skill-pills">
+            <span class="pill accent">TypeScript (Strict)</span>
+            <span class="pill accent">JavaScript (ESNext)</span>
+            <span class="pill">Python</span>
+            <span class="pill">Go (Golang)</span>
+            <span class="pill">C++</span>
+            <span class="pill">Rust</span>
+            <span class="pill">SQL</span>
+          </div>
+        </div>
+
+        <div class="skill-category-card">
+          <div class="category-header">Frontend & Mobile Platforms</div>
+          <div class="skill-pills">
+            <span class="pill accent">React 19</span>
+            <span class="pill accent">Next.js 16 (App Router)</span>
+            <span class="pill accent">React Native / Expo</span>
+            <span class="pill">Tailwind CSS v4</span>
+            <span class="pill">Three.js / WebGL</span>
+            <span class="pill">Astro</span>
+            <span class="pill">Flutter</span>
+          </div>
+        </div>
+
+        <div class="skill-category-card">
+          <div class="category-header">Backend, Databases & APIs</div>
+          <div class="skill-pills">
+            <span class="pill accent">Node.js / Express</span>
+            <span class="pill">FastAPI</span>
+            <span class="pill accent">PostgreSQL</span>
+            <span class="pill">Supabase</span>
+            <span class="pill">Redis (Caching & Pub/Sub)</span>
+            <span class="pill">Firebase</span>
+            <span class="pill">REST & GraphQL</span>
+            <span class="pill">WebSockets / WebRTC</span>
+          </div>
+        </div>
+
+        <div class="skill-category-card">
+          <div class="category-header">DevOps, Cloud & Architecture</div>
+          <div class="skill-pills">
+            <span class="pill accent">Docker & Containers</span>
+            <span class="pill">Linux (Fedora, Arch)</span>
+            <span class="pill">GitHub Actions CI/CD</span>
+            <span class="pill">Vercel & Cloudflare</span>
+            <span class="pill">Offline-First Caching</span>
+            <span class="pill">Jest & Unit Testing</span>
+            <span class="pill">Figma Design Systems</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Professional Experience -->
+    <section class="section">
+      <h2 class="section-title">Professional Experience</h2>
+      <div class="timeline">
+
+        <!-- Role 1 -->
+        <article class="timeline-item">
+          <div class="item-header">
+            <div class="item-title-group">
+              <span class="item-title">Lead Full-Stack & Mobile Engineer</span>
+              <span class="item-company">&bull; Logos Path / Independent Product Studio</span>
+            </div>
+            <div class="item-meta">2023 &ndash; Present</div>
+          </div>
+          <div class="item-submeta">Addis Ababa, Ethiopia &bull; Global Remote | Full-Time / Product Leadership</div>
+          <ul class="bullet-list">
+            <li><strong>Cross-Platform Mobile Architecture:</strong> Architected and shipped an offline-first React Native mobile client that scaled to <strong>15,000+ monthly active users</strong> across 12 countries, sustaining a <strong>99.9% crash-free rate</strong>.</li>
+            <li><strong>Low-Latency Data Synchronization:</strong> Engineered a custom conflict-free delta synchronization engine in Node.js and PostgreSQL, driving cloud-to-device synchronization latency below <strong>100ms</strong> over unstable mobile networks.</li>
+            <li><strong>Media Optimization:</strong> Built automated audio/video transcode pipelines reducing client streaming bandwidth requirements by <strong>45%</strong>.</li>
+            <li><strong>DevOps & Release Velocity:</strong> Implemented end-to-end CI/CD release automation with GitHub Actions, Fastlane, and Vercel, reducing turnaround times for production releases by <strong>50%</strong>.</li>
+            <li><strong>API Integrity:</strong> Established strict end-to-end type safety between client and server via shared Zod/TypeScript schemas with automated TypeScript client SDK generation.</li>
+          </ul>
+          <div class="tech-used">
+            <span class="tech-label">Tech:</span>
+            <span class="pill">React Native</span>
+            <span class="pill">TypeScript</span>
+            <span class="pill">Node.js</span>
+            <span class="pill">PostgreSQL</span>
+            <span class="pill">Supabase</span>
+            <span class="pill">Tailwind CSS</span>
+            <span class="pill">Redis</span>
+            <span class="pill">Docker</span>
+          </div>
+        </article>
+
+        <!-- Role 2 -->
+        <article class="timeline-item">
+          <div class="item-header">
+            <div class="item-title-group">
+              <span class="item-title">Full-Stack Software Engineer</span>
+              <span class="item-company">&bull; FinTech & Cloud Solutions</span>
+            </div>
+            <div class="item-meta">2022 &ndash; 2023</div>
+          </div>
+          <div class="item-submeta">Addis Ababa, Ethiopia | Full-Time Engineering</div>
+          <ul class="bullet-list">
+            <li><strong>Financial Payment Gateways:</strong> Integrated core payment gateway APIs and webhook event handlers processing thousands of daily financial transactions with <strong>zero idempotency faults</strong> and full auditability.</li>
+            <li><strong>Database Performance Tuning:</strong> Diagnosed database bottlenecks, optimized complex PostgreSQL query indexes, and implemented multi-tier Redis caching, slashing p95 endpoint response times from <strong>340ms to 45ms</strong>.</li>
+            <li><strong>Analytics Dashboards:</strong> Developed high-throughput administrative portals in Next.js providing financial analysts with real-time transaction reconciliation and anomaly detection.</li>
+            <li><strong>Engineering Standards:</strong> Mentored junior engineers, established comprehensive code review guidelines, automated linting, and introduced automated Jest integration suites.</li>
+          </ul>
+          <div class="tech-used">
+            <span class="tech-label">Tech:</span>
+            <span class="pill">TypeScript</span>
+            <span class="pill">Next.js</span>
+            <span class="pill">Python</span>
+            <span class="pill">FastAPI</span>
+            <span class="pill">PostgreSQL</span>
+            <span class="pill">Redis</span>
+            <span class="pill">Docker</span>
+          </div>
+        </article>
+
+        <!-- Role 3 -->
+        <article class="timeline-item">
+          <div class="item-header">
+            <div class="item-title-group">
+              <span class="item-title">Frontend & Interactive Web Developer</span>
+              <span class="item-company">&bull; Creative Digital Agency</span>
+            </div>
+            <div class="item-meta">2021 &ndash; 2022</div>
+          </div>
+          <div class="item-submeta">Addis Ababa, Ethiopia | Full-Time</div>
+          <ul class="bullet-list">
+            <li><strong>High-Performance Web Applications:</strong> Delivered 12+ production client web portals achieving consistent <strong>98+ Lighthouse scores</strong> across performance, accessibility (a11y), and SEO.</li>
+            <li><strong>3D & WebGL Graphics:</strong> Developed custom WebGL experiences using Three.js and custom GLSL fragment shaders for interactive browser-based 3D product previews.</li>
+            <li><strong>Component Architecture:</strong> Created a company-wide reusable React component library in Figma and Tailwind CSS, reducing design-to-production turnaround by <strong>35%</strong>.</li>
+          </ul>
+          <div class="tech-used">
+            <span class="tech-label">Tech:</span>
+            <span class="pill">React</span>
+            <span class="pill">JavaScript (ES6+)</span>
+            <span class="pill">Three.js</span>
+            <span class="pill">WebGL</span>
+            <span class="pill">Tailwind CSS</span>
+            <span class="pill">Figma</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Key Featured Projects -->
+    <section class="section">
+      <h2 class="section-title">Highlighted Engineering Projects</h2>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div>
+            <div class="project-header">
+              <a href="https://logospath-web.onrender.com/" target="_blank" rel="noreferrer" class="project-name" style="text-decoration: none; color: inherit; display: inline-flex; align-items: center; gap: 4px;">
+                Logos Path Platform
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--primary);"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+              <span class="project-metrics-badge">15k+ MAU &bull; 99.9% Uptime</span>
+            </div>
+            <p class="project-desc">
+              Cross-platform education and faith mobile ecosystem with low-bandwidth audio streaming, conflict-free offline-first sync, and multi-tenant content management. Live at <a href="https://logospath-web.onrender.com/" target="_blank" rel="noreferrer" style="color: var(--primary); text-decoration: underline;">logospath-web.onrender.com</a>.
+            </p>
+          </div>
+          <div class="project-tech">
+            <span class="pill">React Native</span>
+            <span class="pill">TypeScript</span>
+            <span class="pill">Node.js</span>
+            <span class="pill">PostgreSQL</span>
+            <span class="pill">Docker</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div>
+            <div class="project-header">
+              <span class="project-name">OmniFlow Distributed Engine</span>
+              <span class="project-metrics-badge">40M+ Events &bull; &lt;15ms p99</span>
+            </div>
+            <p class="project-desc">
+              High-throughput async event orchestration engine managing distributed microservices task scheduling with Redis Streams, exponential backoff retries, and Prometheus metrics.
+            </p>
+          </div>
+          <div class="project-tech">
+            <span class="pill">Go</span>
+            <span class="pill">Node.js</span>
+            <span class="pill">PostgreSQL</span>
+            <span class="pill">Redis Streams</span>
+            <span class="pill">Docker</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div>
+            <div class="project-header">
+              <span class="project-name">Lumina 3D WebGL Studio</span>
+              <span class="project-metrics-badge">60 FPS &bull; 3.4x Engagement</span>
+            </div>
+            <p class="project-desc">
+              Real-time browser-based 3D product configurator using Three.js, custom PBR shaders, and Draco mesh streaming, decreasing return rates for e-commerce by 28%.
+            </p>
+          </div>
+          <div class="project-tech">
+            <span class="pill">Three.js</span>
+            <span class="pill">TypeScript</span>
+            <span class="pill">React</span>
+            <span class="pill">WebGL / GLSL</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div>
+            <div class="project-header">
+              <span class="project-name">PulseSync Telehealth</span>
+              <span class="project-metrics-badge">10k+ Consults &bull; HIPAA Compliant</span>
+            </div>
+            <p class="project-desc">
+              Clinical web platform connecting patients with remote medical practitioners. Features peer-to-peer WebRTC video, row-level security (RLS), and automated triage notes.
+            </p>
+          </div>
+          <div class="project-tech">
+            <span class="pill">Next.js</span>
+            <span class="pill">TypeScript</span>
+            <span class="pill">Supabase</span>
+            <span class="pill">WebRTC</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Education, Languages & Certifications -->
+    <section class="section">
+      <div class="two-col">
+
+        <!-- Education -->
+        <div>
+          <h2 class="section-title">Education</h2>
+          <div class="timeline-item">
+            <div class="item-header">
+              <span class="item-title">B.Sc. in Information Technology</span>
+              <span class="item-meta">2018 &ndash; 2022</span>
+            </div>
+            <div class="item-company">Haramaya University &bull; Dire Dawa / Haramaya, Ethiopia</div>
+            <p class="item-description" style="margin-top: 4px;">
+              Graduated with top academic standing / distinction. Focused on distributed systems, database architectures, and algorithms. Capstone: Automated campus scheduling and resource allocation platform.
+            </p>
+          </div>
+        </div>
+
+        <!-- Languages & Additional -->
+        <div>
+          <h2 class="section-title">Languages</h2>
+          <div>
+            <div class="lang-item">
+              <span class="lang-name">English</span>
+              <span class="lang-level">Professional &bull; Fluent</span>
+            </div>
+            <div class="lang-item">
+              <span class="lang-name">Amharic</span>
+              <span class="lang-level">Native Speaker</span>
+            </div>
+            <div class="lang-item">
+              <span class="lang-name">Afan Oromo</span>
+              <span class="lang-level">Fluent &bull; Conversational</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
