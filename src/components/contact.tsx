@@ -2,6 +2,7 @@ import { contactSocials } from "@/lib/content";
 import { SocialIcon } from "@/lib/icons";
 import { site } from "@/lib/site";
 import { ContactForm } from "./contact-form";
+import { TimeBridge } from "./time-bridge";
 
 /** Brand colour per social: tile background and glyph colour. GitHub and X follow the theme's ink. */
 const brand: Record<string, { bg: string; fg: string }> = {
@@ -40,6 +41,14 @@ export function Contact() {
             >
               {site.email}
             </a>
+
+            <div className="mt-14 border-t border-line pt-8">
+              <h3 className="h-sub text-2xl">Find a time</h3>
+              <p className="measure mt-2 text-ink-2 pretty">
+                I work from Addis Ababa, UTC+3. Drag across the day to see my time next to yours.
+              </p>
+              <TimeBridge workStart={site.workHours.start} workEnd={site.workHours.end} />
+            </div>
 
             <ul className={`mt-12 grid gap-x-8 ${formEnabled ? "sm:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-4"}`}>
               {others.map((s) => (

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ViewTransition } from "react";
 import { featuredProjects, otherProjects, type Project } from "@/lib/content";
 import { Glyph } from "@/lib/glyph";
 import { ProjectMedia } from "./project-media";
@@ -19,18 +20,20 @@ function Metrics({ project }: { project: Project }) {
 function FeaturedRow({ project, first }: { project: Project; first: boolean }) {
   return (
     <article className="grid gap-x-12 gap-y-8 border-t border-line py-12 lg:grid-cols-12 lg:py-16">
-      <Link
-        href={`/projects/${project.id}`}
-        className="group relative block aspect-[1200/630] overflow-hidden bg-paper-2 lg:col-span-7"
-        aria-label={`${project.name}: read the case study`}
-        tabIndex={-1}
-      >
-        <ProjectMedia
-          project={project}
-          priority={first}
-          sizes="(min-width: 1280px) 720px, (min-width: 1024px) 58vw, 92vw"
-        />
-      </Link>
+      <ViewTransition name={`project-${project.id}`} share="morph" default="none">
+        <Link
+          href={`/projects/${project.id}`}
+          className="group relative block aspect-[1200/630] overflow-hidden bg-paper-2 lg:col-span-7"
+          aria-label={`${project.name}: read the case study`}
+          tabIndex={-1}
+        >
+          <ProjectMedia
+            project={project}
+            priority={first}
+            sizes="(min-width: 1280px) 720px, (min-width: 1024px) 58vw, 92vw"
+          />
+        </Link>
+      </ViewTransition>
 
       <div className="flex flex-col lg:col-span-5">
         <p className="text-[0.95rem] text-ink-2">

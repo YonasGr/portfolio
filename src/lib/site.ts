@@ -19,4 +19,6 @@ export const site = {
   city: "Addis Ababa",
   country: "Ethiopia",
   timeZone: "Africa/Addis_Ababa",
+  /** Local working day in Addis Ababa (24h). Drives the "Find a time" strip in Contact. Edit to match reality. */
+  workHours: { start: 9, end: 18 },
 } as const;

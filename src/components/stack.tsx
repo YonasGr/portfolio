@@ -1,5 +1,6 @@
-import { stack, type Tier } from "@/lib/content";
+import { projects, stack, type Tier } from "@/lib/content";
 import { TechIcon } from "@/lib/icons";
+import { SkillChip, StackLens } from "./stack-lens";
 
 const tierStyle: Record<Tier, string> = {
   daily: "bg-ink text-paper border-ink",
@@ -12,6 +13,21 @@ const tierLabel: Record<Tier, string> = {
   advanced: "Advanced",
   proficient: "Proficient",
 };
+
+/** Project tech names that differ from the stack's skill names. */
+const alias: Record<string, string> = {
+  go: "Go (Golang)",
+  "three.js": "Three.js / WebGL",
+  webgl: "Three.js / WebGL",
+  git: "Git & GitHub",
+  jest: "Jest & Testing",
+};
+const known = new Map(stack.flatMap((g) => g.skills).map((s) => [s.name.toLowerCase(), s.name]));
+const lensProjects = projects.map((p) => ({
+  id: p.id,
+  name: p.name,
+  skills: [...new Set(p.tech.map((t) => known.get(t.toLowerCase()) ?? alias[t.toLowerCase()]).filter((n): n is string => !!n))],
+}));
 
 export function Stack() {
   return (
@@ -34,6 +50,7 @@ export function Stack() {
         </div>
 
         <div className="mt-12">
+          <StackLens projects={lensProjects}>
           {stack.map((group) => (
             <div key={group.id} className="grid gap-x-12 gap-y-5 border-t border-line py-8 lg:grid-cols-12">
               <div className="lg:col-span-4">
@@ -42,24 +59,26 @@ export function Stack() {
               </div>
               <ul className="flex flex-wrap content-start gap-2.5 lg:col-span-8">
                 {group.skills.map((s) => (
-                  <li
-                    key={s.name}
-                    tabIndex={0}
-                    aria-label={`${s.name}, ${tierLabel[s.tier]}${s.description ? `. ${s.description}` : ""}`}
-                    className={`skill inline-flex items-center gap-2.5 rounded-sm border-[1.5px] py-1.5 pl-2 pr-3.5 font-medium ${tierStyle[s.tier]}`}
-                  >
-                    <TechIcon name={s.name} />
-                    {s.name}
-                    {s.description && (
-                      <span className="skill-tip" aria-hidden="true">
-                        {s.description}
-                      </span>
-                    )}
+                  <li key={s.name}>
+                    <SkillChip
+                      name={s.name}
+                      label={`${s.name}, ${tierLabel[s.tier]}${s.description ? `. ${s.description}` : ""}`}
+                      className={`inline-flex items-center gap-2.5 rounded-sm border-[1.5px] py-1.5 pl-2 pr-3.5 font-medium ${tierStyle[s.tier]}`}
+                    >
+                      <TechIcon name={s.name} />
+                      {s.name}
+                      {s.description && (
+                        <span className="skill-tip" aria-hidden="true">
+                          {s.description}
+                        </span>
+                      )}
+                    </SkillChip>
                   </li>
                 ))}
               </ul>
             </div>
           ))}
+          </StackLens>
         </div>
       </div>
     </section>

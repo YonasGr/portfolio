@@ -1,10 +1,12 @@
 import { experience, studies, type Role } from "@/lib/content";
 import { site } from "@/lib/site";
 import { Glyph } from "@/lib/glyph";
+import { Thread } from "./thread";
 
 function RoleEntry({ role, open = false }: { role: Role; open?: boolean }) {
   return (
-    <article className="grid gap-x-10 gap-y-3 border-t border-line py-9 md:grid-cols-[9.5rem_1fr]">
+    <article className="relative grid gap-x-10 gap-y-3 border-t border-line py-9 md:grid-cols-[9.5rem_1fr]">
+      <span data-thread-node className="thread-node" aria-hidden="true" />
       <p className="tabular-nums text-ink-2">{role.period}</p>
       <div>
         <h3 className="h-sub text-2xl md:text-3xl">{role.role}</h3>
@@ -56,9 +58,11 @@ export function Experience() {
         </div>
 
         <div className="lg:col-span-8">
-          {experience.map((r, i) => (
-            <RoleEntry key={r.organization + r.period} role={r} open={i === 0} />
-          ))}
+          <Thread>
+            {experience.map((r, i) => (
+              <RoleEntry key={r.organization + r.period} role={r} open={i === 0} />
+            ))}
+          </Thread>
           <h3 className="h-sub mt-10 border-t border-line pt-9 text-2xl">Education</h3>
           {studies.map((r) => (
             <div key={r.organization} className="grid gap-x-10 gap-y-1 pt-5 md:grid-cols-[9.5rem_1fr]">

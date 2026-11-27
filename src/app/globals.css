@@ -247,3 +247,84 @@ dialog[open] { animation: fade-up 0.22s cubic-bezier(0.2, 0.8, 0.1, 1) both; }
 /* details marker removal */
 summary { list-style: none; }
 summary::-webkit-details-marker { display: none; }
+
+/* ---------- Page transitions: a cover morphs into its case study ---------- */
+::view-transition { pointer-events: none; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 260ms; }
+::view-transition-group(.morph) {
+  animation-duration: 650ms;
+  animation-timing-function: cubic-bezier(0.6, 0, 0.1, 1);
+}
+::view-transition-image-pair(.morph) { animation-name: via-blur; }
+@keyframes via-blur { 40% { filter: blur(2px); } }
+/* The header is the fixed reference point: content moves, the frame doesn't. */
+::view-transition-group(site-header) { animation: none; z-index: 100; }
+::view-transition-old(site-header) { display: none; }
+::view-transition-new(site-header) { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*), ::view-transition-new(*), ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+/* ---------- Career thread: the header's three-stripe weave, turned vertical ---------- */
+.thread { --pad: 1.75rem; position: relative; padding-left: var(--pad); }
+@media (min-width: 768px) { .thread { --pad: 2.5rem; } }
+.thread::before, .thread::after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0.4rem;
+  width: 6px;
+}
+.thread::before { background: var(--line); }
+.thread::after {
+  background: linear-gradient(90deg, #f2b124 0 33.3%, #dd4b2f 33.3% 66.6%, #1e8559 66.6%);
+  transform-origin: top;
+  transform: scaleY(var(--p, 0));
+}
+.thread-node {
+  position: absolute;
+  top: -0.45rem;
+  left: calc(0.4rem + 3px - var(--pad) - 0.45rem);
+  z-index: 1;
+  width: 0.9rem; height: 0.9rem;
+  rotate: 45deg;
+  background: var(--paper);
+  border: 2px solid var(--ink-2);
+  transition: background-color 0.3s, border-color 0.3s;
+}
+.thread-node[data-on="true"] { background: #f2b124; border-color: var(--ink); }
+
+/* ---------- Stack lens ---------- */
+.lens-chip { transition: opacity 0.2s, translate 0.2s; cursor: pointer; }
+.lens-chip[data-lens="off"] { opacity: 0.28; }
+.lens-chip[data-lens="on"] { translate: 0 -2px; }
+.lens-chip[data-lens="on"]::after {
+  content: "";
+  position: absolute;
+  top: -6px; right: -6px;
+  width: 11px; height: 11px;
+  rotate: 45deg;
+  background: #f2b124;
+  border: 1.5px solid var(--ink);
+}
+
+/* ---------- Time strip ---------- */
+.scrub {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+  cursor: ew-resize;
+  touch-action: pan-y;
+}
+.scrub::-webkit-slider-thumb { appearance: none; width: 2px; height: 5rem; background: transparent; border: 0; }
+.scrub::-moz-range-thumb { width: 2px; height: 5rem; background: transparent; border: 0; }
+.scrub::-moz-range-track { background: transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lens-chip, .thread-node { transition: none; }
+}

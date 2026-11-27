@@ -55,3 +55,19 @@ export function addisTime(date: Date): AddisTime {
     dateAm: `${MONTHS_AM[eth.month]} ${eth.day}`,
   };
 }
+
+const wrapDay = (minutes: number) => ((Math.round(minutes) % 1440) + 1440) % 1440;
+
+/** Minutes since midnight to a 12-hour label, e.g. 905 -> "3:05 PM". */
+export function clockLabel(minutes: number) {
+  const m = wrapDay(minutes);
+  const h = Math.floor(m / 60);
+  return `${h % 12 || 12}:${pad(m % 60)} ${h < 12 ? "AM" : "PM"}`;
+}
+
+/** The same instant on the Ethiopian clock, where the day starts at sunrise (6:00 local reads 12:00). */
+export function ethiopianLabel(minutes: number) {
+  const m = wrapDay(minutes);
+  const h = Math.floor(m / 60);
+  return `${(h + 6) % 12 || 12}:${pad(m % 60)}`;
+}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ViewTransition } from "react";
 import { ProjectMedia } from "@/components/project-media";
 import { adjacentProjects, getProject, projects } from "@/lib/content";
 import { Glyph } from "@/lib/glyph";
@@ -62,9 +63,11 @@ export default async function ProjectPage({ params }: Props) {
           </div>
         </header>
 
-        <div className="relative mt-12 aspect-[1200/630] overflow-hidden bg-paper-2">
-          <ProjectMedia project={project} priority sizes="(min-width: 1280px) 1248px, 92vw" />
-        </div>
+        <ViewTransition name={`project-${project.id}`} share="morph" default="none">
+          <div className="relative mt-12 aspect-[1200/630] overflow-hidden bg-paper-2">
+            <ProjectMedia project={project} priority sizes="(min-width: 1280px) 1248px, 92vw" />
+          </div>
+        </ViewTransition>
 
         <div className="mt-16 grid gap-x-14 gap-y-14 lg:grid-cols-12">
           <div className="lg:col-span-7">
@@ -90,7 +93,7 @@ export default async function ProjectPage({ params }: Props) {
             )}
           </div>
 
-          <aside className="space-y-10 lg:col-span-5">
+          <aside className="space-y-10 lg:sticky lg:top-28 lg:col-span-5 lg:self-start">
             {project.metrics.length > 0 && (
               <section aria-labelledby="results">
                 <h2 id="results" className="h-sub text-xl">

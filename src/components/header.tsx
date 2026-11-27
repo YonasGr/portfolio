@@ -37,7 +37,7 @@ export function Header({ sponsorUrl }: { sponsorUrl?: string }) {
   const openPalette = () => window.dispatchEvent(new Event("open-palette"));
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-paper/85 backdrop-blur-md">
+    <header style={{ viewTransitionName: "site-header" }} className="sticky top-0 z-40 border-b border-line bg-paper/85 backdrop-blur-md">
       <div className="wrap flex h-16 items-center justify-between gap-4">
         <Link href="/" className="group flex items-center gap-3">
           <span
